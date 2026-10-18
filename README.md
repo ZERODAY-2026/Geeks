@@ -1,10 +1,24 @@
-# LexiShield
+<p align="center">
+  <img src="assets/lexishield-readme-banner.png" alt="LexiShield — Private, On-Device Legal Document Triage Agent" width="100%" />
+</p>
 
-**Private, on-device legal document triage, powered by Google Gemma.**  
-*ZeroDay OSS Hacktoberfest 2026 · IIIT Dharwad · Track PS2 (Private Legal Document Triage Agent)*
+<div align="center">
 
----
+# LexiShield — Private, On-Device Legal Document Triage Agent
 
+**ZeroDay OSS Hacktoberfest 2026 · IIIT Dharwad · Track PS2**
+
+<p>
+  <img src="https://skillicons.dev/icons?i=react,vite,tailwind,py,fastapi,git&perline=6" alt="Technology stack: React, Vite, Tailwind CSS, Python, FastAPI, Git" />
+</p>
+<p>
+  <img src="https://img.shields.io/badge/LLM-Google%20Gemma-886FBF?style=flat-square" alt="Google Gemma" />
+  <img src="https://img.shields.io/badge/Inference-Ollama-black?style=flat-square&logo=ollama" alt="Ollama" />
+  <img src="https://img.shields.io/badge/Retrieval-BM25%20%2B%20EmbeddingGemma-8C7B5D?style=flat-square" alt="BM25 and EmbeddingGemma retrieval" />
+  <img src="https://img.shields.io/badge/Privacy-Local%20Only-2E724A?style=flat-square" alt="Local-only processing" />
+</p>
+
+</div>
 LexiShield analyzes residential rental agreements, employment contracts, freelance service agreements (MSA/SOW), and legal demand notices **entirely on your local machine**. It translates dense legal clauses into plain language, explicitly highlights when a document is **silent** on critical statutory protections, verifies every claim against exact source text offsets, refuses to provide legal verdicts, and routes users to appropriate legal authorities (e.g., District Legal Services Authorities, Rent Controllers, Labour Departments, or specialized advocates). 
 
 **Zero document bytes, derived text, or embeddings ever leave the local device.**
