@@ -14,6 +14,7 @@ from ..ingest.pipeline import Ingested
 from ..ingest.prompt_view import analysis_text
 from ..llm.gateway import LLMError, LLMGateway
 from ..llm.prompts import checklist as prompts
+from ..llm.prompts import relevance
 from ..models import ChecklistItem, ChecklistStatus, Citation, Clause, ClauseCard, Country, Distortion, UserRole
 from ..packs import Topic
 from ..retrieval.hybrid import expand_xrefs, hybrid_top_k
@@ -60,6 +61,7 @@ class DocContext:
     country: Country
     fuzzy_min: int = 92
     retrieval_k: int = 6
+    relevance_gate: bool = True
 
     @classmethod
     def build(
@@ -69,6 +71,7 @@ class DocContext:
         country: Country,
         fuzzy_min: int,
         retrieval_k: int,
+        relevance_gate: bool = True,
     ) -> DocContext:
         views = {c.id: analysis_text(c, ing.hidden) for c in ing.clauses}
         return cls(
@@ -86,6 +89,7 @@ class DocContext:
             country=country,
             fuzzy_min=fuzzy_min,
             retrieval_k=retrieval_k,
+            relevance_gate=relevance_gate,
         )
 
     def overlaps_flagged(self, c: Citation) -> bool:
@@ -120,6 +124,24 @@ async def _ask(gw: LLMGateway, topic: Topic, doc: DocContext, role: UserRole) ->
     return res.value, chosen
 
 
+class RelevanceOut(BaseModel):
+    addresses_topic: bool
+
+
+async def _addresses(gw: LLMGateway, topic: Topic, quote: str) -> bool:
+    """Ask the model whether one verified quote addresses the topic. If the check cannot run, the quote is not kept."""
+    user = (
+        relevance.USER.replace("{TOPIC}", topic.title)
+        .replace("{HYPOTHESIS}", topic.hypothesis)
+        .replace("{QUOTE}", quote)
+    )
+    try:
+        res = await gw.structured(RelevanceOut, user, system=relevance.SYSTEM)
+    except LLMError:
+        return False
+    return res.value.addresses_topic
+
+
 async def analyze_topic(gw: LLMGateway, topic: Topic, doc: DocContext, role: UserRole) -> TopicOutcome:
     out, _ = await _ask(gw, topic, doc, role)
     proposed = len(out.evidence) if out else 0
@@ -134,6 +156,15 @@ async def analyze_topic(gw: LLMGateway, topic: Topic, doc: DocContext, role: Use
             continue
         verified.append(cit)
 
+    if doc.relevance_gate:
+        # Grounding gate: a verified quote must itself address the topic question, or it does not support the topic.
+        kept: list[Citation] = []
+        for c in verified:
+            if await _addresses(gw, topic, c.quote):
+                kept.append(c)
+            else:
+                dropped.append(c.clause_id)
+        verified = kept
     hits = lexicon_hits(doc.full_view, topic.lexicon)
     model_status = out.status if out else ChecklistStatus.UNCLEAR
     status, status_note = decide_status(model_status, bool(verified), hits)

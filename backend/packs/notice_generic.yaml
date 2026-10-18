@@ -9,7 +9,7 @@ topics:
     title: Who sent it and who it is for
     query: sender recipient from to notice addressed
     lexicon: [from, to, sender, recipient, addressed]
-    hypothesis: The notice names who is sending it and who must respond.
+    hypothesis: The notice names who sent it.
     severity: LOW
   - id: notice.demand
     title: What is demanded

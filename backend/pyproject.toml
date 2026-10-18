@@ -55,6 +55,7 @@ markers = [
     "phase4: proof and robustness",
     "phase5: freeze and reproduction",
     "live: needs a running Ollama with the configured models (skipped otherwise)",
+    "history: used-up held-out sets, run for the record only (not part of any gate)",
 ]
 addopts = "-ra"
 
