@@ -27,6 +27,8 @@ class ServerSettings(BaseModel):
     # FastAPI's /docs page loads Swagger UI from a CDN, which fails offline. Off by default;
     # contracts/openapi.json is the local reference.
     api_docs: bool = False
+    # Serve the built frontend (paths.frontend_dist) at / so the app is one local URL.
+    serve_frontend: bool = True
 
 
 class OllamaSettings(BaseModel):
@@ -93,6 +95,7 @@ class PathSettings(BaseModel):
     escalation_dir: str = "escalation"
     results_dir: str = "eval/results"
     data_dir: str = "data"  # set-up-time downloads (CUAD, statute index); git-ignored
+    frontend_dist: str = "../frontend/dist"  # built by `npm run build` in frontend/
 
     @property
     def statute_db(self) -> Path:

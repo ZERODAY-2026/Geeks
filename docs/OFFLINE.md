@@ -3,6 +3,9 @@
 LexiShield runs with no internet connection. Everything it needs is installed once, while the machine is still online.
 After that, unplug the network: the app, the model and the analysis all run on this machine.
 
+The quickest path: `install.ps1` / `install.sh` (once, online), then `run.ps1` / `run.sh` (offline). The steps
+below are what those scripts do.
+
 ## 1. One-time set-up (online)
 
 ```powershell

@@ -316,6 +316,57 @@
         }
       }
     },
+    "/api/v1/documents/{document_id}/file": {
+      "get": {
+        "tags": [
+          "documents"
+        ],
+        "summary": "Original uploaded file (PDF, DOCX or TXT)",
+        "operationId": "get_file_api_v1_documents__document_id__file_get",
+        "parameters": [
+          {
+            "name": "document_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Document Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The original uploaded file, for the source viewer. Open a citation at its page and lines.",
+            "content": {
+              "application/pdf": {},
+              "application/vnd.openxmlformats-officedocument.wordprocessingml.document": {},
+              "text/plain": {}
+            }
+          },
+          "404": {
+            "content": {
+              "application/problem+json": {},
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/documents/{document_id}/clauses/{clause_id}": {
       "get": {
         "tags": [
@@ -1794,6 +1845,32 @@
             "minimum": 0.0,
             "title": "Score",
             "default": 100
+          },
+          "line_start": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 1.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Line Start",
+            "description": "Line on `page` where the quote starts (1-based, in the page text)."
+          },
+          "line_end": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 1.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Line End",
+            "description": "Line on `page` where the quote ends (1-based)."
           }
         },
         "type": "object",

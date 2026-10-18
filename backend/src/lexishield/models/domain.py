@@ -104,6 +104,10 @@ class Citation(Span):
     quote: str = Field(description="Verbatim source text at [char_start, char_end).")
     match: MatchType
     score: float = Field(ge=0, le=100, default=100)
+    line_start: int | None = Field(
+        default=None, ge=1, description="Line on `page` where the quote starts (1-based, in the page text)."
+    )
+    line_end: int | None = Field(default=None, ge=1, description="Line on `page` where the quote ends (1-based).")
 
 
 class Claim(BaseModel):

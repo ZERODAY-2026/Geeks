@@ -1,39 +1,75 @@
 {
   "status": "ANSWERED",
-  "message": "Here is what the document says about the deposit.",
+  "message": "Here is what the document says.",
   "claims": [
     {
-      "text": "The agreement says the monthly fee is Rs. 45,000. This payment must be made by the 5th day of every month.",
+      "text": "The Licensee shall pay to the Licensor an interest-free refundable security deposit of Rs. 1,50,000/- (Rupees One Lakh Fifty Thousand only) on or before the date of possession.",
       "kind": "STATED",
       "citations": [
         {
           "page": 1,
-          "char_start": 324,
-          "char_end": 424,
-          "clause_id": "C3",
-          "quote": "The Licensee shall pay a monthly licence fee of Rs. 45,000/- on or before the 5th day of each month.",
+          "char_start": 446,
+          "char_end": 622,
+          "clause_id": "C4",
+          "quote": "The Licensee shall pay to the Licensor an interest-free refundable security deposit of Rs. 1,50,000/- (Rupees One Lakh Fifty Thousand only) on or before the date of possession.",
           "match": "EXACT",
-          "score": 100.0
+          "score": 100.0,
+          "line_start": 7,
+          "line_end": 7
         }
       ],
       "distortion": "PASS",
       "facts": [
-        "INR 45000"
+        "INR 150000"
       ]
     }
   ],
-  "related_clauses": [],
+  "related_clauses": [
+    {
+      "page": 1,
+      "char_start": 425,
+      "char_end": 801,
+      "clause_id": "C4",
+      "quote": "3. SECURITY DEPOSIT. The Licensee shall pay to the Licensor an interest-free refundable security deposit of Rs. 1,50,000/- (Rupees One Lakh Fifty Thousand only) on or before the date of possession. The deposit shall be refunded within thirty (30) days of the Licensee vacating the Premises, after deducting any amounts towards unpaid licence fee, damages and painting charges.",
+      "match": "EXACT",
+      "score": 100.0,
+      "line_start": 7,
+      "line_end": 7
+    },
+    {
+      "page": 1,
+      "char_start": 0,
+      "char_end": 231,
+      "clause_id": "C1",
+      "quote": "LEAVE AND LICENSE AGREEMENT (SYNTHETIC TEST DOCUMENT)\n\nThis Agreement is made on 1 March 2026 between Mr. A. Sharma, the Licensor, and Ms. B. Rao, the Licensee, for the premises at 12 MG Road, Bengaluru, Karnataka (the \"Premises\").",
+      "match": "EXACT",
+      "score": 100.0,
+      "line_start": 1,
+      "line_end": 3
+    },
+    {
+      "page": 1,
+      "char_start": 949,
+      "char_end": 1067,
+      "clause_id": "C6",
+      "quote": "5. MAINTENANCE. The Licensee shall bear minor repairs. Structural repairs shall be the responsibility of the Licensor.",
+      "match": "EXACT",
+      "score": 100.0,
+      "line_start": 9,
+      "line_end": 9
+    }
+  ],
   "not_found_note": null,
   "clarifying_question": null,
   "escalation": null,
-  "conversation_id": "conv_1",
+  "conversation_id": "conv_example",
   "trace": {
-    "route": "DOC_FACT",
+    "route": "DOCFACT",
     "tools_used": [
       "search_clauses",
-      "get_clause"
+      "answer"
     ],
-    "latency_ms": 3820
+    "latency_ms": 2675
   },
   "disclaimer": "LexiShield gives preliminary information to help you understand a document. It is not legal advice and cannot decide whether anything is legal or enforceable."
 }

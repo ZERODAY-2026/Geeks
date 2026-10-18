@@ -1,0 +1,59 @@
+{
+  "status": "LEGAL_VERDICT_DECLINED",
+  "message": "I can't tell you whether this is enforceable, legal, fair or a good idea to sign. That depends on the law and on facts outside the document. The related clauses are below, with who can advise you.",
+  "claims": [],
+  "related_clauses": [
+    {
+      "page": 1,
+      "char_start": 802,
+      "char_end": 948,
+      "clause_id": "C5",
+      "quote": "4. LOCK-IN. Neither party shall terminate this Agreement during the first six (6) months from the Commencement Date, save as provided in Clause 9.",
+      "match": "EXACT",
+      "score": 100.0,
+      "line_start": 8,
+      "line_end": 8
+    },
+    {
+      "page": 1,
+      "char_start": 1348,
+      "char_end": 1472,
+      "clause_id": "C10",
+      "quote": "9. TERMINATION. Either party may terminate this Agreement by giving two (2) months' written notice after the lock-in period.",
+      "match": "EXACT",
+      "score": 100.0,
+      "line_start": 13,
+      "line_end": 13
+    },
+    {
+      "page": 1,
+      "char_start": 0,
+      "char_end": 231,
+      "clause_id": "C1",
+      "quote": "LEAVE AND LICENSE AGREEMENT (SYNTHETIC TEST DOCUMENT)\n\nThis Agreement is made on 1 March 2026 between Mr. A. Sharma, the Licensor, and Ms. B. Rao, the Licensee, for the premises at 12 MG Road, Bengaluru, Karnataka (the \"Premises\").",
+      "match": "EXACT",
+      "score": 100.0,
+      "line_start": 1,
+      "line_end": 3
+    }
+  ],
+  "not_found_note": null,
+  "clarifying_question": null,
+  "escalation": {
+    "topic_family": "rent_tenancy",
+    "who": "A tenancy lawyer, or the rent authority in your area",
+    "why": "Questions about deposits, notice periods, repairs or ending the tenancy are best settled with someone who knows local rent law.",
+    "free_help": "District Legal Services Authority (DLSA), free legal aid",
+    "urgency": "normal",
+    "jurisdiction_note": "Rent laws differ by state. Name the state when you ask."
+  },
+  "conversation_id": "conv_example",
+  "trace": {
+    "route": "LEGAL_VERDICT",
+    "tools_used": [
+      "search_clauses"
+    ],
+    "latency_ms": 141
+  },
+  "disclaimer": "LexiShield gives preliminary information to help you understand a document. It is not legal advice and cannot decide whether anything is legal or enforceable."
+}

@@ -12,6 +12,7 @@ server:
     - http://localhost:3000
   max_upload_mb: 20
   api_docs: false            # /docs loads Swagger UI from a CDN, so it is off for offline use
+  serve_frontend: true       # serve frontend/dist at http://127.0.0.1:8000/
 
 ollama:
   host: http://127.0.0.1:11434
@@ -62,3 +63,4 @@ paths:
   escalation_dir: escalation
   results_dir: eval/results
   data_dir: data
+  frontend_dist: ../frontend/dist

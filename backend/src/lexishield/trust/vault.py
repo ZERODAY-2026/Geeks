@@ -55,6 +55,12 @@ class Vault:
                 self._drop_locked(doc_id)
             return len(ids)
 
+    def ids(self) -> list[str]:
+        """Every stored id (documents, files, reports, job events)."""
+        with self._lock:
+            self._expire_locked()
+            return list(self._keys)
+
     def __len__(self) -> int:
         with self._lock:
             return len(self._keys)

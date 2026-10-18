@@ -15,7 +15,7 @@ from ..agents.checklist import DocContext, TopicOutcome, analyze_topic
 from ..agents.classify import classify
 from ..ingest.pipeline import Ingested
 from ..ingest.quick import governing_law
-from ..ingest.segment import page_of
+from ..ingest.segment import line_span, page_of
 from ..llm.gateway import LLMGateway
 from ..models import (
     AnalyzeRequest,
@@ -55,6 +55,7 @@ def _jurisdiction(ing: Ingested, req: AnalyzeRequest) -> tuple[Country, Jurisdic
         detected, start, end = law
         clause = next((c for c in ing.clauses if c.char_start <= start < c.char_end), None)
         if clause is not None:
+            line_start, line_end = line_span(ing.pages, start, end)
             evidence.append(
                 Citation(
                     page=page_of(ing.pages, start),
@@ -64,6 +65,8 @@ def _jurisdiction(ing: Ingested, req: AnalyzeRequest) -> tuple[Country, Jurisdic
                     quote=ing.text[start:end],
                     match=MatchType.EXACT,
                     score=100.0,
+                    line_start=line_start,
+                    line_end=line_end,
                 )
             )
     else:

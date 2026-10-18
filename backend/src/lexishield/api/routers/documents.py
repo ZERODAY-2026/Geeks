@@ -9,6 +9,7 @@ import secrets
 from datetime import UTC, datetime
 
 from fastapi import APIRouter, Request, UploadFile
+from fastapi.responses import Response
 
 from ...ingest.pipeline import Ingested, IngestError, ingest_docx, ingest_pdf, ingest_text
 from ...models import Clause, DeleteResult, DocumentDetail, DocumentSummary, TextUpload, WipeResult
@@ -33,7 +34,11 @@ def _run_ingest(fn, *args) -> Ingested:  # type: ignore[no-untyped-def]
         raise LexiError(e.status, e.code, e.title, e.detail) from e
 
 
-def _store(request: Request, ing: Ingested, filename: str, mime: str) -> DocumentSummary:
+def file_key(document_id: str) -> str:
+    return f"file:{document_id}"
+
+
+def _store(request: Request, ing: Ingested, filename: str, mime: str, original: bytes) -> DocumentSummary:
     doc_id = "doc_" + secrets.token_hex(6)
     summary = DocumentSummary(
         document_id=doc_id,
@@ -50,6 +55,7 @@ def _store(request: Request, ing: Ingested, filename: str, mime: str) -> Documen
     )
     detail = DocumentDetail(summary=summary, pages=ing.pages, clauses=ing.clauses)
     _vault(request).put(doc_id, detail.model_dump_json().encode("utf-8"))
+    _vault(request).put(file_key(doc_id), original)  # the uploaded file itself, for the source viewer
     return summary
 
 
@@ -77,17 +83,17 @@ async def upload_document(request: Request, file: UploadFile) -> DocumentSummary
             raise LexiError(413, "DOC_TOO_LARGE", "Document too large", f"The limit is {max_bytes // MB} MB.")
         if lower.endswith(".pdf"):
             ing = _run_ingest(ingest_pdf, data, name)
-            return _store(request, ing, name, "application/pdf")
+            return _store(request, ing, name, "application/pdf", data)
         if lower.endswith(".docx"):
             ing = _run_ingest(ingest_docx, data, name)
-            return _store(request, ing, name, DOCX_MIME)
+            return _store(request, ing, name, DOCX_MIME, data)
         if lower.endswith(".txt"):
             try:
                 text = data.decode("utf-8-sig")
             except UnicodeDecodeError as e:
                 raise LexiError(422, "MALFORMED_FILE", "Malformed file", "The text file is not valid UTF-8.") from e
             ing = _run_ingest(ingest_text, text, name)
-            return _store(request, ing, name, "text/plain")
+            return _store(request, ing, name, "text/plain", data)
     raise LexiError(
         415,
         "UNSUPPORTED_TYPE",
@@ -105,12 +111,38 @@ async def upload_document(request: Request, file: UploadFile) -> DocumentSummary
 )
 async def upload_text(request: Request, body: TextUpload) -> DocumentSummary:
     ing = _run_ingest(ingest_text, body.text, body.filename)
-    return _store(request, ing, body.filename, "text/plain")
+    return _store(request, ing, body.filename, "text/plain", body.text.encode("utf-8"))
 
 
 @router.get("/documents/{document_id}", response_model=DocumentDetail, responses=problem_responses(404))
 async def get_document(request: Request, document_id: str) -> DocumentDetail:
     return load_detail(request, document_id)
+
+
+@router.get(
+    "/documents/{document_id}/file",
+    response_class=Response,
+    responses={
+        200: {
+            "content": {"application/pdf": {}, DOCX_MIME: {}, "text/plain": {}},
+            "description": "The original uploaded file, for the source viewer. Open a citation at its page and lines.",
+        },
+        **problem_responses(404),
+    },
+    summary="Original uploaded file (PDF, DOCX or TXT)",
+)
+async def get_file(request: Request, document_id: str) -> Response:
+    detail = load_detail(request, document_id)
+    original = _vault(request).get(file_key(document_id))
+    if original is None:
+        raise LexiError(404, "NOT_FOUND", "File not found", "The original file is not stored for this document.")
+    safe_name = "".join(ch if ch.isalnum() or ch in "._- " else "_" for ch in detail.summary.filename) or "document"
+    media_type = detail.summary.mime + ("; charset=utf-8" if detail.summary.mime == "text/plain" else "")
+    return Response(
+        original,
+        media_type=media_type,
+        headers={"Content-Disposition": f'inline; filename="{safe_name}"', "Cache-Control": "no-store"},
+    )
 
 
 @router.get("/documents/{document_id}/clauses/{clause_id}", response_model=Clause, responses=problem_responses(404))
@@ -126,6 +158,7 @@ async def get_clause(request: Request, document_id: str, clause_id: str) -> Clau
 async def delete_document(request: Request, document_id: str) -> DeleteResult:
     if not _vault(request).delete(document_id):
         raise LexiError(404, "NOT_FOUND", "Document not found", "It was already deleted or never existed.")
+    _vault(request).delete(file_key(document_id))
     request.app.state.jobs.purge(document_id)  # jobs and the sealed report go with the document
     egress_guard.record("document_shredded", None, "crypto_shredded")
     return DeleteResult(deleted=True, crypto_shredded=True)
@@ -134,7 +167,8 @@ async def delete_document(request: Request, document_id: str) -> DeleteResult:
 @router.delete("/sessions", response_model=WipeResult, summary="Crypto-shred every document in memory")
 async def wipe_sessions(request: Request) -> WipeResult:
     request.app.state.jobs.purge_all()
-    n = _vault(request).wipe()
+    n = sum(1 for k in _vault(request).ids() if k.startswith("doc_"))  # documents, not every sealed entry
+    _vault(request).wipe()
     egress_guard.record("session_wiped", None, "crypto_shredded")
     return WipeResult(wiped=n)
 
