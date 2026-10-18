@@ -1,54 +1,51 @@
 {
-  "id": "card_07",
-  "topic_id": "in_rental.security_deposit",
-  "title": "Security deposit",
-  "severity": "MEDIUM",
+  "id": "card_in_rental.rent_amount",
+  "topic_id": "in_rental.rent_amount",
+  "title": "Rent or licence fee and due date",
+  "severity": "HIGH",
   "tier": "STATED",
-  "reading_grade": 7.8,
+  "reading_grade": 3.7,
   "source": {
-    "page": 3,
-    "char_start": 6142,
-    "char_end": 6281,
-    "clause_id": "C12",
-    "quote": "The Licensee shall pay to the Licensor an interest-free refundable security deposit of Rs. 1,50,000/- (Rupees One Lakh Fifty Thousand only)",
+    "page": 1,
+    "char_start": 324,
+    "char_end": 424,
+    "clause_id": "C3",
+    "quote": "The Licensee shall pay a monthly licence fee of Rs. 45,000/- on or before the 5th day of each month.",
     "match": "EXACT",
     "score": 100.0
   },
   "plain_explanation": {
-    "text": "You pay a deposit of ₹1,50,000 before moving in. No interest is paid on it.",
+    "text": "The agreement says the monthly fee is Rs. 45,000. This payment must be made by the 5th day of every month.",
     "kind": "STATED",
     "citations": [
       {
-        "page": 3,
-        "char_start": 6142,
-        "char_end": 6281,
-        "clause_id": "C12",
-        "quote": "The Licensee shall pay to the Licensor an interest-free refundable security deposit of Rs. 1,50,000/- (Rupees One Lakh Fifty Thousand only)",
+        "page": 1,
+        "char_start": 324,
+        "char_end": 424,
+        "clause_id": "C3",
+        "quote": "The Licensee shall pay a monthly licence fee of Rs. 45,000/- on or before the 5th day of each month.",
         "match": "EXACT",
         "score": 100.0
       }
     ],
     "distortion": "PASS",
     "facts": [
-      "INR 150000"
+      "INR 45000"
     ]
   },
   "explanation_withheld_reason": null,
-  "stated": [
-    "The deposit is interest-free and refundable.",
-    "It is refunded within 30 days of vacating, after deductions."
-  ],
+  "stated": [],
   "interpretations": [
     {
-      "text": "'Damages' and 'painting charges' are not defined, so the amount that can be deducted is unclear.",
-      "kind": "CONCERN",
+      "text": "The agreement states that the monthly licence fee is Rs. 45,000 and it is due on or before the 5th day of each month (C3).",
+      "kind": "INTERPRETATION",
       "citations": [
         {
-          "page": 3,
-          "char_start": 6142,
-          "char_end": 6281,
-          "clause_id": "C12",
-          "quote": "The Licensee shall pay to the Licensor an interest-free refundable security deposit of Rs. 1,50,000/- (Rupees One Lakh Fifty Thousand only)",
+          "page": 1,
+          "char_start": 324,
+          "char_end": 424,
+          "clause_id": "C3",
+          "quote": "The Licensee shall pay a monthly licence fee of Rs. 45,000/- on or before the 5th day of each month.",
           "match": "EXACT",
           "score": 100.0
         }
@@ -57,14 +54,7 @@
       "facts": []
     }
   ],
-  "ambiguity_flags": [
-    "Undefined term: damages",
-    "Undefined amount: painting charges"
-  ],
-  "jurisdiction_flags": [
-    "Limits on deposits vary by state. Check local rent law with a professional."
-  ],
-  "questions_for_lawyer": [
-    "Which deductions are allowed, and can I see an itemised bill?"
-  ]
+  "ambiguity_flags": [],
+  "jurisdiction_flags": [],
+  "questions_for_lawyer": []
 }

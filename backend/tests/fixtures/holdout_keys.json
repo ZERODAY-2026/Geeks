@@ -1,0 +1,83 @@
+{
+  "_note": "Held-out answer keys, written before any model run. SILENT = the document does not address the topic; the model may answer NOT_MENTIONED or UNCLEAR, never ENTAILED. The prompts were never tuned on these documents. Do not edit a key after a run. Synthetic documents only.",
+  "documents": {
+    "in_rental_holdout_flat.pdf": {
+      "pack": "in_rental",
+      "topics": {
+        "in_rental.parties_and_property": "ENTAILED",
+        "in_rental.term": "ENTAILED",
+        "in_rental.rent_amount": "ENTAILED",
+        "in_rental.rent_escalation": "ENTAILED",
+        "in_rental.security_deposit": "ENTAILED",
+        "in_rental.deposit_refund_deductions": "ENTAILED",
+        "in_rental.lock_in": "ENTAILED",
+        "in_rental.termination_notice": "ENTAILED",
+        "in_rental.maintenance_repairs": "ENTAILED",
+        "in_rental.society_utilities": "ENTAILED",
+        "in_rental.landlord_entry": "ENTAILED",
+        "in_rental.subletting": "ENTAILED",
+        "in_rental.use_restrictions": "ENTAILED",
+        "in_rental.late_payment_penalty": "SILENT",
+        "in_rental.renewal": "SILENT",
+        "in_rental.stamp_duty_registration": "ENTAILED",
+        "in_rental.painting_cleaning_deductions": "ENTAILED",
+        "in_rental.governing_law": "ENTAILED"
+      }
+    },
+    "in_employment_holdout_offer.pdf": {
+      "pack": "in_employment",
+      "topics": {
+        "in_employment.role_designation": "ENTAILED",
+        "in_employment.ctc_compensation": "ENTAILED",
+        "in_employment.probation": "ENTAILED",
+        "in_employment.notice_period": "ENTAILED",
+        "in_employment.notice_buyout": "ENTAILED",
+        "in_employment.termination_cause": "ENTAILED",
+        "in_employment.service_bond": "ENTAILED",
+        "in_employment.joining_bonus_clawback": "SILENT",
+        "in_employment.non_compete": "SILENT",
+        "in_employment.non_solicit": "SILENT",
+        "in_employment.confidentiality": "ENTAILED",
+        "in_employment.ip_assignment": "ENTAILED",
+        "in_employment.working_hours_overtime": "SILENT",
+        "in_employment.leave": "ENTAILED",
+        "in_employment.transfer_relocation": "SILENT",
+        "in_employment.background_verification": "ENTAILED",
+        "in_employment.garden_leave": "SILENT",
+        "in_employment.governing_law": "ENTAILED"
+      }
+    },
+    "msa_freelance_generic.pdf": {
+      "pack": "msa_generic",
+      "topics": {
+        "msa.scope_deliverables": "ENTAILED",
+        "msa.revisions": "SILENT",
+        "msa.payment_terms": "ENTAILED",
+        "msa.ip_transfer": "SILENT",
+        "msa.confidentiality": "SILENT",
+        "msa.indemnity": "ENTAILED",
+        "msa.liability_cap": "SILENT",
+        "msa.termination_kill_fee": "ENTAILED",
+        "msa.non_solicit": "SILENT",
+        "msa.acceptance": "SILENT",
+        "msa.assignment": "SILENT",
+        "msa.governing_law": "ENTAILED"
+      }
+    },
+    "legal_notice_demand.pdf": {
+      "pack": "notice_generic",
+      "topics": {
+        "notice.sender_recipient": "UNCLEAR",
+        "notice.demand": "ENTAILED",
+        "notice.amount_claimed": "ENTAILED",
+        "notice.response_deadline": "ENTAILED",
+        "notice.referenced_agreement": "UNCLEAR",
+        "notice.stated_legal_basis": "SILENT",
+        "notice.threatened_consequences": "ENTAILED",
+        "notice.how_to_respond": "SILENT",
+        "notice.enclosures": "SILENT",
+        "notice.notice_date": "SILENT"
+      }
+    }
+  }
+}

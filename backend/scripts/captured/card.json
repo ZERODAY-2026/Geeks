@@ -1,0 +1,60 @@
+{
+  "id": "card_in_rental.rent_amount",
+  "topic_id": "in_rental.rent_amount",
+  "title": "Rent or licence fee and due date",
+  "severity": "HIGH",
+  "tier": "STATED",
+  "reading_grade": 3.7,
+  "source": {
+    "page": 1,
+    "char_start": 324,
+    "char_end": 424,
+    "clause_id": "C3",
+    "quote": "The Licensee shall pay a monthly licence fee of Rs. 45,000/- on or before the 5th day of each month.",
+    "match": "EXACT",
+    "score": 100.0
+  },
+  "plain_explanation": {
+    "text": "The agreement says the monthly fee is Rs. 45,000. This payment must be made by the 5th day of every month.",
+    "kind": "STATED",
+    "citations": [
+      {
+        "page": 1,
+        "char_start": 324,
+        "char_end": 424,
+        "clause_id": "C3",
+        "quote": "The Licensee shall pay a monthly licence fee of Rs. 45,000/- on or before the 5th day of each month.",
+        "match": "EXACT",
+        "score": 100.0
+      }
+    ],
+    "distortion": "PASS",
+    "facts": [
+      "INR 45000"
+    ]
+  },
+  "explanation_withheld_reason": null,
+  "stated": [],
+  "interpretations": [
+    {
+      "text": "The agreement states that the monthly licence fee is Rs. 45,000 and it is due on or before the 5th day of each month (C3).",
+      "kind": "INTERPRETATION",
+      "citations": [
+        {
+          "page": 1,
+          "char_start": 324,
+          "char_end": 424,
+          "clause_id": "C3",
+          "quote": "The Licensee shall pay a monthly licence fee of Rs. 45,000/- on or before the 5th day of each month.",
+          "match": "EXACT",
+          "score": 100.0
+        }
+      ],
+      "distortion": "NA",
+      "facts": []
+    }
+  ],
+  "ambiguity_flags": [],
+  "jurisdiction_flags": [],
+  "questions_for_lawyer": []
+}

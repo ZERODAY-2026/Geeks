@@ -174,6 +174,48 @@ class Smoke:
 
         self.check("P1 temp files during upload", temp_files)
 
+    def phase2(self) -> None:
+        """Synthetic fixture only. Runs the real analysis on the running server (uses the live model)."""
+        fixtures = Path(__file__).resolve().parents[1] / "tests" / "fixtures"
+        state: dict = {}
+
+        def analyze() -> str:
+            text = (fixtures / "in_rental_11m_leave_license.txt").read_text(encoding="utf-8")
+            doc = self.c.post(f"{API}/documents/text", json={"text": text, "filename": "lease.txt"}).json()
+            state["doc"] = doc["document_id"]
+            r = self.c.post(f"{API}/documents/{doc['document_id']}/analyze", json={})
+            assert r.status_code == 202, f"status {r.status_code}: {r.text[:200]}"
+            state["job"] = r.json()["job_id"]
+            names: list[str] = []
+            with self.c.stream("GET", f"{API}/jobs/{state['job']}/events", timeout=900) as s:
+                for line in s.iter_lines():
+                    if line.startswith("event:"):
+                        names.append(line.split(":", 1)[1].strip())
+            state["names"] = names
+            assert names[0] == "job.stage" and names[1] == "classification.ready", names[:3]
+            assert names[-1] == "report.ready", f"last event {names[-1:]}; stream ended before the report"
+            assert "job.failed" not in names, "job failed"
+            return f"{names.count('checklist.item')} checklist items, {names.count('card.ready')} cards, in order"
+
+        def report() -> str:
+            rep = self.c.get(f"{API}/documents/{state['doc']}/report").json()
+            assert rep["metrics"]["unverified_displayed"] == 0, "unverified quote displayed"
+            text = "\n\n".join(p["text"] for p in self.c.get(f"{API}/documents/{state['doc']}").json()["pages"])
+            citations = [c for item in rep["checklist"] for c in item["evidence"]]
+            citations += [card["source"] for card in rep["cards"] if card["source"]]
+            for c in citations:
+                assert text[c["char_start"] : c["char_end"]] == c["quote"], "citation is not source text"
+            silent = len(rep["silences"])
+            return f"pack {rep['pack_id']}, {len(rep['checklist'])} topics, {silent} silent, citations verified"
+
+        def packs() -> str:
+            names = {p["pack_id"] for p in self.c.get(f"{API}/packs").json()}
+            assert {"in_rental", "in_employment"} <= names, names
+            return ", ".join(sorted(names))
+
+        for name, fn in [("analyze + SSE order", analyze), ("report + citations", report), ("packs", packs)]:
+            self.check(f"P2 {name}", fn)
+
     def temp_files(self) -> int:
         return int(self.c.get(f"{API}/privacy/status").json()["temp_files_created"])
 

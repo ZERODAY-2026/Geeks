@@ -1,0 +1,139 @@
+# Checklist pack: India residential rental and leave-and-licence agreements (deep).
+# Adding a document type means adding a file like this. Lexicons are the silence double-key: a topic is reported
+# silent only when the model says so AND none of these words appear anywhere in the document.
+pack_id: in_rental
+doc_type: rental
+jurisdiction: IN
+version: "1"
+depth: deep
+topics:
+  - id: in_rental.parties_and_property
+    title: Parties and property
+    query: parties licensor licensee landlord tenant premises address
+    lexicon: [licensor, licensee, landlord, tenant, premises, between]
+    hypothesis: The agreement names the owner and the occupant and describes the property.
+    severity: LOW
+  - id: in_rental.term
+    title: Term and lock-in start
+    query: term duration months commencement lease period licence period
+    lexicon: [months, commencing, commencement, term of, years]
+    hypothesis: The agreement states how long the occupancy lasts and when it starts.
+    severity: MEDIUM
+  - id: in_rental.rent_amount
+    title: Rent or licence fee and due date
+    query: monthly rent licence fee amount due date
+    lexicon: [rent, licence fee, monthly fee, per month]
+    hypothesis: The agreement states the monthly amount and the day it is due.
+    severity: HIGH
+  - id: in_rental.rent_escalation
+    title: Rent increase
+    query: rent increase escalation revision annual increase
+    lexicon: [escalat, increase, revision, hike, enhance]
+    hypothesis: The agreement says whether and how the monthly amount can rise.
+    severity: MEDIUM
+    silence_note: Not found. Rent increases are often agreed in advance, so ask before you sign.
+  - id: in_rental.security_deposit
+    title: Security deposit amount
+    query: security deposit amount refundable interest
+    lexicon: [deposit, security amount, advance, caution money]
+    hypothesis: The agreement states the security deposit amount and whether it is refundable.
+    severity: HIGH
+    silence_note: Deposit terms not found.
+    escalation_ref: rent_tenancy
+  - id: in_rental.deposit_refund_deductions
+    title: Deposit refund timeline and deductions
+    query: deposit refunded within days after vacating deductions
+    lexicon: [refund, refunded, refundable, vacat, deduct]
+    hypothesis: The agreement says when the deposit is refunded and what can be deducted from it.
+    severity: HIGH
+    silence_note: No refund timeline found. Ask for one in writing.
+    escalation_ref: rent_tenancy
+  - id: in_rental.lock_in
+    title: Lock-in period
+    query: lock-in period no termination during first months
+    lexicon: [lock-in, lock in, lockin, first months, minimum period]
+    hypothesis: The agreement says whether either party can leave early during an initial period.
+    severity: MEDIUM
+    severity_rules:
+      - when: {fact_unit: months, gt: 6}
+        then: {severity: HIGH, note: Longer than the six months often seen. Ask why the lock-in is this long.}
+    silence_note: No lock-in period found.
+    escalation_ref: rent_tenancy
+  - id: in_rental.termination_notice
+    title: Notice to end the agreement
+    query: termination notice period written notice to end agreement
+    lexicon: [terminat, notice, end this agreement, vacate]
+    hypothesis: The agreement states how much written notice each party must give to end it.
+    severity: HIGH
+    silence_note: No notice period found.
+    escalation_ref: rent_tenancy
+  - id: in_rental.maintenance_repairs
+    title: Maintenance and repairs
+    query: maintenance repairs responsibility structural minor
+    lexicon: [repair, maintenance, structural]
+    hypothesis: The agreement says who pays for minor and structural repairs.
+    severity: MEDIUM
+    silence_note: Not found. Who pays for repairs is often unclear, so ask before moving in.
+    escalation_ref: rent_tenancy
+  - id: in_rental.society_utilities
+    title: Society charges and utilities
+    query: society maintenance charges electricity water utilities
+    lexicon: [society, electricity, utilit, maintenance charges, broadband]
+    hypothesis: The agreement says who pays society charges and utility bills.
+    severity: LOW
+    silence_note: Not found. Ask who pays society charges and utility bills.
+  - id: in_rental.landlord_entry
+    title: Landlord entry and inspection
+    query: landlord inspection entry premises reasonable notice
+    lexicon: [inspect, inspection, entry, enter the premises]
+    hypothesis: The agreement says when the owner may enter or inspect the property.
+    severity: MEDIUM
+  - id: in_rental.subletting
+    title: Subletting and occupants
+    query: subletting sub-let assign occupants guests
+    lexicon: [sublet, sub-let, occupants, assign]
+    hypothesis: The agreement says whether the occupant may sublet or share the property.
+    severity: MEDIUM
+  - id: in_rental.use_restrictions
+    title: Use of the property
+    query: use of premises residential commercial purpose business
+    lexicon: [residential, commercial, business, purpose, use of the premises]
+    hypothesis: The agreement says how the property may and may not be used.
+    severity: LOW
+    silence_note: Not found. Ask whether business use or pets are allowed.
+  - id: in_rental.late_payment_penalty
+    title: Late payment penalty
+    query: late payment penalty interest delay rent
+    lexicon: [late, penalt, delay, default interest]
+    hypothesis: The agreement says whether a late payment costs extra.
+    severity: MEDIUM
+    silence_note: Not found. Ask whether a late payment carries a charge.
+  - id: in_rental.renewal
+    title: Renewal and expiry
+    query: renewal extension expiry new agreement
+    lexicon: [renew, renewal, extend, extension, expir]
+    hypothesis: The agreement says what happens when the term ends.
+    severity: MEDIUM
+    silence_note: Not found. Ask what happens at the end of the term.
+  - id: in_rental.stamp_duty_registration
+    title: Stamp duty and registration
+    query: stamp duty registration registered agreement
+    lexicon: [stamp, registration, registered, registrar]
+    hypothesis: The agreement says whether it is stamped or registered.
+    severity: MEDIUM
+    silence_note: Not found. Stamp duty and registration rules vary by state.
+    jurisdiction_sensitive: true
+  - id: in_rental.painting_cleaning_deductions
+    title: Painting and cleaning deductions
+    query: painting cleaning charges deduction damage
+    lexicon: [painting, paint, cleaning, damage, deduction]
+    hypothesis: The agreement says which charges, such as painting, can be deducted at exit.
+    severity: MEDIUM
+    escalation_ref: rent_tenancy
+  - id: in_rental.governing_law
+    title: Governing law and disputes
+    query: governing law jurisdiction courts disputes
+    lexicon: [governed by, governing law, jurisdiction, courts, arbitration]
+    hypothesis: The agreement says which law applies and which courts hear disputes.
+    severity: MEDIUM
+    jurisdiction_sensitive: true

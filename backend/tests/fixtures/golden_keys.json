@@ -1,0 +1,74 @@
+{
+  "_note": "Written from the fixture text before any model run. SILENT = the document does not address the topic; the model may answer NOT_MENTIONED or UNCLEAR, never ENTAILED. Synthetic documents only.",
+  "documents": {
+    "in_rental_11m_leave_license.txt": {
+      "pack": "in_rental",
+      "topics": {
+        "in_rental.parties_and_property": "ENTAILED",
+        "in_rental.term": "ENTAILED",
+        "in_rental.rent_amount": "ENTAILED",
+        "in_rental.rent_escalation": "SILENT",
+        "in_rental.security_deposit": "ENTAILED",
+        "in_rental.deposit_refund_deductions": "ENTAILED",
+        "in_rental.lock_in": "ENTAILED",
+        "in_rental.termination_notice": "ENTAILED",
+        "in_rental.maintenance_repairs": "ENTAILED",
+        "in_rental.society_utilities": "SILENT",
+        "in_rental.landlord_entry": "ENTAILED",
+        "in_rental.subletting": "ENTAILED",
+        "in_rental.use_restrictions": "SILENT",
+        "in_rental.late_payment_penalty": "SILENT",
+        "in_rental.renewal": "SILENT",
+        "in_rental.stamp_duty_registration": "SILENT",
+        "in_rental.painting_cleaning_deductions": "ENTAILED",
+        "in_rental.governing_law": "ENTAILED"
+      }
+    },
+    "in_rental_missing_clauses.pdf": {
+      "pack": "in_rental",
+      "topics": {
+        "in_rental.parties_and_property": "ENTAILED",
+        "in_rental.term": "ENTAILED",
+        "in_rental.rent_amount": "ENTAILED",
+        "in_rental.rent_escalation": "SILENT",
+        "in_rental.security_deposit": "ENTAILED",
+        "in_rental.deposit_refund_deductions": "SILENT",
+        "in_rental.lock_in": "SILENT",
+        "in_rental.termination_notice": "UNCLEAR",
+        "in_rental.maintenance_repairs": "SILENT",
+        "in_rental.society_utilities": "SILENT",
+        "in_rental.landlord_entry": "SILENT",
+        "in_rental.subletting": "SILENT",
+        "in_rental.use_restrictions": "SILENT",
+        "in_rental.late_payment_penalty": "SILENT",
+        "in_rental.renewal": "SILENT",
+        "in_rental.stamp_duty_registration": "SILENT",
+        "in_rental.painting_cleaning_deductions": "SILENT",
+        "in_rental.governing_law": "ENTAILED"
+      }
+    },
+    "in_offer_letter_bond.pdf": {
+      "pack": "in_employment",
+      "topics": {
+        "in_employment.role_designation": "ENTAILED",
+        "in_employment.ctc_compensation": "UNCLEAR",
+        "in_employment.probation": "ENTAILED",
+        "in_employment.notice_period": "ENTAILED",
+        "in_employment.notice_buyout": "ENTAILED",
+        "in_employment.termination_cause": "SILENT",
+        "in_employment.service_bond": "ENTAILED",
+        "in_employment.joining_bonus_clawback": "SILENT",
+        "in_employment.non_compete": "ENTAILED",
+        "in_employment.non_solicit": "SILENT",
+        "in_employment.confidentiality": "SILENT",
+        "in_employment.ip_assignment": "SILENT",
+        "in_employment.working_hours_overtime": "SILENT",
+        "in_employment.leave": "SILENT",
+        "in_employment.transfer_relocation": "SILENT",
+        "in_employment.background_verification": "SILENT",
+        "in_employment.garden_leave": "SILENT",
+        "in_employment.governing_law": "ENTAILED"
+      }
+    }
+  }
+}

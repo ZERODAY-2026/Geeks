@@ -1,0 +1,25 @@
+# Escalation routes: who can help, and why. These are routes, never conclusions about the document.
+rent_tenancy:
+  who: A tenancy lawyer, or the rent authority in your area
+  why: Questions about deposits, notice periods, repairs or ending the tenancy are best settled with someone who knows local rent law.
+  free_help: District Legal Services Authority (DLSA), free legal aid
+  urgency: normal
+  jurisdiction_note: Rent laws differ by state. Name the state when you ask.
+employment:
+  who: An employment lawyer, or the labour department in your state
+  why: Questions about bonds, notice periods, non-compete and pay are best checked against labour law.
+  free_help: District Legal Services Authority (DLSA), free legal aid
+  urgency: normal
+  jurisdiction_note: Labour rules differ by state. Name the state and the employer's location when you ask.
+legal_notice:
+  who: A lawyer, urgently if a response deadline is close
+  why: This notice sets a response time and threatens action. A lawyer can tell you what it means for you.
+  free_help: District Legal Services Authority (DLSA), free legal aid
+  urgency: urgent
+  jurisdiction_note: Do not ignore a deadline while you look for help.
+msa:
+  who: A commercial lawyer
+  why: Payment, liability, ownership of work and termination terms can carry large financial risk.
+  free_help: null
+  urgency: normal
+  jurisdiction_note: null

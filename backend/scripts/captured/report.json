@@ -1,0 +1,1213 @@
+{
+  "document_id": "doc_example",
+  "pack_id": "in_rental",
+  "classification": {
+    "doc_type": "rental",
+    "confidence": 1.0,
+    "party_roles": {
+      "Mr. A. Sharma": "landlord",
+      "Ms. B. Rao": "tenant"
+    },
+    "evidence": []
+  },
+  "jurisdiction": {
+    "country": "IN",
+    "state": null,
+    "confidence": 0.9,
+    "evidence": [
+      {
+        "page": 1,
+        "char_start": 1254,
+        "char_end": 1283,
+        "clause_id": "C9",
+        "quote": "governed by the laws of India",
+        "match": "EXACT",
+        "score": 100.0
+      }
+    ],
+    "overridden_by_user": false
+  },
+  "user_role": "unknown",
+  "cards": [
+    {
+      "id": "card_in_rental.rent_amount",
+      "topic_id": "in_rental.rent_amount",
+      "title": "Rent or licence fee and due date",
+      "severity": "HIGH",
+      "tier": "STATED",
+      "reading_grade": 3.7,
+      "source": {
+        "page": 1,
+        "char_start": 324,
+        "char_end": 424,
+        "clause_id": "C3",
+        "quote": "The Licensee shall pay a monthly licence fee of Rs. 45,000/- on or before the 5th day of each month.",
+        "match": "EXACT",
+        "score": 100.0
+      },
+      "plain_explanation": {
+        "text": "The agreement says the monthly fee is Rs. 45,000. This payment must be made by the 5th day of every month.",
+        "kind": "STATED",
+        "citations": [
+          {
+            "page": 1,
+            "char_start": 324,
+            "char_end": 424,
+            "clause_id": "C3",
+            "quote": "The Licensee shall pay a monthly licence fee of Rs. 45,000/- on or before the 5th day of each month.",
+            "match": "EXACT",
+            "score": 100.0
+          }
+        ],
+        "distortion": "PASS",
+        "facts": [
+          "INR 45000"
+        ]
+      },
+      "explanation_withheld_reason": null,
+      "stated": [],
+      "interpretations": [
+        {
+          "text": "The agreement states that the monthly licence fee is Rs. 45,000 and it is due on or before the 5th day of each month (C3).",
+          "kind": "INTERPRETATION",
+          "citations": [
+            {
+              "page": 1,
+              "char_start": 324,
+              "char_end": 424,
+              "clause_id": "C3",
+              "quote": "The Licensee shall pay a monthly licence fee of Rs. 45,000/- on or before the 5th day of each month.",
+              "match": "EXACT",
+              "score": 100.0
+            }
+          ],
+          "distortion": "NA",
+          "facts": []
+        }
+      ],
+      "ambiguity_flags": [],
+      "jurisdiction_flags": [],
+      "questions_for_lawyer": []
+    },
+    {
+      "id": "card_in_rental.security_deposit",
+      "topic_id": "in_rental.security_deposit",
+      "title": "Security deposit amount",
+      "severity": "HIGH",
+      "tier": "STATED",
+      "reading_grade": 9.2,
+      "source": {
+        "page": 1,
+        "char_start": 446,
+        "char_end": 622,
+        "clause_id": "C4",
+        "quote": "The Licensee shall pay to the Licensor an interest-free refundable security deposit of Rs. 1,50,000/- (Rupees One Lakh Fifty Thousand only) on or before the date of possession.",
+        "match": "EXACT",
+        "score": 100.0
+      },
+      "plain_explanation": {
+        "text": "The agreement says the security deposit is Rs. 1,50,000. It also says this deposit can be returned to the Licensee after they move out, minus any fees or damages.",
+        "kind": "STATED",
+        "citations": [
+          {
+            "page": 1,
+            "char_start": 446,
+            "char_end": 622,
+            "clause_id": "C4",
+            "quote": "The Licensee shall pay to the Licensor an interest-free refundable security deposit of Rs. 1,50,000/- (Rupees One Lakh Fifty Thousand only) on or before the date of possession.",
+            "match": "EXACT",
+            "score": 100.0
+          },
+          {
+            "page": 1,
+            "char_start": 623,
+            "char_end": 801,
+            "clause_id": "C4",
+            "quote": "The deposit shall be refunded within thirty (30) days of the Licensee vacating the Premises, after deducting any amounts towards unpaid licence fee, damages and painting charges.",
+            "match": "EXACT",
+            "score": 100.0
+          }
+        ],
+        "distortion": "PASS",
+        "facts": [
+          "INR 150000"
+        ]
+      },
+      "explanation_withheld_reason": null,
+      "stated": [],
+      "interpretations": [
+        {
+          "text": "The agreement states the security deposit amount and whether it is refundable.",
+          "kind": "INTERPRETATION",
+          "citations": [
+            {
+              "page": 1,
+              "char_start": 446,
+              "char_end": 622,
+              "clause_id": "C4",
+              "quote": "The Licensee shall pay to the Licensor an interest-free refundable security deposit of Rs. 1,50,000/- (Rupees One Lakh Fifty Thousand only) on or before the date of possession.",
+              "match": "EXACT",
+              "score": 100.0
+            },
+            {
+              "page": 1,
+              "char_start": 623,
+              "char_end": 801,
+              "clause_id": "C4",
+              "quote": "The deposit shall be refunded within thirty (30) days of the Licensee vacating the Premises, after deducting any amounts towards unpaid licence fee, damages and painting charges.",
+              "match": "EXACT",
+              "score": 100.0
+            }
+          ],
+          "distortion": "NA",
+          "facts": []
+        }
+      ],
+      "ambiguity_flags": [],
+      "jurisdiction_flags": [],
+      "questions_for_lawyer": []
+    },
+    {
+      "id": "card_in_rental.deposit_refund_deductions",
+      "topic_id": "in_rental.deposit_refund_deductions",
+      "title": "Deposit refund timeline and deductions",
+      "severity": "HIGH",
+      "tier": "STATED",
+      "reading_grade": 7.6,
+      "source": {
+        "page": 1,
+        "char_start": 623,
+        "char_end": 801,
+        "clause_id": "C4",
+        "quote": "The deposit shall be refunded within thirty (30) days of the Licensee vacating the Premises, after deducting any amounts towards unpaid licence fee, damages and painting charges.",
+        "match": "EXACT",
+        "score": 100.0
+      },
+      "plain_explanation": {
+        "text": "The deposit will be returned within 30 days after the Licensee moves out. The Licensor can take money out for unpaid fees, damages, or painting costs.",
+        "kind": "STATED",
+        "citations": [
+          {
+            "page": 1,
+            "char_start": 623,
+            "char_end": 801,
+            "clause_id": "C4",
+            "quote": "The deposit shall be refunded within thirty (30) days of the Licensee vacating the Premises, after deducting any amounts towards unpaid licence fee, damages and painting charges.",
+            "match": "EXACT",
+            "score": 100.0
+          }
+        ],
+        "distortion": "PASS",
+        "facts": [
+          "days 30"
+        ]
+      },
+      "explanation_withheld_reason": null,
+      "stated": [],
+      "interpretations": [
+        {
+          "text": "The agreement states that the security deposit must be returned within thirty (30) days after the Licensee vacates the Premises, after deducting any amounts towards unpaid licence fee, damages and painting charges (C4).",
+          "kind": "INTERPRETATION",
+          "citations": [
+            {
+              "page": 1,
+              "char_start": 623,
+              "char_end": 801,
+              "clause_id": "C4",
+              "quote": "The deposit shall be refunded within thirty (30) days of the Licensee vacating the Premises, after deducting any amounts towards unpaid licence fee, damages and painting charges.",
+              "match": "EXACT",
+              "score": 100.0
+            }
+          ],
+          "distortion": "NA",
+          "facts": []
+        }
+      ],
+      "ambiguity_flags": [],
+      "jurisdiction_flags": [],
+      "questions_for_lawyer": []
+    },
+    {
+      "id": "card_in_rental.termination_notice",
+      "topic_id": "in_rental.termination_notice",
+      "title": "Notice to end the agreement",
+      "severity": "HIGH",
+      "tier": "STATED",
+      "reading_grade": 9.3,
+      "source": {
+        "page": 1,
+        "char_start": 1364,
+        "char_end": 1472,
+        "clause_id": "C10",
+        "quote": "Either party may terminate this Agreement by giving two (2) months' written notice after the lock-in period.",
+        "match": "EXACT",
+        "score": 100.0
+      },
+      "plain_explanation": {
+        "text": "Both sides can end this agreement by giving two months of written notice after the initial lock-in time is over.",
+        "kind": "STATED",
+        "citations": [
+          {
+            "page": 1,
+            "char_start": 1364,
+            "char_end": 1472,
+            "clause_id": "C10",
+            "quote": "Either party may terminate this Agreement by giving two (2) months' written notice after the lock-in period.",
+            "match": "EXACT",
+            "score": 100.0
+          }
+        ],
+        "distortion": "PASS",
+        "facts": [
+          "months 2"
+        ]
+      },
+      "explanation_withheld_reason": null,
+      "stated": [],
+      "interpretations": [
+        {
+          "text": "The agreement specifies that either party must give two months of written notice to end the agreement after the lock-in period has passed.",
+          "kind": "INTERPRETATION",
+          "citations": [
+            {
+              "page": 1,
+              "char_start": 1364,
+              "char_end": 1472,
+              "clause_id": "C10",
+              "quote": "Either party may terminate this Agreement by giving two (2) months' written notice after the lock-in period.",
+              "match": "EXACT",
+              "score": 100.0
+            }
+          ],
+          "distortion": "NA",
+          "facts": []
+        }
+      ],
+      "ambiguity_flags": [],
+      "jurisdiction_flags": [],
+      "questions_for_lawyer": []
+    },
+    {
+      "id": "card_in_rental.term",
+      "topic_id": "in_rental.term",
+      "title": "Term and lock-in start",
+      "severity": "MEDIUM",
+      "tier": "STATED",
+      "reading_grade": 6.9,
+      "source": {
+        "page": 1,
+        "char_start": 242,
+        "char_end": 307,
+        "clause_id": "C2",
+        "quote": "The licence is for eleven (11) months commencing on 1 March 2026.",
+        "match": "EXACT",
+        "score": 100.0
+      },
+      "plain_explanation": {
+        "text": "The agreement says the rental period is for eleven months and it starts on March 1, 2026. Also, neither side can end the agreement during the first six months from the start date.",
+        "kind": "STATED",
+        "citations": [
+          {
+            "page": 1,
+            "char_start": 242,
+            "char_end": 307,
+            "clause_id": "C2",
+            "quote": "The licence is for eleven (11) months commencing on 1 March 2026.",
+            "match": "EXACT",
+            "score": 100.0
+          },
+          {
+            "page": 1,
+            "char_start": 814,
+            "char_end": 948,
+            "clause_id": "C5",
+            "quote": "Neither party shall terminate this Agreement during the first six (6) months from the Commencement Date, save as provided in Clause 9.",
+            "match": "EXACT",
+            "score": 100.0
+          }
+        ],
+        "distortion": "PASS",
+        "facts": [
+          "date 2026-03-01",
+          "months 11",
+          "months 6"
+        ]
+      },
+      "explanation_withheld_reason": null,
+      "stated": [],
+      "interpretations": [
+        {
+          "text": "The agreement states the rental period is for eleven months and it starts on March 1, 2026. The agreement also states that neither party can end the agreement during the first six months from the start date, unless Clause 9 allows it.",
+          "kind": "INTERPRETATION",
+          "citations": [
+            {
+              "page": 1,
+              "char_start": 242,
+              "char_end": 307,
+              "clause_id": "C2",
+              "quote": "The licence is for eleven (11) months commencing on 1 March 2026.",
+              "match": "EXACT",
+              "score": 100.0
+            },
+            {
+              "page": 1,
+              "char_start": 814,
+              "char_end": 948,
+              "clause_id": "C5",
+              "quote": "Neither party shall terminate this Agreement during the first six (6) months from the Commencement Date, save as provided in Clause 9.",
+              "match": "EXACT",
+              "score": 100.0
+            }
+          ],
+          "distortion": "NA",
+          "facts": []
+        }
+      ],
+      "ambiguity_flags": [],
+      "jurisdiction_flags": [],
+      "questions_for_lawyer": []
+    },
+    {
+      "id": "card_in_rental.lock_in",
+      "topic_id": "in_rental.lock_in",
+      "title": "Lock-in period",
+      "severity": "MEDIUM",
+      "tier": "STATED",
+      "reading_grade": 8.1,
+      "source": {
+        "page": 1,
+        "char_start": 814,
+        "char_end": 948,
+        "clause_id": "C5",
+        "quote": "Neither party shall terminate this Agreement during the first six (6) months from the Commencement Date, save as provided in Clause 9.",
+        "match": "EXACT",
+        "score": 100.0
+      },
+      "plain_explanation": {
+        "text": "Neither side can end this agreement during the first six months from when it starts, unless Clause 9 says otherwise.",
+        "kind": "STATED",
+        "citations": [
+          {
+            "page": 1,
+            "char_start": 814,
+            "char_end": 948,
+            "clause_id": "C5",
+            "quote": "Neither party shall terminate this Agreement during the first six (6) months from the Commencement Date, save as provided in Clause 9.",
+            "match": "EXACT",
+            "score": 100.0
+          }
+        ],
+        "distortion": "PASS",
+        "facts": [
+          "months 6"
+        ]
+      },
+      "explanation_withheld_reason": null,
+      "stated": [],
+      "interpretations": [
+        {
+          "text": "The agreement states that neither party can end the agreement during the first six months from the start date, except as allowed by Clause 9.",
+          "kind": "INTERPRETATION",
+          "citations": [
+            {
+              "page": 1,
+              "char_start": 814,
+              "char_end": 948,
+              "clause_id": "C5",
+              "quote": "Neither party shall terminate this Agreement during the first six (6) months from the Commencement Date, save as provided in Clause 9.",
+              "match": "EXACT",
+              "score": 100.0
+            }
+          ],
+          "distortion": "NA",
+          "facts": []
+        }
+      ],
+      "ambiguity_flags": [],
+      "jurisdiction_flags": [],
+      "questions_for_lawyer": []
+    },
+    {
+      "id": "card_in_rental.maintenance_repairs",
+      "topic_id": "in_rental.maintenance_repairs",
+      "title": "Maintenance and repairs",
+      "severity": "MEDIUM",
+      "tier": "STATED",
+      "reading_grade": 5.4,
+      "source": {
+        "page": 1,
+        "char_start": 965,
+        "char_end": 1003,
+        "clause_id": "C6",
+        "quote": "The Licensee shall bear minor repairs.",
+        "match": "EXACT",
+        "score": 100.0
+      },
+      "plain_explanation": {
+        "text": "The agreement says the person renting the space must pay for small fixes. The owner must pay for big structural repairs.",
+        "kind": "STATED",
+        "citations": [
+          {
+            "page": 1,
+            "char_start": 965,
+            "char_end": 1003,
+            "clause_id": "C6",
+            "quote": "The Licensee shall bear minor repairs.",
+            "match": "EXACT",
+            "score": 100.0
+          },
+          {
+            "page": 1,
+            "char_start": 1004,
+            "char_end": 1067,
+            "clause_id": "C6",
+            "quote": "Structural repairs shall be the responsibility of the Licensor.",
+            "match": "EXACT",
+            "score": 100.0
+          }
+        ],
+        "distortion": "PASS",
+        "facts": []
+      },
+      "explanation_withheld_reason": null,
+      "stated": [],
+      "interpretations": [
+        {
+          "text": "The Licensee is responsible for minor repairs.",
+          "kind": "INTERPRETATION",
+          "citations": [
+            {
+              "page": 1,
+              "char_start": 965,
+              "char_end": 1003,
+              "clause_id": "C6",
+              "quote": "The Licensee shall bear minor repairs.",
+              "match": "EXACT",
+              "score": 100.0
+            },
+            {
+              "page": 1,
+              "char_start": 1004,
+              "char_end": 1067,
+              "clause_id": "C6",
+              "quote": "Structural repairs shall be the responsibility of the Licensor.",
+              "match": "EXACT",
+              "score": 100.0
+            }
+          ],
+          "distortion": "NA",
+          "facts": []
+        },
+        {
+          "text": "The Licensor is responsible for structural repairs.",
+          "kind": "INTERPRETATION",
+          "citations": [
+            {
+              "page": 1,
+              "char_start": 965,
+              "char_end": 1003,
+              "clause_id": "C6",
+              "quote": "The Licensee shall bear minor repairs.",
+              "match": "EXACT",
+              "score": 100.0
+            },
+            {
+              "page": 1,
+              "char_start": 1004,
+              "char_end": 1067,
+              "clause_id": "C6",
+              "quote": "Structural repairs shall be the responsibility of the Licensor.",
+              "match": "EXACT",
+              "score": 100.0
+            }
+          ],
+          "distortion": "NA",
+          "facts": []
+        }
+      ],
+      "ambiguity_flags": [],
+      "jurisdiction_flags": [],
+      "questions_for_lawyer": []
+    },
+    {
+      "id": "card_in_rental.landlord_entry",
+      "topic_id": "in_rental.landlord_entry",
+      "title": "Landlord entry and inspection",
+      "severity": "MEDIUM",
+      "tier": "STATED",
+      "reading_grade": 7.6,
+      "source": {
+        "page": 1,
+        "char_start": 1093,
+        "char_end": 1152,
+        "clause_id": "C7",
+        "quote": "The Licensor may inspect the Premises on reasonable notice.",
+        "match": "EXACT",
+        "score": 100.0
+      },
+      "plain_explanation": {
+        "text": "The agreement says the owner can look at the property if they give enough warning.",
+        "kind": "STATED",
+        "citations": [
+          {
+            "page": 1,
+            "char_start": 1093,
+            "char_end": 1152,
+            "clause_id": "C7",
+            "quote": "The Licensor may inspect the Premises on reasonable notice.",
+            "match": "EXACT",
+            "score": 100.0
+          }
+        ],
+        "distortion": "PASS",
+        "facts": []
+      },
+      "explanation_withheld_reason": null,
+      "stated": [],
+      "interpretations": [
+        {
+          "text": "The Licensor may inspect the Premises on reasonable notice.",
+          "kind": "INTERPRETATION",
+          "citations": [
+            {
+              "page": 1,
+              "char_start": 1093,
+              "char_end": 1152,
+              "clause_id": "C7",
+              "quote": "The Licensor may inspect the Premises on reasonable notice.",
+              "match": "EXACT",
+              "score": 100.0
+            }
+          ],
+          "distortion": "NA",
+          "facts": []
+        }
+      ],
+      "ambiguity_flags": [],
+      "jurisdiction_flags": [],
+      "questions_for_lawyer": []
+    },
+    {
+      "id": "card_in_rental.subletting",
+      "topic_id": "in_rental.subletting",
+      "title": "Subletting and occupants",
+      "severity": "MEDIUM",
+      "tier": "STATED",
+      "reading_grade": 8.4,
+      "source": {
+        "page": 1,
+        "char_start": 1153,
+        "char_end": 1211,
+        "clause_id": "C8",
+        "quote": "7. SUBLETTING. The Licensee shall not sublet the Premises.",
+        "match": "EXACT",
+        "score": 100.0
+      },
+      "plain_explanation": {
+        "text": "The agreement says that the person renting the property cannot rent it out to someone else.",
+        "kind": "STATED",
+        "citations": [
+          {
+            "page": 1,
+            "char_start": 1153,
+            "char_end": 1211,
+            "clause_id": "C8",
+            "quote": "7. SUBLETTING. The Licensee shall not sublet the Premises.",
+            "match": "EXACT",
+            "score": 100.0
+          }
+        ],
+        "distortion": "PASS",
+        "facts": []
+      },
+      "explanation_withheld_reason": null,
+      "stated": [],
+      "interpretations": [
+        {
+          "text": "The agreement states that the Licensee is not allowed to sublet the Premises.",
+          "kind": "INTERPRETATION",
+          "citations": [
+            {
+              "page": 1,
+              "char_start": 1153,
+              "char_end": 1211,
+              "clause_id": "C8",
+              "quote": "7. SUBLETTING. The Licensee shall not sublet the Premises.",
+              "match": "EXACT",
+              "score": 100.0
+            }
+          ],
+          "distortion": "NA",
+          "facts": []
+        }
+      ],
+      "ambiguity_flags": [],
+      "jurisdiction_flags": [],
+      "questions_for_lawyer": []
+    },
+    {
+      "id": "card_in_rental.renewal",
+      "topic_id": "in_rental.renewal",
+      "title": "Renewal and expiry",
+      "severity": "MEDIUM",
+      "tier": "ASK_A_LAWYER",
+      "reading_grade": 7.6,
+      "source": {
+        "page": 1,
+        "char_start": 242,
+        "char_end": 307,
+        "clause_id": "C2",
+        "quote": "The licence is for eleven (11) months commencing on 1 March 2026.",
+        "match": "EXACT",
+        "score": 100.0
+      },
+      "plain_explanation": {
+        "text": "The agreement says the license lasts for eleven months starting March 1, 2026. It also says either side can end the agreement with two months' written notice after a certain time.",
+        "kind": "INTERPRETATION",
+        "citations": [
+          {
+            "page": 1,
+            "char_start": 242,
+            "char_end": 307,
+            "clause_id": "C2",
+            "quote": "The licence is for eleven (11) months commencing on 1 March 2026.",
+            "match": "EXACT",
+            "score": 100.0
+          },
+          {
+            "page": 1,
+            "char_start": 1364,
+            "char_end": 1472,
+            "clause_id": "C10",
+            "quote": "Either party may terminate this Agreement by giving two (2) months' written notice after the lock-in period.",
+            "match": "EXACT",
+            "score": 100.0
+          }
+        ],
+        "distortion": "PASS",
+        "facts": [
+          "date 2026-03-01",
+          "months 11",
+          "months 2"
+        ]
+      },
+      "explanation_withheld_reason": null,
+      "stated": [],
+      "interpretations": [],
+      "ambiguity_flags": [],
+      "jurisdiction_flags": [],
+      "questions_for_lawyer": []
+    },
+    {
+      "id": "card_in_rental.painting_cleaning_deductions",
+      "topic_id": "in_rental.painting_cleaning_deductions",
+      "title": "Painting and cleaning deductions",
+      "severity": "MEDIUM",
+      "tier": "STATED",
+      "reading_grade": 10.5,
+      "source": {
+        "page": 1,
+        "char_start": 623,
+        "char_end": 801,
+        "clause_id": "C4",
+        "quote": "The deposit shall be refunded within thirty (30) days of the Licensee vacating the Premises, after deducting any amounts towards unpaid licence fee, damages and painting charges.",
+        "match": "EXACT",
+        "score": 100.0
+      },
+      "plain_explanation": {
+        "text": "The agreement says that painting charges can be taken out of the security deposit when the tenant moves out.",
+        "kind": "STATED",
+        "citations": [
+          {
+            "page": 1,
+            "char_start": 623,
+            "char_end": 801,
+            "clause_id": "C4",
+            "quote": "The deposit shall be refunded within thirty (30) days of the Licensee vacating the Premises, after deducting any amounts towards unpaid licence fee, damages and painting charges.",
+            "match": "EXACT",
+            "score": 100.0
+          }
+        ],
+        "distortion": "PASS",
+        "facts": []
+      },
+      "explanation_withheld_reason": null,
+      "stated": [],
+      "interpretations": [
+        {
+          "text": "The agreement states that when the Licensee moves out, the security deposit may have painting charges deducted from it.",
+          "kind": "INTERPRETATION",
+          "citations": [
+            {
+              "page": 1,
+              "char_start": 623,
+              "char_end": 801,
+              "clause_id": "C4",
+              "quote": "The deposit shall be refunded within thirty (30) days of the Licensee vacating the Premises, after deducting any amounts towards unpaid licence fee, damages and painting charges.",
+              "match": "EXACT",
+              "score": 100.0
+            }
+          ],
+          "distortion": "NA",
+          "facts": []
+        }
+      ],
+      "ambiguity_flags": [],
+      "jurisdiction_flags": [],
+      "questions_for_lawyer": []
+    },
+    {
+      "id": "card_in_rental.governing_law",
+      "topic_id": "in_rental.governing_law",
+      "title": "Governing law and disputes",
+      "severity": "MEDIUM",
+      "tier": "STATED",
+      "reading_grade": 7.9,
+      "source": {
+        "page": 1,
+        "char_start": 1230,
+        "char_end": 1347,
+        "clause_id": "C9",
+        "quote": "This Agreement shall be governed by the laws of India, and the courts at Bengaluru shall have exclusive jurisdiction.",
+        "match": "EXACT",
+        "score": 100.0
+      },
+      "plain_explanation": {
+        "text": "The agreement states that the laws of India will control this contract. Also, any disagreements must be handled by the courts in Bengaluru.",
+        "kind": "STATED",
+        "citations": [
+          {
+            "page": 1,
+            "char_start": 1230,
+            "char_end": 1347,
+            "clause_id": "C9",
+            "quote": "This Agreement shall be governed by the laws of India, and the courts at Bengaluru shall have exclusive jurisdiction.",
+            "match": "EXACT",
+            "score": 100.0
+          }
+        ],
+        "distortion": "PASS",
+        "facts": []
+      },
+      "explanation_withheld_reason": null,
+      "stated": [],
+      "interpretations": [
+        {
+          "text": "The agreement specifies that the laws of India apply to this contract. Furthermore, the courts in Bengaluru have the sole authority to hear any disputes.",
+          "kind": "INTERPRETATION",
+          "citations": [
+            {
+              "page": 1,
+              "char_start": 1230,
+              "char_end": 1347,
+              "clause_id": "C9",
+              "quote": "This Agreement shall be governed by the laws of India, and the courts at Bengaluru shall have exclusive jurisdiction.",
+              "match": "EXACT",
+              "score": 100.0
+            }
+          ],
+          "distortion": "NA",
+          "facts": []
+        }
+      ],
+      "ambiguity_flags": [],
+      "jurisdiction_flags": [
+        "Rules differ by state or country and are checked against local law. Check with a professional."
+      ],
+      "questions_for_lawyer": []
+    },
+    {
+      "id": "card_in_rental.parties_and_property",
+      "topic_id": "in_rental.parties_and_property",
+      "title": "Parties and property",
+      "severity": "LOW",
+      "tier": "ASK_A_LAWYER",
+      "reading_grade": 5.4,
+      "source": {
+        "page": 1,
+        "char_start": 55,
+        "char_end": 231,
+        "clause_id": "C1",
+        "quote": "This Agreement is made on 1 March 2026 between Mr. A. Sharma, the Licensor, and Ms. B. Rao, the Licensee, for the premises at 12 MG Road, Bengaluru, Karnataka (the \"Premises\").",
+        "match": "EXACT",
+        "score": 100.0
+      },
+      "plain_explanation": {
+        "text": "The document names Mr. A. Sharma as the Licensor and Ms. B. Rao as the Licensee. It also names the property at 12 MG Road, Bengaluru, Karnataka.",
+        "kind": "INTERPRETATION",
+        "citations": [
+          {
+            "page": 1,
+            "char_start": 55,
+            "char_end": 231,
+            "clause_id": "C1",
+            "quote": "This Agreement is made on 1 March 2026 between Mr. A. Sharma, the Licensor, and Ms. B. Rao, the Licensee, for the premises at 12 MG Road, Bengaluru, Karnataka (the \"Premises\").",
+            "match": "EXACT",
+            "score": 100.0
+          }
+        ],
+        "distortion": "PASS",
+        "facts": []
+      },
+      "explanation_withheld_reason": null,
+      "stated": [],
+      "interpretations": [],
+      "ambiguity_flags": [],
+      "jurisdiction_flags": [],
+      "questions_for_lawyer": []
+    }
+  ],
+  "checklist": [
+    {
+      "topic_id": "in_rental.rent_amount",
+      "title": "Rent or licence fee and due date",
+      "hypothesis": "The agreement states the monthly amount and the day it is due.",
+      "status": "ENTAILED",
+      "evidence": [
+        {
+          "page": 1,
+          "char_start": 324,
+          "char_end": 424,
+          "clause_id": "C3",
+          "quote": "The Licensee shall pay a monthly licence fee of Rs. 45,000/- on or before the 5th day of each month.",
+          "match": "EXACT",
+          "score": 100.0
+        }
+      ],
+      "note": null,
+      "severity": "HIGH"
+    },
+    {
+      "topic_id": "in_rental.security_deposit",
+      "title": "Security deposit amount",
+      "hypothesis": "The agreement states the security deposit amount and whether it is refundable.",
+      "status": "ENTAILED",
+      "evidence": [
+        {
+          "page": 1,
+          "char_start": 446,
+          "char_end": 622,
+          "clause_id": "C4",
+          "quote": "The Licensee shall pay to the Licensor an interest-free refundable security deposit of Rs. 1,50,000/- (Rupees One Lakh Fifty Thousand only) on or before the date of possession.",
+          "match": "EXACT",
+          "score": 100.0
+        },
+        {
+          "page": 1,
+          "char_start": 623,
+          "char_end": 801,
+          "clause_id": "C4",
+          "quote": "The deposit shall be refunded within thirty (30) days of the Licensee vacating the Premises, after deducting any amounts towards unpaid licence fee, damages and painting charges.",
+          "match": "EXACT",
+          "score": 100.0
+        }
+      ],
+      "note": null,
+      "severity": "HIGH"
+    },
+    {
+      "topic_id": "in_rental.deposit_refund_deductions",
+      "title": "Deposit refund timeline and deductions",
+      "hypothesis": "The agreement says when the deposit is refunded and what can be deducted from it.",
+      "status": "ENTAILED",
+      "evidence": [
+        {
+          "page": 1,
+          "char_start": 623,
+          "char_end": 801,
+          "clause_id": "C4",
+          "quote": "The deposit shall be refunded within thirty (30) days of the Licensee vacating the Premises, after deducting any amounts towards unpaid licence fee, damages and painting charges.",
+          "match": "EXACT",
+          "score": 100.0
+        }
+      ],
+      "note": null,
+      "severity": "HIGH"
+    },
+    {
+      "topic_id": "in_rental.termination_notice",
+      "title": "Notice to end the agreement",
+      "hypothesis": "The agreement states how much written notice each party must give to end it.",
+      "status": "ENTAILED",
+      "evidence": [
+        {
+          "page": 1,
+          "char_start": 1364,
+          "char_end": 1472,
+          "clause_id": "C10",
+          "quote": "Either party may terminate this Agreement by giving two (2) months' written notice after the lock-in period.",
+          "match": "EXACT",
+          "score": 100.0
+        }
+      ],
+      "note": null,
+      "severity": "HIGH"
+    },
+    {
+      "topic_id": "in_rental.term",
+      "title": "Term and lock-in start",
+      "hypothesis": "The agreement states how long the occupancy lasts and when it starts.",
+      "status": "ENTAILED",
+      "evidence": [
+        {
+          "page": 1,
+          "char_start": 242,
+          "char_end": 307,
+          "clause_id": "C2",
+          "quote": "The licence is for eleven (11) months commencing on 1 March 2026.",
+          "match": "EXACT",
+          "score": 100.0
+        },
+        {
+          "page": 1,
+          "char_start": 814,
+          "char_end": 948,
+          "clause_id": "C5",
+          "quote": "Neither party shall terminate this Agreement during the first six (6) months from the Commencement Date, save as provided in Clause 9.",
+          "match": "EXACT",
+          "score": 100.0
+        }
+      ],
+      "note": null,
+      "severity": "MEDIUM"
+    },
+    {
+      "topic_id": "in_rental.rent_escalation",
+      "title": "Rent increase",
+      "hypothesis": "The agreement says whether and how the monthly amount can rise.",
+      "status": "NOT_MENTIONED",
+      "evidence": [],
+      "note": "Not found. Rent increases are often agreed in advance, so ask before you sign.",
+      "severity": "MEDIUM"
+    },
+    {
+      "topic_id": "in_rental.lock_in",
+      "title": "Lock-in period",
+      "hypothesis": "The agreement says whether either party can leave early during an initial period.",
+      "status": "ENTAILED",
+      "evidence": [
+        {
+          "page": 1,
+          "char_start": 814,
+          "char_end": 948,
+          "clause_id": "C5",
+          "quote": "Neither party shall terminate this Agreement during the first six (6) months from the Commencement Date, save as provided in Clause 9.",
+          "match": "EXACT",
+          "score": 100.0
+        }
+      ],
+      "note": null,
+      "severity": "MEDIUM"
+    },
+    {
+      "topic_id": "in_rental.maintenance_repairs",
+      "title": "Maintenance and repairs",
+      "hypothesis": "The agreement says who pays for minor and structural repairs.",
+      "status": "ENTAILED",
+      "evidence": [
+        {
+          "page": 1,
+          "char_start": 965,
+          "char_end": 1003,
+          "clause_id": "C6",
+          "quote": "The Licensee shall bear minor repairs.",
+          "match": "EXACT",
+          "score": 100.0
+        },
+        {
+          "page": 1,
+          "char_start": 1004,
+          "char_end": 1067,
+          "clause_id": "C6",
+          "quote": "Structural repairs shall be the responsibility of the Licensor.",
+          "match": "EXACT",
+          "score": 100.0
+        }
+      ],
+      "note": null,
+      "severity": "MEDIUM"
+    },
+    {
+      "topic_id": "in_rental.landlord_entry",
+      "title": "Landlord entry and inspection",
+      "hypothesis": "The agreement says when the owner may enter or inspect the property.",
+      "status": "ENTAILED",
+      "evidence": [
+        {
+          "page": 1,
+          "char_start": 1093,
+          "char_end": 1152,
+          "clause_id": "C7",
+          "quote": "The Licensor may inspect the Premises on reasonable notice.",
+          "match": "EXACT",
+          "score": 100.0
+        }
+      ],
+      "note": null,
+      "severity": "MEDIUM"
+    },
+    {
+      "topic_id": "in_rental.subletting",
+      "title": "Subletting and occupants",
+      "hypothesis": "The agreement says whether the occupant may sublet or share the property.",
+      "status": "ENTAILED",
+      "evidence": [
+        {
+          "page": 1,
+          "char_start": 1153,
+          "char_end": 1211,
+          "clause_id": "C8",
+          "quote": "7. SUBLETTING. The Licensee shall not sublet the Premises.",
+          "match": "EXACT",
+          "score": 100.0
+        }
+      ],
+      "note": null,
+      "severity": "MEDIUM"
+    },
+    {
+      "topic_id": "in_rental.late_payment_penalty",
+      "title": "Late payment penalty",
+      "hypothesis": "The agreement says whether a late payment costs extra.",
+      "status": "NOT_MENTIONED",
+      "evidence": [],
+      "note": "Not found. Ask whether a late payment carries a charge.",
+      "severity": "MEDIUM"
+    },
+    {
+      "topic_id": "in_rental.renewal",
+      "title": "Renewal and expiry",
+      "hypothesis": "The agreement says what happens when the term ends.",
+      "status": "UNCLEAR",
+      "evidence": [
+        {
+          "page": 1,
+          "char_start": 242,
+          "char_end": 307,
+          "clause_id": "C2",
+          "quote": "The licence is for eleven (11) months commencing on 1 March 2026.",
+          "match": "EXACT",
+          "score": 100.0
+        },
+        {
+          "page": 1,
+          "char_start": 1364,
+          "char_end": 1472,
+          "clause_id": "C10",
+          "quote": "Either party may terminate this Agreement by giving two (2) months' written notice after the lock-in period.",
+          "match": "EXACT",
+          "score": 100.0
+        }
+      ],
+      "note": null,
+      "severity": "MEDIUM"
+    },
+    {
+      "topic_id": "in_rental.stamp_duty_registration",
+      "title": "Stamp duty and registration",
+      "hypothesis": "The agreement says whether it is stamped or registered.",
+      "status": "NOT_MENTIONED",
+      "evidence": [],
+      "note": "Not found. Stamp duty and registration rules vary by state.",
+      "severity": "MEDIUM"
+    },
+    {
+      "topic_id": "in_rental.painting_cleaning_deductions",
+      "title": "Painting and cleaning deductions",
+      "hypothesis": "The agreement says which charges, such as painting, can be deducted at exit.",
+      "status": "ENTAILED",
+      "evidence": [
+        {
+          "page": 1,
+          "char_start": 623,
+          "char_end": 801,
+          "clause_id": "C4",
+          "quote": "The deposit shall be refunded within thirty (30) days of the Licensee vacating the Premises, after deducting any amounts towards unpaid licence fee, damages and painting charges.",
+          "match": "EXACT",
+          "score": 100.0
+        }
+      ],
+      "note": null,
+      "severity": "MEDIUM"
+    },
+    {
+      "topic_id": "in_rental.governing_law",
+      "title": "Governing law and disputes",
+      "hypothesis": "The agreement says which law applies and which courts hear disputes.",
+      "status": "ENTAILED",
+      "evidence": [
+        {
+          "page": 1,
+          "char_start": 1230,
+          "char_end": 1347,
+          "clause_id": "C9",
+          "quote": "This Agreement shall be governed by the laws of India, and the courts at Bengaluru shall have exclusive jurisdiction.",
+          "match": "EXACT",
+          "score": 100.0
+        }
+      ],
+      "note": null,
+      "severity": "MEDIUM"
+    },
+    {
+      "topic_id": "in_rental.parties_and_property",
+      "title": "Parties and property",
+      "hypothesis": "The agreement names the owner and the occupant and describes the property.",
+      "status": "UNCLEAR",
+      "evidence": [
+        {
+          "page": 1,
+          "char_start": 55,
+          "char_end": 231,
+          "clause_id": "C1",
+          "quote": "This Agreement is made on 1 March 2026 between Mr. A. Sharma, the Licensor, and Ms. B. Rao, the Licensee, for the premises at 12 MG Road, Bengaluru, Karnataka (the \"Premises\").",
+          "match": "EXACT",
+          "score": 100.0
+        }
+      ],
+      "note": null,
+      "severity": "LOW"
+    },
+    {
+      "topic_id": "in_rental.society_utilities",
+      "title": "Society charges and utilities",
+      "hypothesis": "The agreement says who pays society charges and utility bills.",
+      "status": "NOT_MENTIONED",
+      "evidence": [],
+      "note": "Not found. Ask who pays society charges and utility bills.",
+      "severity": "LOW"
+    },
+    {
+      "topic_id": "in_rental.use_restrictions",
+      "title": "Use of the property",
+      "hypothesis": "The agreement says how the property may and may not be used.",
+      "status": "NOT_MENTIONED",
+      "evidence": [],
+      "note": "Not found. Ask whether business use or pets are allowed.",
+      "severity": "LOW"
+    }
+  ],
+  "silences": [
+    "in_rental.rent_escalation",
+    "in_rental.late_payment_penalty",
+    "in_rental.stamp_duty_registration",
+    "in_rental.society_utilities",
+    "in_rental.use_restrictions"
+  ],
+  "hidden_findings": [],
+  "statute_context": [],
+  "escalations": [],
+  "metrics": {
+    "citations_proposed": 17,
+    "citations_verified": 17,
+    "unverified_displayed": 0,
+    "distortion_pass": 13,
+    "distortion_warn": 0,
+    "distortion_fail": 0,
+    "model": "gemma4:e4b-it-qat",
+    "model_digest": null,
+    "latency_s": 46.71
+  },
+  "disclaimer": "LexiShield gives preliminary information to help you understand a document. It is not legal advice and cannot decide whether anything is legal or enforceable.",
+  "generated_at": "2026-10-18T09:51:43.811499Z"
+}

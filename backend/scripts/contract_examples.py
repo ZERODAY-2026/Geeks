@@ -7,6 +7,7 @@ they are written to contracts/examples/ and never served by the real API.
 from __future__ import annotations
 
 from datetime import UTC, datetime
+from pathlib import Path
 
 from pydantic import BaseModel
 
@@ -16,7 +17,6 @@ from lexishield.models import (
     AskTrace,
     BenchmarkResult,
     ChecklistItem,
-    ChecklistStatus,
     Citation,
     Claim,
     ClaimKind,
@@ -50,7 +50,6 @@ from lexishield.models import (
     PrivacyStatus,
     Problem,
     QuickDetect,
-    ReportMetrics,
     ScenarioInfo,
     ScenarioResult,
     ScenarioStep,
@@ -58,7 +57,6 @@ from lexishield.models import (
     StatuteIndexInfo,
     StatuteRef,
     SystemInfo,
-    Tier,
     TopicInfo,
     TriageReport,
     UserRole,
@@ -172,69 +170,6 @@ DETAIL = DocumentDetail(
     ],
 )
 
-CARD = ClauseCard(
-    id="card_07",
-    topic_id="in_rental.security_deposit",
-    title="Security deposit",
-    severity=Severity.MEDIUM,
-    tier=Tier.STATED,
-    reading_grade=7.8,
-    source=DEPOSIT,
-    plain_explanation=Claim(
-        text="You pay a deposit of ₹1,50,000 before moving in. No interest is paid on it.",
-        kind=ClaimKind.STATED,
-        citations=[DEPOSIT],
-        distortion=Distortion.PASS,
-        facts=["INR 150000"],
-    ),
-    stated=[
-        "The deposit is interest-free and refundable.",
-        "It is refunded within 30 days of vacating, after deductions.",
-    ],
-    interpretations=[
-        Claim(
-            text="'Damages' and 'painting charges' are not defined, so the amount that can be deducted is unclear.",
-            kind=ClaimKind.CONCERN,
-            citations=[DEPOSIT],
-            distortion=Distortion.NA,
-        )
-    ],
-    ambiguity_flags=["Undefined term: damages", "Undefined amount: painting charges"],
-    jurisdiction_flags=["Limits on deposits vary by state. Check local rent law with a professional."],
-    questions_for_lawyer=["Which deductions are allowed, and can I see an itemised bill?"],
-)
-
-WITHHELD = ClauseCard(
-    id="card_09",
-    topic_id="in_rental.lock_in",
-    title="Lock-in period",
-    severity=Severity.HIGH,
-    tier=Tier.INTERPRETATION,
-    source=LOCKIN,
-    plain_explanation=None,
-    explanation_withheld_reason="We couldn't verify the numbers in this explanation against the clause. "
-    "Please read the clause itself.",
-    stated=["Neither party may end the agreement in the first 6 months, except under Clause 17."],
-    questions_for_lawyer=["What happens to my deposit if I must leave during the lock-in?"],
-)
-
-CHECK_OK = ChecklistItem(
-    topic_id="in_rental.security_deposit",
-    title="Security deposit",
-    hypothesis="The agreement states the security deposit amount and whether it is refundable.",
-    status=ChecklistStatus.ENTAILED,
-    evidence=[DEPOSIT],
-    severity=Severity.MEDIUM,
-)
-CHECK_SILENT = ChecklistItem(
-    topic_id="in_rental.maintenance_split",
-    title="Maintenance and repairs",
-    hypothesis="The agreement says who pays for repairs and maintenance.",
-    status=ChecklistStatus.NOT_MENTIONED,
-    note="Not found in this document. This is commonly addressed in rental agreements.",
-    severity=Severity.HIGH,
-)
-
 CLASSIFICATION = Classification(
     doc_type=DocType.RENTAL,
     confidence=0.94,
@@ -254,31 +189,12 @@ STATUTE = StatuteRef(
     source_url="https://indiacode.gov.in",
 )
 
-REPORT = TriageReport(
-    document_id=DOC,
-    pack_id="in_rental",
-    classification=CLASSIFICATION,
-    jurisdiction=JURIS,
-    user_role=UserRole.TENANT,
-    cards=[CARD, WITHHELD],
-    checklist=[CHECK_OK, CHECK_SILENT],
-    silences=["in_rental.maintenance_split"],
-    hidden_findings=SUMMARY.hidden_findings,
-    statute_context=[STATUTE],
-    escalations=[ESC_RENT],
-    metrics=ReportMetrics(
-        citations_proposed=31,
-        citations_verified=29,
-        unverified_displayed=0,
-        distortion_pass=15,
-        distortion_warn=2,
-        distortion_fail=1,
-        model="gemma4:e4b-it-qat",
-        model_digest="sha256:…",
-        latency_s=74.2,
-    ),
-    generated_at=TS,
-)
+# The report, card and silent checklist item are real output, captured on the synthetic rental fixture by
+# scripts/capture_examples.py. They are not hand-written, so the frontend sees what the analysis produces.
+CAPTURED = Path(__file__).resolve().parent / "captured"
+REPORT = TriageReport.model_validate_json((CAPTURED / "report.json").read_text(encoding="utf-8"))
+CARD = ClauseCard.model_validate_json((CAPTURED / "card.json").read_text(encoding="utf-8"))
+CHECK_SILENT = ChecklistItem.model_validate_json((CAPTURED / "checklist_item_silent.json").read_text(encoding="utf-8"))
 
 ASK_ANSWERED = AskResponse(
     status=AskStatus.ANSWERED,
@@ -349,9 +265,9 @@ BRIEF = EscalationBrief(
     doc_type=DocType.RENTAL,
     jurisdiction=JURIS,
     parties={"Licensor": UserRole.LANDLORD, "Licensee": UserRole.TENANT},
-    top_issues=[WITHHELD, CARD],
-    silences=["in_rental.maintenance_split"],
-    questions_for_lawyer=CARD.questions_for_lawyer + WITHHELD.questions_for_lawyer,
+    top_issues=REPORT.cards[:2],
+    silences=REPORT.silences,
+    questions_for_lawyer=[q for c in REPORT.cards[:2] for q in c.questions_for_lawyer],
     escalations=[ESC_RENT],
 )
 

@@ -1,0 +1,144 @@
+# Checklist pack: India employment contracts and offer letters (deep).
+# Lexicons are the silence double-key: a topic is reported silent only when the model says so AND none of these
+# words appear anywhere in the document.
+pack_id: in_employment
+doc_type: employment
+jurisdiction: IN
+version: "1"
+depth: deep
+topics:
+  - id: in_employment.role_designation
+    title: Role and designation
+    query: designation role position title appointed
+    lexicon: [designation, position, appointed, job title]
+    hypothesis: The letter states the role or designation the employee is hired for.
+    severity: LOW
+  - id: in_employment.ctc_compensation
+    title: Pay and compensation breakdown
+    query: CTC salary compensation breakdown annual fixed components
+    lexicon: [ctc, salary, compensation, fixed pay, components]
+    hypothesis: The letter states the total pay and how it is made up.
+    severity: HIGH
+    silence_note: The pay breakdown is not in this document.
+  - id: in_employment.probation
+    title: Probation period
+    query: probation period confirmation
+    lexicon: [probation, confirmation]
+    hypothesis: The letter says how long probation lasts and what happens at its end.
+    severity: MEDIUM
+    silence_note: Not found. Ask how long probation lasts.
+  - id: in_employment.notice_period
+    title: Notice period to resign
+    query: notice period resign resignation days
+    lexicon: [notice period, resign, resignation]
+    hypothesis: The letter states how much notice the employee must give to resign.
+    severity: HIGH
+    silence_note: No notice period found.
+    escalation_ref: employment
+  - id: in_employment.notice_buyout
+    title: Notice buyout
+    query: buyout notice period waive pay in lieu
+    lexicon: [buyout, buy out, in lieu, waive]
+    hypothesis: The letter says whether the notice period can be bought out with payment.
+    severity: MEDIUM
+    escalation_ref: employment
+  - id: in_employment.termination_cause
+    title: Termination with and without cause
+    query: termination with cause without cause dismissal
+    lexicon: [terminat, dismiss, with cause, without cause]
+    hypothesis: The letter says how the employer can end employment, with and without cause.
+    severity: HIGH
+    silence_note: Not found. Ask how either side can end the employment.
+    escalation_ref: employment
+  - id: in_employment.service_bond
+    title: Service bond and training-cost recovery
+    query: service bond training cost recovery repay leave early
+    lexicon: [service bond, bond, repay, recover, training cost, leaves within]
+    hypothesis: The letter says whether the employee must stay for a period or repay money if they leave early.
+    severity: MEDIUM
+    severity_rules:
+      - when: {fact_unit: months, gt: 12}
+        then: {severity: HIGH, note: Longer than the twelve months often seen. Check the repayment amount.}
+    escalation_ref: employment
+  - id: in_employment.joining_bonus_clawback
+    title: Joining bonus clawback
+    query: joining bonus clawback repay bonus
+    lexicon: [joining bonus, sign-on, signing bonus, clawback]
+    hypothesis: The letter says whether a joining bonus must be repaid if the employee leaves early.
+    severity: MEDIUM
+    silence_note: Not found. Ask whether any bonus must be repaid.
+    escalation_ref: employment
+  - id: in_employment.non_compete
+    title: Non-compete after exit
+    query: non-compete restraint competing business after leaving
+    lexicon: [non-compete, non compete, competing, restraint]
+    hypothesis: The letter says whether the employee may work for a competitor after leaving.
+    severity: HIGH
+    escalation_ref: employment
+    jurisdiction_sensitive: true
+  - id: in_employment.non_solicit
+    title: Non-solicit
+    query: non-solicit solicit employees customers clients
+    lexicon: [solicit, poach, customers]
+    hypothesis: The letter says whether the employee may approach colleagues or customers after leaving.
+    severity: MEDIUM
+    silence_note: Not found. Ask about restrictions on approaching colleagues or clients.
+    escalation_ref: employment
+  - id: in_employment.confidentiality
+    title: Confidentiality
+    query: confidential information non-disclosure secrecy
+    lexicon: [confidential, non-disclosure, nda, secrecy]
+    hypothesis: The letter says what information must be kept secret.
+    severity: MEDIUM
+    silence_note: Not found. Ask what must be kept confidential.
+  - id: in_employment.ip_assignment
+    title: Intellectual property and work outside job
+    query: intellectual property invention ownership work assignment outside work
+    lexicon: [intellectual property, invention, work product, ownership, copyright]
+    hypothesis: The letter says who owns work the employee creates, including outside work.
+    severity: MEDIUM
+    silence_note: Not found. Ask who owns work you create.
+    escalation_ref: employment
+  - id: in_employment.working_hours_overtime
+    title: Working hours and overtime
+    query: working hours overtime shift schedule
+    lexicon: [working hours, overtime, shift, hours per week]
+    hypothesis: The letter says how many hours are expected and whether overtime is paid.
+    severity: LOW
+    silence_note: Not found. Ask about working hours and overtime.
+  - id: in_employment.leave
+    title: Leave
+    query: annual leave casual leave sick leave holidays
+    lexicon: [annual leave, casual leave, sick leave, paid time off, holidays, vacation]
+    hypothesis: The letter says how much leave the employee gets.
+    severity: LOW
+    silence_note: Not found. Ask how much leave you get.
+  - id: in_employment.transfer_relocation
+    title: Transfer and relocation
+    query: transfer relocation location change posting
+    lexicon: [transfer, relocat, posting]
+    hypothesis: The letter says whether the employer can move the employee to another place.
+    severity: LOW
+    silence_note: Not found.
+  - id: in_employment.background_verification
+    title: Background verification
+    query: background verification check references
+    lexicon: [background verification, background check, references]
+    hypothesis: The letter says whether the offer depends on checks.
+    severity: LOW
+    silence_note: Not found.
+  - id: in_employment.garden_leave
+    title: Garden leave
+    query: garden leave paid notice not working
+    lexicon: [garden leave]
+    hypothesis: The letter says whether the employer can keep the employee away from work during notice.
+    severity: LOW
+    silence_note: Not found.
+    escalation_ref: employment
+  - id: in_employment.governing_law
+    title: Governing law and disputes
+    query: governing law jurisdiction courts disputes
+    lexicon: [governed by, governing law, jurisdiction, courts]
+    hypothesis: The letter says which law applies and which courts hear disputes.
+    severity: MEDIUM
+    jurisdiction_sensitive: true

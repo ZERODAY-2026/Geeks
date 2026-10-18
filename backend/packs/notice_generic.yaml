@@ -1,0 +1,69 @@
+# Checklist pack: legal demand and notice letters (standard, generic). Deadlines are flagged urgent.
+pack_id: notice_generic
+doc_type: legal_notice
+jurisdiction: UNKNOWN
+version: "1"
+depth: standard
+topics:
+  - id: notice.sender_recipient
+    title: Who sent it and who it is for
+    query: sender recipient from to notice addressed
+    lexicon: [from, to, sender, recipient, addressed]
+    hypothesis: The notice names who is sending it and who must respond.
+    severity: LOW
+  - id: notice.demand
+    title: What is demanded
+    query: demand call upon pay vacate do
+    lexicon: [demand, call upon, required to, must]
+    hypothesis: The notice says what the recipient must do.
+    severity: HIGH
+  - id: notice.amount_claimed
+    title: Amount claimed
+    query: amount sum claimed pay rupees
+    lexicon: [amount, sum, rs., rupees, due]
+    hypothesis: The notice states the money claimed, if any.
+    severity: HIGH
+  - id: notice.response_deadline
+    title: Response deadline
+    query: within days receipt deadline respond
+    lexicon: [within, days, deadline, respond, receipt]
+    hypothesis: The notice states how long the recipient has to respond.
+    severity: HIGH
+  - id: notice.referenced_agreement
+    title: Agreement or clauses referred to
+    query: agreement dated clause referred arrangement
+    lexicon: [agreement, clause, arrangement, dated]
+    hypothesis: The notice names the agreement or clauses it relies on.
+    severity: MEDIUM
+  - id: notice.stated_legal_basis
+    title: Legal basis stated
+    query: under section act law basis relies
+    lexicon: [section, act, law, under]
+    hypothesis: The notice names the law it relies on. The reliance is quoted, not assessed.
+    severity: MEDIUM
+    silence_note: Not found. The notice does not name a legal basis.
+  - id: notice.threatened_consequences
+    title: Threatened consequences
+    query: legal proceedings court action consequences failing payment
+    lexicon: [proceedings, court, action, consequence, failing]
+    hypothesis: The notice says what will happen if the recipient does not respond.
+    severity: HIGH
+  - id: notice.how_to_respond
+    title: How to respond
+    query: respond reply address email contact
+    lexicon: [reply, respond, address, email, contact]
+    hypothesis: The notice says how and where to respond.
+    severity: MEDIUM
+    silence_note: Not found. Ask where to send a reply.
+  - id: notice.enclosures
+    title: Enclosures
+    query: enclosed enclosures attached documents
+    lexicon: [enclosed, enclosure, attached]
+    hypothesis: The notice lists any documents it encloses.
+    severity: LOW
+  - id: notice.notice_date
+    title: Date of notice
+    query: dated date of this notice issued
+    lexicon: [dated, date, issued]
+    hypothesis: The notice states the date it was sent.
+    severity: LOW
