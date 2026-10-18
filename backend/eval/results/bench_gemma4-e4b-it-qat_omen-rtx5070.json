@@ -1,0 +1,27 @@
+{
+  "trials": 10,
+  "schema_valid": 10,
+  "schema_valid_rate": 1.0,
+  "status_correct_rate": 1.0,
+  "quote_verbatim_rate": 1.0,
+  "gen_tokens_per_s_median": 61.74063173654869,
+  "prompt_tokens_per_s_median": 4171.705172279173,
+  "latency_s_median": 2.7253928000000087,
+  "latency_s_p95": 2.9518573000004835,
+  "load_s": 10.8289017,
+  "model": "gemma4:e4b-it-qat",
+  "label": "omen-rtx5070",
+  "host": {
+    "os": "Windows 11",
+    "cpu": "Intel64 Family 6 Model 197 Stepping 2, GenuineIntel",
+    "logical_cpus": 16,
+    "ram_gb": 31.4,
+    "gpu": "NVIDIA GeForce RTX 5070 Laptop GPU, 8151 MiB",
+    "python": "3.12.15"
+  },
+  "created_at": "2026-10-18T08:03:04.822065+00:00",
+  "ram_peak_mb": 5884.3,
+  "vram_peak_mb": 4278.0,
+  "ollama_model_mb": 3499.9,
+  "ollama_vram_mb": 3499.9
+}

@@ -105,7 +105,7 @@ def test_benchmark_404_then_served(client, settings) -> None:
     ("method", "path", "status", "code"),
     [
         ("get", "/api/v1/nope", 404, "NOT_FOUND"),
-        ("get", "/api/v1/documents/abc", 501, "NOT_IMPLEMENTED"),
+        ("get", "/api/v1/packs/in_rental", 501, "NOT_IMPLEMENTED"),
         ("post", "/api/v1/documents/abc/ask", 422, "VALIDATION_ERROR"),
         ("delete", "/api/v1/health", 405, "METHOD_NOT_ALLOWED"),
     ],
@@ -189,5 +189,9 @@ def test_no_secrets_in_backend_sources() -> None:
     import re
 
     pat = re.compile(r"(api[_-]?key|secret|token)\s*[:=]\s*['\"][A-Za-z0-9_\-]{16,}", re.I)
-    hits = [p for p in Path(BACKEND_DIR).rglob("*.py") if ".venv" not in p.parts and pat.search(p.read_text())]
+    hits = [
+        p
+        for p in Path(BACKEND_DIR).rglob("*.py")
+        if ".venv" not in p.parts and pat.search(p.read_text(encoding="utf-8"))
+    ]
     assert not hits

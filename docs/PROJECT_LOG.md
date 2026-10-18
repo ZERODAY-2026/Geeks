@@ -7,7 +7,7 @@ Last updated: 2026-10-18 (Phase 0). Update this file at the end of each phase.
 | Phase | State | Evidence |
 |---|---|---|
 | P0 Foundations and contract | **Code complete, gate partly passed.** Pytest 26/26 green on the Ryzen laptop. Clean benchmark runs on both machines are still to do. The primary model's accuracy is an open issue (section 4). | `backend/tests/test_phase0_*.py`, `contracts/` |
-| P1 Ingestion, trust, retrieval | Not started | stubs return 501 |
+| P1 Ingestion, trust, retrieval | **Partly built** (branch `phase1/ingest-trust`). Done: PDF and TXT ingestion with exact offsets, clause segmentation, hidden-text and injection detection, quick type/jurisdiction signals, AES-GCM crypto-shred vault, egress guard, document and privacy endpoints. Not built: DOCX, temp-file sentinel, retrieval (BM25/embeddings), `audit_deps.py`, 60-page timing test, real fixture answer keys. Tests: 49 passing. | `backend/tests/test_phase1_*.py` |
 | P2–P6 | Not started | |
 
 **Is Phase 0 done?** Mostly. What is green: the scaffold, settings, models, gateway, API skeleton, contract

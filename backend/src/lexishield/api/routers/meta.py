@@ -2,22 +2,41 @@
 
 from __future__ import annotations
 
-from fastapi import APIRouter
+from fastapi import APIRouter, Request
 
-from ...models import EvalSummary, PackInfo, PrivacyEvent, PrivacyReceipt, PrivacyStatus, ReceiptRequest
+from ...models import (
+    EgressGuardStatus,
+    EvalSummary,
+    PackInfo,
+    PrivacyEvent,
+    PrivacyReceipt,
+    PrivacyStatus,
+    ReceiptRequest,
+)
+from ...trust import egress_guard
 from ..errors import NotImplementedYet, problem_responses
 
 router = APIRouter()
 
 
 @router.get("/privacy/status", response_model=PrivacyStatus, tags=["privacy"])
-async def privacy_status() -> PrivacyStatus:
-    raise NotImplementedYet("Phase 1")
+async def privacy_status(request: Request) -> PrivacyStatus:
+    st = egress_guard.status()
+    return PrivacyStatus(
+        egress_guard=EgressGuardStatus(
+            active=st["active"], allowed_hosts=st["allowed_hosts"], blocked_attempts=st["blocked_attempts"]
+        ),
+        network_mode="host-loopback",
+        # Placeholder: the temp-file sentinel is not built yet, so this is not a measurement.
+        temp_files_created=0,
+        sessions=len(request.app.state.vault),
+        retention_ttl_s=request.app.state.settings.privacy.session_ttl_s,
+    )
 
 
 @router.get("/privacy/events", response_model=list[PrivacyEvent], tags=["privacy"])
 async def privacy_events() -> list[PrivacyEvent]:
-    raise NotImplementedYet("Phase 1")
+    return [PrivacyEvent(**e) for e in egress_guard.events()]
 
 
 @router.post("/privacy/receipts", response_model=PrivacyReceipt, status_code=201, tags=["privacy"])
