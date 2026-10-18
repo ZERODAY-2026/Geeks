@@ -1,0 +1,31 @@
+# Held-out Ask questions, written before any run, on documents never used to develop or debug Ask.
+# Expected facts come from the document text (scripts/make_holdout_fixtures.py, scripts/make_fresh3_fixtures.py).
+# Gate: at least 80% of in_document answers cite the expected fact in verified source text; at least 90% of
+# not_in_document questions are answered NOT_IN_DOCUMENT with no claims. Do not edit after a run.
+documents:
+  in_rental_holdout_flat.pdf:
+    in_document:
+      - {question: "What is the monthly rent?", expect_fact: "INR 32000"}
+      - {question: "How much is the deposit?", expect_fact: "INR 96000"}
+      - {question: "Within how many days is the deposit returned?", expect_fact: "days 45"}
+      - {question: "How long is the lock-in?", expect_fact: "months 12"}
+      - {question: "How much notice is needed to end the licence?", expect_fact: "months 3"}
+    not_in_document:
+      - "Is there a parking space with the flat?"
+      - "Who pays for the internet connection?"
+      - "Can I install air conditioning?"
+      - "Are guests allowed to stay overnight?"
+      - "Is the flat furnished?"
+  fresh3_employment_noida.pdf:
+    in_document:
+      - {question: "What is the monthly gross pay?", expect_fact: "INR 55000"}
+      - {question: "How long is the probation period?", expect_fact: "months 3"}
+      - {question: "How much notice must I give to resign?", expect_fact: "days 45"}
+      - {question: "How much must I repay under the training bond?", expect_fact: "INR 80000"}
+      - {question: "For how many months does the training bond apply?", expect_fact: "months 12"}
+    not_in_document:
+      - "How many days of annual leave do I get?"
+      - "Is there a joining bonus?"
+      - "Can I work from home?"
+      - "Is health insurance provided?"
+      - "Is there a performance bonus?"

@@ -1,0 +1,10 @@
+# What-if: resigning while a service or training bond runs. The repayment is the stated amount, or nothing is computed.
+scenario_id: bond_exit
+title: Resigning during a bond
+description: Checks whether leaving after a given number of months falls inside the bond period, and shows the stated repayment.
+doc_types: [employment]
+params_schema:
+  type: object
+  required: [months_served]
+  properties:
+    months_served: {type: integer, minimum: 0, maximum: 240, description: Months you would have worked when you leave.}

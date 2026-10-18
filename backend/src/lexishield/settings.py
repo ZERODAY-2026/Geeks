@@ -24,6 +24,9 @@ class ServerSettings(BaseModel):
     port: int = 8000
     cors_origins: list[str] = Field(default_factory=lambda: ["http://localhost:5173"])
     max_upload_mb: int = 20
+    # FastAPI's /docs page loads Swagger UI from a CDN, which fails offline. Off by default;
+    # contracts/openapi.json is the local reference.
+    api_docs: bool = False
 
 
 class OllamaSettings(BaseModel):
@@ -59,7 +62,8 @@ class ModelSettings(BaseModel):
 
 
 class AgentSettings(BaseModel):
-    mode: Literal["tools", "pipeline"] = "tools"
+    # Only the pipeline is built. "tools" (a bounded tool-calling agent) is on the plan's cut list.
+    mode: Literal["tools", "pipeline"] = "pipeline"
     max_tool_calls: int = 3
 
 

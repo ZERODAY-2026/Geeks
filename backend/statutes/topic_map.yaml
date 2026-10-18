@@ -1,0 +1,14 @@
+# Topic -> statute sections shown as context (India only). Context is never applied to the document by a model.
+# Each act and section must exist in the Open India Law snapshot; scripts/build_statute_index.py drops any that don't.
+# Keep this list short and curated: a wrong mapping is worse than none.
+in_rental.termination_notice:
+  - {act: "Transfer of Property Act, 1882", section: "106"}
+in_rental.stamp_duty_registration:
+  - {act: "Registration Act, 1908", section: "17"}
+  - {act: "Indian Stamp Act, 1899", section: "3"}
+in_employment.non_compete:
+  - {act: "Indian Contract Act, 1872", section: "27"}
+in_employment.service_bond:
+  - {act: "Indian Contract Act, 1872", section: "74"}
+msa.indemnity:
+  - {act: "Indian Contract Act, 1872", section: "124"}

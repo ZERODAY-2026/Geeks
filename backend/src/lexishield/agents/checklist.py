@@ -14,7 +14,6 @@ from ..ingest.pipeline import Ingested
 from ..ingest.prompt_view import analysis_text
 from ..llm.gateway import LLMError, LLMGateway
 from ..llm.prompts import checklist as prompts
-from ..llm.prompts import relevance
 from ..models import ChecklistItem, ChecklistStatus, Citation, Clause, ClauseCard, Country, Distortion, UserRole
 from ..packs import Topic
 from ..retrieval.hybrid import expand_xrefs, hybrid_top_k
@@ -26,6 +25,7 @@ from ..verify.severity import apply_rules
 from ..verify.silence import decide_status, lexicon_hits
 from ..verify.tiers import tier
 from .cards import CardInput, build_card
+from .relevance import addresses
 
 MAX_PROMPT_CLAUSES = 8
 
@@ -124,22 +124,9 @@ async def _ask(gw: LLMGateway, topic: Topic, doc: DocContext, role: UserRole) ->
     return res.value, chosen
 
 
-class RelevanceOut(BaseModel):
-    addresses_topic: bool
-
-
 async def _addresses(gw: LLMGateway, topic: Topic, quote: str) -> bool:
-    """Ask the model whether one verified quote addresses the topic. If the check cannot run, the quote is not kept."""
-    user = (
-        relevance.USER.replace("{TOPIC}", topic.title)
-        .replace("{HYPOTHESIS}", topic.hypothesis)
-        .replace("{QUOTE}", quote)
-    )
-    try:
-        res = await gw.structured(RelevanceOut, user, system=relevance.SYSTEM)
-    except LLMError:
-        return False
-    return res.value.addresses_topic
+    """Does one verified quote address the topic? See agents/relevance.py."""
+    return await addresses(gw, topic.title, topic.hypothesis, quote)
 
 
 async def analyze_topic(gw: LLMGateway, topic: Topic, doc: DocContext, role: UserRole) -> TopicOutcome:

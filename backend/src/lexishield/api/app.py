@@ -33,7 +33,7 @@ def create_app(settings: Settings | None = None, gateway: LLMGateway | None = No
         version=__version__,
         description=DESCRIPTION,
         openapi_url=f"{API_PREFIX}/openapi.json",
-        docs_url="/docs",
+        docs_url="/docs" if settings.server.api_docs else None,  # Swagger UI needs a CDN; off offline
         redoc_url=None,
     )
     egress_guard.install()  # process-wide; idempotent
