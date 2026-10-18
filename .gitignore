@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+build/
+dist/
+
+# Set-up-time downloads (datasets, statute index) — never commit
+backend/data/
+
+# Local editor / office artefacts
+.~lock.*
+.vscode/
+.idea/
+.DS_Store
+
+# Working copy of the plan at the repo root (the tracked copy is docs/plan/)
+/LexiShield_Build_Plan.docx
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+
+# Secrets
+.env
+*.pem

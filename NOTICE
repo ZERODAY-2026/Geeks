@@ -1,0 +1,21 @@
+LexiShield
+Copyright 2026 the LexiShield team (ZeroDay OSS Hacktoberfest 2026, IIIT Dharwad)
+
+This product is licensed under the Apache License, Version 2.0 (see LICENSE).
+
+Models (downloaded by the user at set-up time; NOT redistributed in this repository)
+- Google Gemma 4 (gemma4:e4b-it-qat, gemma4:e2b-it-qat): licence as stated on the official model card
+  (reported Apache-2.0; confirm before redistribution).
+- Google Gemma 3n (gemma3n:e4b / e2b, optional comparison): Gemma Terms of Use, https://ai.google.dev/gemma/terms
+- Google EmbeddingGemma (embeddinggemma:300m): see its official model card / Gemma Terms of Use.
+
+Datasets (downloaded by scripts at set-up time; NOT committed)
+- CUAD v1, The Atticus Project, CC BY 4.0. Hendrycks et al., "CUAD: An Expert-Annotated NLP Dataset for
+  Legal Contract Review", NeurIPS 2021 Datasets and Benchmarks. Used for evaluation only.
+- Open India Law (vaquill/open-india-law, snapshot v2026.08), data CC BY 4.0. Legislation subset used to
+  build a local statute-context index. Some upstream sources have unknown terms; the index is generated
+  locally and not redistributed.
+- India Code (indiacode.gov.in): referenced only through source links shown to users; not scraped or
+  redistributed.
+
+Test documents in backend/tests/fixtures are synthetic and written by the LexiShield team.
