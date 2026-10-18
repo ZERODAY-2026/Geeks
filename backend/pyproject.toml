@@ -1,0 +1,68 @@
+[project]
+name = "lexishield"
+version = "0.1.0"
+description = "Private, on-device legal document triage agent powered by Google Gemma"
+readme = "README.md"
+license = "Apache-2.0"
+authors = [
+    { name = "Willis Kipgen", email = "itswilliskipsjr@gmail.com" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "cryptography>=50.0.2",
+    "fastapi>=0.143.3",
+    "httpx>=0.28.1",
+    "numpy>=2.5.4",
+    "ollama>=0.6.3",
+    "pdfplumber>=0.11.10",
+    "psutil>=7.2.2",
+    "pydantic>=2.14.1",
+    "pydantic-settings>=2.16.0",
+    "python-docx>=1.2.0",
+    "python-multipart>=0.0.32",
+    "pyyaml>=6.0.3",
+    "rank-bm25>=0.2.2",
+    "rapidfuzz>=3.14.6",
+    "sse-starlette>=3.5.0",
+    "textstat>=0.7.13",
+    "uvicorn>=0.54.0",
+]
+
+[project.scripts]
+lexishield = "lexishield.cli:main"
+
+[build-system]
+requires = ["uv_build>=0.13.1,<0.14.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "pytest>=9.1.1",
+    "pytest-asyncio>=1.4.0",
+    "reportlab>=5.0.1",
+    "ruff>=0.17.1",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+markers = [
+    "phase0: foundations and frozen contract",
+    "phase1: ingestion, trust boundary, retrieval",
+    "phase2: analysis core and verification gate",
+    "phase3: interaction layer",
+    "phase4: proof and robustness",
+    "phase5: freeze and reproduction",
+    "live: needs a running Ollama with the configured models (skipped otherwise)",
+]
+addopts = "-ra"
+
+[tool.ruff]
+line-length = 120
+target-version = "py312"
+src = ["src", "scripts", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "SIM"]
+ignore = ["B008"]

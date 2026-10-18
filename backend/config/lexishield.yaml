@@ -1,0 +1,62 @@
+# LexiShield runtime configuration.
+# Every value can be overridden with an environment variable:
+#   LEXISHIELD_<SECTION>__<KEY>, e.g. LEXISHIELD_MODELS__PROFILE=cpu
+# Model names are configuration, never code (rubric #8 reusability).
+
+server:
+  host: 127.0.0.1            # loopback only, never 0.0.0.0
+  port: 8000
+  cors_origins:
+    - http://localhost:5173
+    - http://127.0.0.1:5173
+    - http://localhost:3000
+  max_upload_mb: 20
+
+ollama:
+  host: http://127.0.0.1:11434
+  keep_alive: 30m
+
+models:
+  profile: gpu               # gpu (HP OMEN, RTX 5070) | cpu (dev laptops)
+  gpu:
+    chat: gemma4:e4b-it-qat
+    alt: gemma3n:e4b
+    embed: embeddinggemma:300m
+    num_ctx: 8192
+  cpu:
+    chat: gemma4:e2b-it-qat
+    alt: gemma3n:e2b
+    embed: embeddinggemma:300m
+    num_ctx: 8192
+  options:
+    temperature: 0
+    seed: 42
+    timeout_s: 120
+    max_parallel: 2
+    think: false               # Gemma 4 thinking off: ~3x faster (measured P0)
+
+agent:
+  mode: tools                # tools | pipeline
+  max_tool_calls: 3
+
+verify:
+  fuzzy_min: 92
+  retrieval_k: 6
+
+privacy:
+  egress_allow: [127.0.0.1, "::1", localhost]
+  session_ttl_s: 1800
+  receipts: true
+
+features:
+  statutes: true
+  scenarios: true
+  docx: true
+  ocr: false
+
+paths:
+  packs_dir: packs
+  scenarios_dir: scenarios
+  escalation_dir: escalation
+  results_dir: eval/results
+  data_dir: data
