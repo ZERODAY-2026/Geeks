@@ -1,0 +1,19 @@
+[
+  {
+    "scenario_id": "rental_early_exit",
+    "title": "I need to move out early",
+    "description": "What the agreement says happens if you leave before the term ends.",
+    "doc_types": [
+      "rental"
+    ],
+    "params_schema": {
+      "type": "object",
+      "properties": {
+        "month_of_exit": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    }
+  }
+]

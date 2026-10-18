@@ -1,0 +1,14 @@
+{
+  "job_id": "job_42",
+  "document_id": "doc_7f3a9c",
+  "status": "running",
+  "progress": {
+    "stage": "checklist",
+    "done": 7,
+    "total": 18
+  },
+  "created_at": "2026-10-18T12:00:00Z",
+  "started_at": "2026-10-18T12:00:00Z",
+  "finished_at": null,
+  "error": null
+}

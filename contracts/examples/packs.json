@@ -1,0 +1,15 @@
+[
+  {
+    "pack_id": "in_rental",
+    "doc_type": "rental",
+    "jurisdiction": "IN",
+    "version": "1",
+    "depth": "deep",
+    "topics": [
+      {
+        "id": "in_rental.security_deposit",
+        "title": "Security deposit"
+      }
+    ]
+  }
+]

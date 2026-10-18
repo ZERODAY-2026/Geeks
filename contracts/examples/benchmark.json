@@ -1,0 +1,24 @@
+[
+  {
+    "model": "gemma4:e4b-it-qat",
+    "label": "omen-gpu",
+    "trials": 10,
+    "schema_valid": 10,
+    "schema_valid_rate": 1.0,
+    "status_correct_rate": null,
+    "quote_verbatim_rate": null,
+    "gen_tokens_per_s_median": 0.0,
+    "prompt_tokens_per_s_median": null,
+    "latency_s_median": 0.0,
+    "latency_s_p95": null,
+    "load_s": null,
+    "ram_peak_mb": null,
+    "vram_peak_mb": null,
+    "ollama_model_mb": null,
+    "ollama_vram_mb": null,
+    "host": {
+      "note": "illustrative shape only; real numbers from bench.py"
+    },
+    "created_at": "2026-10-18T12:00:00Z"
+  }
+]

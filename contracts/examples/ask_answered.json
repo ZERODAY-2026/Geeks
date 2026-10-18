@@ -1,0 +1,39 @@
+{
+  "status": "ANSWERED",
+  "message": "Here is what the document says about the deposit.",
+  "claims": [
+    {
+      "text": "You pay a deposit of ₹1,50,000 before moving in. No interest is paid on it.",
+      "kind": "STATED",
+      "citations": [
+        {
+          "page": 3,
+          "char_start": 6142,
+          "char_end": 6281,
+          "clause_id": "C12",
+          "quote": "The Licensee shall pay to the Licensor an interest-free refundable security deposit of Rs. 1,50,000/- (Rupees One Lakh Fifty Thousand only)",
+          "match": "EXACT",
+          "score": 100.0
+        }
+      ],
+      "distortion": "PASS",
+      "facts": [
+        "INR 150000"
+      ]
+    }
+  ],
+  "related_clauses": [],
+  "not_found_note": null,
+  "clarifying_question": null,
+  "escalation": null,
+  "conversation_id": "conv_1",
+  "trace": {
+    "route": "DOC_FACT",
+    "tools_used": [
+      "search_clauses",
+      "get_clause"
+    ],
+    "latency_ms": 3820
+  },
+  "disclaimer": "LexiShield gives preliminary information to help you understand a document. It is not legal advice and cannot decide whether anything is legal or enforceable."
+}

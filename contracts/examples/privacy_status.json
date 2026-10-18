@@ -1,0 +1,14 @@
+{
+  "egress_guard": {
+    "active": true,
+    "allowed_hosts": [
+      "127.0.0.1",
+      "::1"
+    ],
+    "blocked_attempts": 0
+  },
+  "network_mode": "offline-host",
+  "temp_files_created": 0,
+  "sessions": 1,
+  "retention_ttl_s": 1800
+}

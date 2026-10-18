@@ -1,0 +1,7 @@
+{
+  "status": "ok",
+  "ollama": "up",
+  "models_ready": true,
+  "missing_models": [],
+  "version": "0.1.0"
+}

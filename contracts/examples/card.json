@@ -1,0 +1,70 @@
+{
+  "id": "card_07",
+  "topic_id": "in_rental.security_deposit",
+  "title": "Security deposit",
+  "severity": "MEDIUM",
+  "tier": "STATED",
+  "reading_grade": 7.8,
+  "source": {
+    "page": 3,
+    "char_start": 6142,
+    "char_end": 6281,
+    "clause_id": "C12",
+    "quote": "The Licensee shall pay to the Licensor an interest-free refundable security deposit of Rs. 1,50,000/- (Rupees One Lakh Fifty Thousand only)",
+    "match": "EXACT",
+    "score": 100.0
+  },
+  "plain_explanation": {
+    "text": "You pay a deposit of ₹1,50,000 before moving in. No interest is paid on it.",
+    "kind": "STATED",
+    "citations": [
+      {
+        "page": 3,
+        "char_start": 6142,
+        "char_end": 6281,
+        "clause_id": "C12",
+        "quote": "The Licensee shall pay to the Licensor an interest-free refundable security deposit of Rs. 1,50,000/- (Rupees One Lakh Fifty Thousand only)",
+        "match": "EXACT",
+        "score": 100.0
+      }
+    ],
+    "distortion": "PASS",
+    "facts": [
+      "INR 150000"
+    ]
+  },
+  "explanation_withheld_reason": null,
+  "stated": [
+    "The deposit is interest-free and refundable.",
+    "It is refunded within 30 days of vacating, after deductions."
+  ],
+  "interpretations": [
+    {
+      "text": "'Damages' and 'painting charges' are not defined, so the amount that can be deducted is unclear.",
+      "kind": "CONCERN",
+      "citations": [
+        {
+          "page": 3,
+          "char_start": 6142,
+          "char_end": 6281,
+          "clause_id": "C12",
+          "quote": "The Licensee shall pay to the Licensor an interest-free refundable security deposit of Rs. 1,50,000/- (Rupees One Lakh Fifty Thousand only)",
+          "match": "EXACT",
+          "score": 100.0
+        }
+      ],
+      "distortion": "NA",
+      "facts": []
+    }
+  ],
+  "ambiguity_flags": [
+    "Undefined term: damages",
+    "Undefined amount: painting charges"
+  ],
+  "jurisdiction_flags": [
+    "Limits on deposits vary by state. Check local rent law with a professional."
+  ],
+  "questions_for_lawyer": [
+    "Which deductions are allowed, and can I see an itemised bill?"
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "status": "NOT_IN_DOCUMENT",
+  "message": "This document does not appear to address pets.",
+  "claims": [],
+  "related_clauses": [
+    {
+      "page": 4,
+      "char_start": 7300,
+      "char_end": 7357,
+      "clause_id": "C15",
+      "quote": "The Premises shall be used only for residential purposes.",
+      "match": "EXACT",
+      "score": 100.0
+    }
+  ],
+  "not_found_note": "No clause mentions pets or animals. The closest related clause is about use of the Premises.",
+  "clarifying_question": null,
+  "escalation": null,
+  "conversation_id": "conv_1",
+  "trace": {
+    "route": "DOC_FACT",
+    "tools_used": [
+      "search_clauses"
+    ],
+    "latency_ms": 2950
+  },
+  "disclaimer": "LexiShield gives preliminary information to help you understand a document. It is not legal advice and cannot decide whether anything is legal or enforceable."
+}

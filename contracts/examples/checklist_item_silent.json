@@ -1,0 +1,9 @@
+{
+  "topic_id": "in_rental.maintenance_split",
+  "title": "Maintenance and repairs",
+  "hypothesis": "The agreement says who pays for repairs and maintenance.",
+  "status": "NOT_MENTIONED",
+  "evidence": [],
+  "note": "Not found in this document. This is commonly addressed in rental agreements.",
+  "severity": "HIGH"
+}

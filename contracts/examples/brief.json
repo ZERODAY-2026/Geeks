@@ -1,0 +1,145 @@
+{
+  "document_id": "doc_7f3a9c",
+  "generated_at": "2026-10-18T12:00:00Z",
+  "doc_type": "rental",
+  "jurisdiction": {
+    "country": "IN",
+    "state": "Karnataka",
+    "confidence": 0.9,
+    "evidence": [
+      {
+        "page": 7,
+        "char_start": 14010,
+        "char_end": 14126,
+        "clause_id": "C24",
+        "quote": "This Agreement shall be governed by the laws of India and the courts at Bengaluru shall have exclusive jurisdiction.",
+        "match": "EXACT",
+        "score": 100.0
+      }
+    ],
+    "overridden_by_user": false
+  },
+  "parties": {
+    "Licensor": "landlord",
+    "Licensee": "tenant"
+  },
+  "top_issues": [
+    {
+      "id": "card_09",
+      "topic_id": "in_rental.lock_in",
+      "title": "Lock-in period",
+      "severity": "HIGH",
+      "tier": "INTERPRETATION",
+      "reading_grade": null,
+      "source": {
+        "page": 3,
+        "char_start": 6498,
+        "char_end": 6646,
+        "clause_id": "C13",
+        "quote": "13. LOCK-IN. Neither party shall terminate this Agreement during the first six (6) months from the Commencement Date, save as provided in Clause 17.",
+        "match": "EXACT",
+        "score": 100.0
+      },
+      "plain_explanation": null,
+      "explanation_withheld_reason": "We couldn't verify the numbers in this explanation against the clause. Please read the clause itself.",
+      "stated": [
+        "Neither party may end the agreement in the first 6 months, except under Clause 17."
+      ],
+      "interpretations": [],
+      "ambiguity_flags": [],
+      "jurisdiction_flags": [],
+      "questions_for_lawyer": [
+        "What happens to my deposit if I must leave during the lock-in?"
+      ]
+    },
+    {
+      "id": "card_07",
+      "topic_id": "in_rental.security_deposit",
+      "title": "Security deposit",
+      "severity": "MEDIUM",
+      "tier": "STATED",
+      "reading_grade": 7.8,
+      "source": {
+        "page": 3,
+        "char_start": 6142,
+        "char_end": 6281,
+        "clause_id": "C12",
+        "quote": "The Licensee shall pay to the Licensor an interest-free refundable security deposit of Rs. 1,50,000/- (Rupees One Lakh Fifty Thousand only)",
+        "match": "EXACT",
+        "score": 100.0
+      },
+      "plain_explanation": {
+        "text": "You pay a deposit of ₹1,50,000 before moving in. No interest is paid on it.",
+        "kind": "STATED",
+        "citations": [
+          {
+            "page": 3,
+            "char_start": 6142,
+            "char_end": 6281,
+            "clause_id": "C12",
+            "quote": "The Licensee shall pay to the Licensor an interest-free refundable security deposit of Rs. 1,50,000/- (Rupees One Lakh Fifty Thousand only)",
+            "match": "EXACT",
+            "score": 100.0
+          }
+        ],
+        "distortion": "PASS",
+        "facts": [
+          "INR 150000"
+        ]
+      },
+      "explanation_withheld_reason": null,
+      "stated": [
+        "The deposit is interest-free and refundable.",
+        "It is refunded within 30 days of vacating, after deductions."
+      ],
+      "interpretations": [
+        {
+          "text": "'Damages' and 'painting charges' are not defined, so the amount that can be deducted is unclear.",
+          "kind": "CONCERN",
+          "citations": [
+            {
+              "page": 3,
+              "char_start": 6142,
+              "char_end": 6281,
+              "clause_id": "C12",
+              "quote": "The Licensee shall pay to the Licensor an interest-free refundable security deposit of Rs. 1,50,000/- (Rupees One Lakh Fifty Thousand only)",
+              "match": "EXACT",
+              "score": 100.0
+            }
+          ],
+          "distortion": "NA",
+          "facts": []
+        }
+      ],
+      "ambiguity_flags": [
+        "Undefined term: damages",
+        "Undefined amount: painting charges"
+      ],
+      "jurisdiction_flags": [
+        "Limits on deposits vary by state. Check local rent law with a professional."
+      ],
+      "questions_for_lawyer": [
+        "Which deductions are allowed, and can I see an itemised bill?"
+      ]
+    }
+  ],
+  "deadlines": [],
+  "silences": [
+    "in_rental.maintenance_split"
+  ],
+  "questions_for_lawyer": [
+    "Which deductions are allowed, and can I see an itemised bill?",
+    "What happens to my deposit if I must leave during the lock-in?"
+  ],
+  "escalations": [
+    {
+      "topic_family": "rent_tenancy",
+      "who": "Property / tenancy lawyer, or the Rent Authority where your state law provides one",
+      "why": "Deposit deductions and lock-in terms depend on state law and the facts.",
+      "free_help": "District Legal Services Authority (DLSA): free legal aid if you are eligible",
+      "urgency": "normal",
+      "jurisdiction_note": "Detected: India, Karnataka (from the governing-law clause)."
+    }
+  ],
+  "disclaimer": "LexiShield gives preliminary information to help you understand a document. It is not legal advice and cannot decide whether anything is legal or enforceable."
+}

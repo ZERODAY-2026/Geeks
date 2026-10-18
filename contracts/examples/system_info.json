@@ -1,0 +1,37 @@
+{
+  "app_version": "0.1.0",
+  "profile": "gpu",
+  "model": {
+    "name": "gemma4:e4b-it-qat",
+    "digest": "sha256:…",
+    "family": "gemma4",
+    "parameter_size": "8B",
+    "quantization": "Q4_0",
+    "size_bytes": 6100000000,
+    "num_ctx": 8192
+  },
+  "alt_model": "gemma3n:e4b",
+  "embed_model": {
+    "name": "embeddinggemma:300m",
+    "digest": null,
+    "family": null,
+    "parameter_size": null,
+    "quantization": null,
+    "size_bytes": null,
+    "num_ctx": 2048
+  },
+  "ollama_version": "0.40.6",
+  "ollama_host": "http://127.0.0.1:11434",
+  "gpu": "NVIDIA GeForce RTX 5070 Laptop GPU, 8151 MiB",
+  "packs": [
+    "in_employment",
+    "in_rental",
+    "msa_generic",
+    "notice_generic"
+  ],
+  "statute_index": {
+    "available": true,
+    "snapshot": "v2026.08"
+  },
+  "agent_mode": "tools"
+}

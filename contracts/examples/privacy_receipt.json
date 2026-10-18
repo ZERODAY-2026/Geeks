@@ -1,0 +1,30 @@
+{
+  "receipt_id": "rcpt_01",
+  "created_at": "2026-10-18T12:00:00Z",
+  "app_version": "0.1.0",
+  "git_commit": "abc1234",
+  "lock_sha256": "…",
+  "model": {
+    "name": "gemma4:e4b-it-qat",
+    "digest": "sha256:…",
+    "family": "gemma4",
+    "parameter_size": "8B",
+    "quantization": "Q4_0",
+    "size_bytes": 6100000000,
+    "num_ctx": 8192
+  },
+  "ollama_version": "0.40.6",
+  "network": {
+    "mode": "docker-internal",
+    "non_loopback_connects": 0,
+    "blocked_attempts": 0
+  },
+  "storage": {
+    "temp_files_created": 0,
+    "shredded_documents": 1
+  },
+  "document_hmac": null,
+  "algorithm": "Ed25519",
+  "public_key": "base64…",
+  "signature": "base64…"
+}

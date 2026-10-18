@@ -1,0 +1,8 @@
+{
+  "type": "https://lexishield.local/errors/scanned-no-text",
+  "title": "No text layer found",
+  "status": 422,
+  "detail": "This PDF looks scanned. Enable local OCR or upload a text PDF.",
+  "code": "SCANNED_NO_TEXT",
+  "instance": null
+}

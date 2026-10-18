@@ -1,0 +1,43 @@
+{
+  "status": "LEGAL_VERDICT_DECLINED",
+  "message": "I can't tell you whether this clause is enforceable. That depends on the law and the facts. Here is what the document says:",
+  "claims": [
+    {
+      "text": "Neither side can end the agreement in the first 6 months, except under Clause 17.",
+      "kind": "STATED",
+      "citations": [
+        {
+          "page": 3,
+          "char_start": 6498,
+          "char_end": 6646,
+          "clause_id": "C13",
+          "quote": "13. LOCK-IN. Neither party shall terminate this Agreement during the first six (6) months from the Commencement Date, save as provided in Clause 17.",
+          "match": "EXACT",
+          "score": 100.0
+        }
+      ],
+      "distortion": "PASS",
+      "facts": [
+        "6 months"
+      ]
+    }
+  ],
+  "related_clauses": [],
+  "not_found_note": null,
+  "clarifying_question": null,
+  "escalation": {
+    "topic_family": "rent_tenancy",
+    "who": "Property / tenancy lawyer, or the Rent Authority where your state law provides one",
+    "why": "Deposit deductions and lock-in terms depend on state law and the facts.",
+    "free_help": "District Legal Services Authority (DLSA): free legal aid if you are eligible",
+    "urgency": "normal",
+    "jurisdiction_note": "Detected: India, Karnataka (from the governing-law clause)."
+  },
+  "conversation_id": "conv_1",
+  "trace": {
+    "route": "LEGAL_VERDICT",
+    "tools_used": [],
+    "latency_ms": 410
+  },
+  "disclaimer": "LexiShield gives preliminary information to help you understand a document. It is not legal advice and cannot decide whether anything is legal or enforceable."
+}
