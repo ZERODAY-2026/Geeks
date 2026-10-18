@@ -32,20 +32,7 @@ LexiShield analyzes residential rental agreements, employment contracts, freelan
 
 ---
 
-## Implementation Status
 
-LexiShield follows a strict phase-gate build plan defined in [`docs/plan/LexiShield_Build_Plan.docx`](docs/plan/LexiShield_Build_Plan.docx). Every phase enforces cumulative automated test gates and strict contract freezes.
-
-| Phase | Subsystem Scope | Status | Verification Evidence |
-|---|---|---|---|
-| **Phase 0** | **Foundations, LLM Gateway & Frozen API Contract** | **COMPLETED & VERIFIED** | 26/26 unit tests passing (`pytest -m phase0`); frozen OpenAPI 3.1 specification & examples in `contracts/`; RFC 9457 `problem+json` error envelope; loopback bind enforcement; live Gemma structured output validation; OMEN RTX 5070 benchmark recorded (`eval/results/bench_gemma4-e4b-it-qat_omen-rtx5070.json`). |
-| **Phase 1** | **Ingestion, Trust Boundary & Hybrid Retrieval** | **COMPLETED & VERIFIED** | 71/71 tests passing (`pytest -m "phase0 or phase1"`); smoke test 11/11 passing (`scripts/smoke_api.py --phase 1`); in-memory PDF/DOCX/TXT parsers with character offset maps; hidden-text & injection quarantine; AES-256-GCM sealed vault with crypto-shredding; temp-file sentinel (0 disk writes); socket egress guard; BM25 + EmbeddingGemma hybrid retrieval with RRF. |
-| **Phase 2** | **Analysis Core, Checklist Packs & Verification Gate** | ⏳ **Planned** *(Contract Frozen)* | Endpoints return `501 NOT_IMPLEMENTED`. Contract includes: YAML topic packs (`in_rental.yaml`, `in_employment.yaml`), tri-state NLI (ENTAILED, CONTRADICTED, NOT_MENTIONED, UNCLEAR), fact distortion checker, silence double-key, asyncio job queue, and SSE progress stream (`/jobs/{id}/events`). |
-| **Phase 3** | **Interactive Layer: Grounded Q&A, Scenarios & Statutes** | ⏳ **Planned** *(Contract Frozen)* | Endpoints return `501 NOT_IMPLEMENTED`. Contract includes: Bounded tool-calling Ask agent (max 3 calls), Legal Advice Guard (`LEGAL_VERDICT_DECLINED`), what-if financial scenario engine, SQLite FTS5 statute context index (Open India Law), and pre-lawyer markdown brief. |
-| **Phase 4** | **Air-gap Proof, Signed Receipts, Red Team & CUAD Eval** | ⏳ **Planned** *(Contract Frozen)* | Contract includes: Docker network-isolated prover run, Ed25519-signed Privacy Receipts (`/privacy/receipts`), 25+ adversarial injection red-team test suite, and 20-contract CUAD v1 benchmark evaluation. |
-| **Phase 5** | **Freeze, Clean-Clone Reproduction & Demo Submission** | ⏳ **Planned** | Clean clone reproduction script, dependency telemetry scan, zero-secret verification, and offline demo recording. |
-
----
 
 ## Architecture & Workflow
 
