@@ -66,13 +66,8 @@ flowchart TD
     end
 
     subgraph Pipeline["Five-Stage Processing Pipeline"]
-        STAGE1["1. Ingestion & Sanitization<br/>PDF/DOCX/TXT Parser • Hidden Text & Injection Scan • Exact Offset Map"]
-        STAGE2["2. Hybrid Retrieval & Context<br/>BM25 + EmbeddingGemma RRF (k=6) • Cross-Refs • Statute Index"]
-        STAGE3["3. Gemma Agent Orchestration<br/>Classification • Checklist DAG • LLM Gateway (Schema Enforcement)"]
-        STAGE4["4. Multi-Layer Verification Gate<br/>Quote Verifier • Fact Distortion Checker • Silence Double-Key • Advice Guard"]
-        STAGE5["5. Triage & Escalation<br/>Severity Scoring • Exposure Arithmetic • India-First Escalation Routes"]
-
-        STAGE1 --> STAGE2 --> STAGE3 --> STAGE4 --> STAGE5
+        direction LR
+        STAGE1["1. Ingestion & Sanitization<br/>PDF/DOCX/TXT Parser • Offset Map"] --> STAGE2["2. Hybrid Retrieval<br/>BM25 + EmbeddingGemma (RRF)"] --> STAGE3["3. Gemma Orchestration<br/>Checklist DAG • Structured NLI"] --> STAGE4["4. Verification Gate<br/>Quote Match • Distortion & Advice Guards"] --> STAGE5["5. Triage & Escalation<br/>Severity • India Escalation Routes"]
     end
 
     subgraph Runtime["Local Inference Runtime"]
