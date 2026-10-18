@@ -165,104 +165,76 @@ flowchart TD
 ### 2. End-to-End Workflow & Verification Pipeline
 
 ```mermaid
-sequenceDiagram
-    autonumber
-    actor User as User / Frontend UI
-    participant API as API Gateway (FastAPI)
-    participant Ingest as Ingestion & Sanitization
-    participant Vault as Sealed In-Memory Vault
-    participant Queue as Asyncio Analysis Worker
-    participant Retrieval as Hybrid Retrieval & Packs
-    participant LLM as LLM Gateway & Gemma 4
-    participant Verify as Verification Gate
-    participant Triage as Triage & Escalation
+flowchart TD
+    subgraph Step1["1. Ingestion & Sanitization (Phase 1: Verified)"]
+        UPLOAD["User Upload: PDF / DOCX / TXT<br/>POST /api/v1/documents"]
+        SPOOL["In-Memory Buffer<br/>Cap: 20 MB (0 disk writes verified by Sentinel)"]
+        PARSE["File Parsers & Layout Extraction<br/>pdfplumber / python-docx / UTF-8 text"]
+        SCAN["Sanitization & Security Scans<br/>Hidden Text Scan + Prompt Injection Quarantine"]
+        OFFSET["Normalizer & Global Offset Map<br/>Exact round-trip: doc.text[start:end] == clause.text"]
+        SEGMENT["Clause Segmentation & Linking<br/>Hierarchical C1..Cn + Definitions + X-Refs"]
+        VAULT_IN["Sealed In-Memory Vault<br/>AES-256-GCM session key (in RAM only)"]
+        SUMMARY["201 Created: DocumentSummary<br/>id, pages, clause count, warnings, quick detect"]
 
-    %% Step 1: Upload
-    Note over User,Vault: Phase 1: Ingestion, Trust Boundary & Offset Mapping (Verified)
-    User->>API: POST /api/v1/documents (PDF, DOCX, or TXT)
-    API->>API: Check size (max 20 MB) & Memory Spool (spool_max_size)
-    API->>Ingest: Ingest file bytes in-memory (temp_sentinel watching)
-    Ingest->>Ingest: Detect hidden content (white text, tiny fonts, zero-width)
-    Ingest->>Ingest: Scan prompt injections (quarantine flagged text)
-    Ingest->>Ingest: Normalize text & build char offset map
-    Ingest->>Ingest: Segment clauses (C1..Cn) & extract cross-references
-    Ingest->>Vault: Store DocumentDetail encrypted (AES-256-GCM ephemeral key)
-    API-->>User: 201 Created (DocumentSummary: id, pages, clauses, warnings)
-
-    %% Step 2: Start Analysis
-    Note over User,Triage: Phase 2: Analysis Core, Streaming SSE & Verification Gate (Planned)
-    User->>API: POST /api/v1/documents/{id}/analyze
-    API->>Queue: Enqueue analysis job
-    API-->>User: 202 Accepted (JobAccepted: job_id)
-
-    %% Step 3: SSE Streaming
-    User->>API: GET /api/v1/jobs/{job_id}/events (Server-Sent Events)
-    API-->>User: SSE: event: job.stage (STAGE_CLASSIFY)
-    Queue->>LLM: Classify document type, jurisdiction, and party roles
-    LLM-->>Queue: Classification result
-    API-->>User: SSE: event: classification.ready
-
-    Queue->>Retrieval: Load Topic Pack (e.g. in_rental.yaml)
-    API-->>User: SSE: event: job.stage (STAGE_CHECKLIST)
-
-    loop For each topic in Topic Pack
-        Queue->>Retrieval: Hybrid retrieve candidate clauses (BM25 + EmbeddingGemma RRF k=6) + X-Refs
-        Retrieval-->>Queue: Candidate clauses & context
-        Queue->>LLM: Structured NLI Prompt with schema constraint
-        LLM-->>Queue: Status (ENTAILED | CONTRADICTED | NOT_MENTIONED | UNCLEAR), Quote, Explanation
-        Queue->>Verify: Verify quote, facts, distortion & advice
-        alt Quote does not match document offsets
-            Verify->>Verify: Drop unverified quote and set status to UNCLEAR
-        else Model claims NOT_MENTIONED but Lexicon hits
-            Verify->>Verify: Silence double-key overrides status to UNCLEAR
-        else Numbers, dates, or party roles fail Distortion Check
-            Verify->>Verify: Distortion FAIL: withhold explanation, show source quote only
-        else Legal verdict language detected
-            Verify->>Verify: Strip verdict and replace with standard limitation
-        else Verified PASS
-            Verify->>Verify: Assign confidence tier and reading grade
-        end
-        Verify-->>Queue: Verified ChecklistItem & ClauseCard
-        API-->>User: SSE: event: checklist.item
-        API-->>User: SSE: event: card.ready
+        UPLOAD --> SPOOL --> PARSE --> SCAN --> OFFSET --> SEGMENT --> VAULT_IN --> SUMMARY
     end
 
-    %% Step 4: Final Triage
-    Queue->>Triage: Aggregate verified cards, evaluate severity rules & exposure arithmetic
-    Triage->>Triage: Resolve India-first escalation paths (DLSA, Rent Authority, Labour Dept)
-    Triage->>Vault: Store complete TriageReport in encrypted vault
-    API-->>User: SSE: event: report.ready ({document_id, report_url})
+    subgraph Step2["2. Job Trigger & Progressive SSE Streaming (Phase 2: Planned)"]
+        START["Trigger Analysis<br/>POST /api/v1/documents/{id}/analyze"]
+        QUEUE["Asyncio Job Queue<br/>Returns 202 Accepted (job_id)"]
+        SSE_OPEN["Client Opens SSE Event Stream<br/>GET /api/v1/jobs/{job_id}/events"]
+        CLASSIFY["Gemma Document Classification<br/>DocType + Jurisdiction + Party Roles"]
+        PACK_SEL["Load Checklist Pack (YAML)<br/>e.g. in_rental.yaml, in_employment.yaml"]
 
-    %% Step 5: Report Retrieval
-    User->>API: GET /api/v1/documents/{id}/report
-    Vault-->>API: Decrypt TriageReport
-    API-->>User: 200 OK (TriageReport)
-
-    %% Step 6: Interactive Q&A
-    Note over User,Verify: Phase 3: Interactive Ask Agent & Advice Guard (Planned)
-    User->>API: POST /api/v1/documents/{id}/ask (Question query)
-    alt Legal verdict inquiry (e.g. Can I be evicted?)
-        API->>Verify: Legal Advice Guard triggers
-        API-->>User: 200 OK (status: LEGAL_VERDICT_DECLINED, factual citations, escalation route)
-    else Fact in document
-        API->>LLM: Ask Agent searches clauses & synthesizes answer
-        LLM->>Verify: Verify answer quotes and citations
-        API-->>User: 200 OK (status: ANSWERED, verified claims with citations)
-    else Silent in document
-        API-->>User: 200 OK (status: NOT_IN_DOCUMENT, nearest related clauses)
+        SUMMARY --> START --> QUEUE --> SSE_OPEN
+        SSE_OPEN --> CLASSIFY --> PACK_SEL
     end
 
-    %% Step 7: Pre-Lawyer Brief
-    User->>API: GET /api/v1/documents/{id}/brief?format=md
-    API-->>User: 200 OK (Markdown Pre-Lawyer Escalation Dossier)
+    subgraph Step3["3. Per-Topic NLI & Verification Pipeline (Phase 2: Planned)"]
+        RETRIEVE["Hybrid Retrieval per Topic<br/>BM25 + EmbeddingGemma (RRF k=6) + X-Refs"]
+        LLM_CALL["Gemma 4 Structured NLI Inference<br/>Schema: Status, Evidence Quotes, Plain Explanation"]
+        GATE{"Verification Gate<br/>Automated Checks"}
 
-    %% Step 8: Crypto-shred
-    Note over User,Vault: Phase 1 & 4: Privacy Proof & Crypto-Shredding
-    User->>API: DELETE /api/v1/documents/{id}
-    API->>Vault: Destroy session AES-256-GCM key (crypto-shred)
-    API-->>User: 200 OK ({"deleted": true, "crypto_shredded": true})
-    User->>API: GET /api/v1/documents/{id}
-    API-->>User: 404 NOT_FOUND (Document unrecoverable)
+        Q_CHECK["1. Quote Verifier<br/>Match quote to original document offset"]
+        S_CHECK["2. Silence Double-Key<br/>If NOT_MENTIONED + Lexicon hit -> UNCLEAR"]
+        D_CHECK["3. Distortion Checker<br/>Verify numbers, dates, durations, negation & roles"]
+        A_CHECK["4. Legal Advice Guard<br/>Regex blocks verdicts (enforceable, illegal, etc.)"]
+
+        VERIFIED["Output: Verified ClauseCard & ChecklistItem<br/>Confidence Tier + Reading Grade Calculation"]
+        STREAM_CARD["Emit Progressive SSE Events<br/>event: checklist.item & event: card.ready"]
+
+        PACK_SEL --> RETRIEVE --> LLM_CALL --> GATE
+        GATE --> Q_CHECK --> S_CHECK --> D_CHECK --> A_CHECK --> VERIFIED --> STREAM_CARD
+    end
+
+    subgraph Step4["4. Triage Synthesis & Report (Phase 2: Planned)"]
+        TRIAGE["Triage Aggregator<br/>Severity Rules + Exposure Arithmetic (Rent, Deposit)"]
+        ESCALATION["India-First Escalation Router<br/>Lawyers, Rent Authority, Labour Dept, DLSA"]
+        VAULT_SAVE["Store Final TriageReport<br/>Encrypted in In-Memory Vault"]
+        REPORT_READY["Emit SSE: event: report.ready<br/>document_id, report_url"]
+        REPORT_GET["Client Fetches Full Report<br/>GET /api/v1/documents/{id}/report"]
+
+        STREAM_CARD --> TRIAGE --> ESCALATION --> VAULT_SAVE --> REPORT_READY --> REPORT_GET
+    end
+
+    subgraph Step5["5. Interactive Layer & Crypto-Shredding (Phase 3 & 4: Planned)"]
+        ASK["User Grounded Q&A<br/>POST /api/v1/documents/{id}/ask"]
+        ROUTER{"Ask Intent Router"}
+        DECLINED["Legal Verdict Bait<br/>Refusal: LEGAL_VERDICT_DECLINED + Escalation"]
+        ANSWERED["Factual / Plain Query<br/>ANSWERED with Verified Clause Citations"]
+        NOT_FOUND["Uncovered Topic<br/>NOT_IN_DOCUMENT + Nearest Related Clauses"]
+
+        BRIEF["Pre-Lawyer Escalation Brief<br/>GET /api/v1/documents/{id}/brief (JSON/Markdown)"]
+        DELETE["Crypto-Shred Document<br/>DELETE /api/v1/documents/{id}"]
+        SHRED_ACTION["Vault Discards AES-256-GCM Key<br/>Data becomes immediately unrecoverable (404)"]
+
+        REPORT_GET --> ASK --> ROUTER
+        ROUTER -->|Verdict Bait| DECLINED
+        ROUTER -->|Document Fact| ANSWERED
+        ROUTER -->|Absent Topic| NOT_FOUND
+        REPORT_GET --> BRIEF
+        REPORT_GET --> DELETE --> SHRED_ACTION
+    end
 ```
 
 ---
