@@ -53,7 +53,7 @@ def _store(request: Request, ing: Ingested, filename: str, mime: str) -> Documen
     return summary
 
 
-def _load(request: Request, document_id: str) -> DocumentDetail:
+def load_detail(request: Request, document_id: str) -> DocumentDetail:
     raw = _vault(request).get(document_id)
     if raw is None:
         raise LexiError(404, "NOT_FOUND", "Document not found", "It was deleted, expired, or never existed.")
@@ -110,12 +110,12 @@ async def upload_text(request: Request, body: TextUpload) -> DocumentSummary:
 
 @router.get("/documents/{document_id}", response_model=DocumentDetail, responses=problem_responses(404))
 async def get_document(request: Request, document_id: str) -> DocumentDetail:
-    return _load(request, document_id)
+    return load_detail(request, document_id)
 
 
 @router.get("/documents/{document_id}/clauses/{clause_id}", response_model=Clause, responses=problem_responses(404))
 async def get_clause(request: Request, document_id: str, clause_id: str) -> Clause:
-    detail = _load(request, document_id)
+    detail = load_detail(request, document_id)
     clause = next((c for c in detail.clauses if c.id == clause_id), None)
     if clause is None:
         raise LexiError(404, "NOT_FOUND", "Clause not found", f"No clause {clause_id} in this document.")
@@ -126,12 +126,28 @@ async def get_clause(request: Request, document_id: str, clause_id: str) -> Clau
 async def delete_document(request: Request, document_id: str) -> DeleteResult:
     if not _vault(request).delete(document_id):
         raise LexiError(404, "NOT_FOUND", "Document not found", "It was already deleted or never existed.")
+    request.app.state.jobs.purge(document_id)  # jobs and the sealed report go with the document
     egress_guard.record("document_shredded", None, "crypto_shredded")
     return DeleteResult(deleted=True, crypto_shredded=True)
 
 
 @router.delete("/sessions", response_model=WipeResult, summary="Crypto-shred every document in memory")
 async def wipe_sessions(request: Request) -> WipeResult:
+    request.app.state.jobs.purge_all()
     n = _vault(request).wipe()
     egress_guard.record("session_wiped", None, "crypto_shredded")
     return WipeResult(wiped=n)
+
+
+def ingested_from(detail: DocumentDetail) -> Ingested:
+    """Rebuild the ingest result from the stored document, so the analysis sees the same offsets and findings."""
+    text = "\n\n".join(p.text for p in detail.pages)
+    return Ingested(
+        text=text,
+        pages=detail.pages,
+        clauses=detail.clauses,
+        hidden=detail.summary.hidden_findings,
+        warnings=detail.summary.warnings,
+        quick=detail.summary.quick_detect,
+        scanned=detail.summary.scanned,
+    )

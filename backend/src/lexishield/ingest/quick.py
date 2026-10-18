@@ -81,3 +81,23 @@ def quick_detect(text: str) -> QuickDetect:
         doc_type=doc if doc_score >= 2 else DocType.UNKNOWN,
         country=country if c_score >= 1 else Country.UNKNOWN,
     )
+
+
+GOVERNING_LAW_RE = re.compile(
+    r"governed by (?:the )?laws? of (India|England and Wales|the State of [A-Z][A-Za-z]+(?: [A-Z][A-Za-z]+)*)"
+)
+
+
+def governing_law(text: str) -> tuple[Country, int, int] | None:
+    """The governing-law sentence phrase and the country it names. Offsets are into `text`."""
+    m = GOVERNING_LAW_RE.search(text)
+    if m is None:
+        return None
+    named = m.group(1)
+    if named == "India":
+        country = Country.IN
+    elif named == "England and Wales":
+        country = Country.UK
+    else:
+        country = Country.US
+    return country, m.start(), m.end()

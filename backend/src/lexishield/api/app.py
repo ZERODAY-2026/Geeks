@@ -7,6 +7,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from starlette.formparsers import MultiPartParser
 
 from .. import __version__
+from ..jobs.queue import JobManager
 from ..llm.gateway import LLMGateway
 from ..settings import Settings, get_settings
 from ..trust import egress_guard, temp_sentinel
@@ -42,6 +43,7 @@ def create_app(settings: Settings | None = None, gateway: LLMGateway | None = No
     app.state.settings = settings
     app.state.gateway = gateway or LLMGateway(settings)
     app.state.vault = Vault(settings.privacy.session_ttl_s)
+    app.state.jobs = JobManager(app.state.vault)
 
     app.add_middleware(
         CORSMiddleware,

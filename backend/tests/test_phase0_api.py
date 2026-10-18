@@ -105,7 +105,7 @@ def test_benchmark_404_then_served(client, settings) -> None:
     ("method", "path", "status", "code"),
     [
         ("get", "/api/v1/nope", 404, "NOT_FOUND"),
-        ("get", "/api/v1/packs/in_rental", 501, "NOT_IMPLEMENTED"),
+        ("get", "/api/v1/eval/summary", 501, "NOT_IMPLEMENTED"),  # Phase 4; packs are built in Phase 2
         ("post", "/api/v1/documents/abc/ask", 422, "VALIDATION_ERROR"),
         ("delete", "/api/v1/health", 405, "METHOD_NOT_ALLOWED"),
     ],

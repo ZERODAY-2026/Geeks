@@ -12,9 +12,11 @@ from ...models import (
     PrivacyReceipt,
     PrivacyStatus,
     ReceiptRequest,
+    TopicInfo,
 )
+from ...packs import Pack, all_packs
 from ...trust import egress_guard, temp_sentinel
-from ..errors import NotImplementedYet, problem_responses
+from ..errors import LexiError, NotImplementedYet, problem_responses
 
 router = APIRouter()
 
@@ -50,14 +52,28 @@ async def get_receipt(receipt_id: str) -> PrivacyReceipt:
     raise NotImplementedYet("Phase 4")
 
 
+def _pack_info(p: Pack) -> PackInfo:
+    return PackInfo(
+        pack_id=p.pack_id,
+        doc_type=p.doc_type,
+        jurisdiction=p.jurisdiction,
+        version=p.version,
+        depth=p.depth,
+        topics=[TopicInfo(id=t.id, title=t.title) for t in p.topics],
+    )
+
+
 @router.get("/packs", response_model=list[PackInfo], tags=["packs"])
-async def list_packs() -> list[PackInfo]:
-    raise NotImplementedYet("Phase 2")
+async def list_packs(request: Request) -> list[PackInfo]:
+    return [_pack_info(p) for p in sorted(all_packs(request.app.state.settings).values(), key=lambda p: p.pack_id)]
 
 
 @router.get("/packs/{pack_id}", response_model=PackInfo, tags=["packs"], responses=problem_responses(404))
-async def get_pack(pack_id: str) -> PackInfo:
-    raise NotImplementedYet("Phase 2")
+async def get_pack(request: Request, pack_id: str) -> PackInfo:
+    pack = all_packs(request.app.state.settings).get(pack_id)
+    if pack is None:
+        raise LexiError(404, "NOT_FOUND", "Pack not found", f"No checklist pack named {pack_id!r}.")
+    return _pack_info(pack)
 
 
 @router.get("/eval/summary", response_model=EvalSummary, tags=["eval"])

@@ -1,0 +1,9 @@
+{
+  "topic_id": "in_rental.rent_escalation",
+  "title": "Rent increase",
+  "hypothesis": "The agreement says whether and how the monthly amount can rise.",
+  "status": "NOT_MENTIONED",
+  "evidence": [],
+  "note": "Not found. Rent increases are often agreed in advance, so ask before you sign.",
+  "severity": "MEDIUM"
+}
