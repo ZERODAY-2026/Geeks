@@ -189,5 +189,9 @@ def test_no_secrets_in_backend_sources() -> None:
     import re
 
     pat = re.compile(r"(api[_-]?key|secret|token)\s*[:=]\s*['\"][A-Za-z0-9_\-]{16,}", re.I)
-    hits = [p for p in Path(BACKEND_DIR).rglob("*.py") if ".venv" not in p.parts and pat.search(p.read_text())]
+    hits = [
+        p
+        for p in Path(BACKEND_DIR).rglob("*.py")
+        if ".venv" not in p.parts and pat.search(p.read_text(encoding="utf-8"))
+    ]
     assert not hits
