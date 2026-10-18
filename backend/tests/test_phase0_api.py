@@ -67,7 +67,7 @@ def test_system_info_reports_digest_and_quantization(client) -> None:
     assert i["model"]["digest"] == "sha256:aaa"
     assert i["model"]["quantization"] == "Q4_0"
     assert i["embed_model"]["name"] == "embeddinggemma:300m"
-    assert i["agent_mode"] == "tools"
+    assert i["agent_mode"] == "pipeline"  # only the pipeline is built; tool-calling mode is on the plan's cut list
 
 
 def test_system_info_503_problem_when_ollama_down(settings) -> None:

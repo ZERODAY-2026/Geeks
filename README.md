@@ -478,6 +478,7 @@ The repository maintains cumulative testing gates. Running a phase test also ver
 ### Run Phase Test Gates
 
 ```bash
+# Backend API with auto-reload off, loopback only
 cd backend
 
 # Phase 0 Gate: Unit & frozen contract tests (no model required)

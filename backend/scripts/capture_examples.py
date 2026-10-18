@@ -14,15 +14,21 @@ from __future__ import annotations
 import asyncio
 from pathlib import Path
 
+from lexishield.agents.ask import answer
 from lexishield.agents.orchestrator import run_analysis
 from lexishield.ingest.pipeline import ingest_text
 from lexishield.llm.gateway import LLMGateway
-from lexishield.models import AnalyzeRequest, ChecklistStatus
+from lexishield.models import AnalyzeRequest, AskRequest, ChecklistStatus
 from lexishield.settings import Settings
 
 CAPTURED = Path(__file__).resolve().parent / "captured"
 FIXTURE = Path(__file__).resolve().parents[1] / "tests" / "fixtures" / "in_rental_11m_leave_license.txt"
 EXAMPLE_DOC = "doc_example"
+ASK = {
+    "ask_answered": "How much is the security deposit?",
+    "ask_not_in_document": "What is the pet policy?",
+    "ask_declined": "Is the lock-in clause enforceable?",
+}
 
 
 async def main() -> None:
@@ -41,7 +47,11 @@ async def main() -> None:
     (CAPTURED / "report.json").write_text(report.model_dump_json(indent=2) + "\n", encoding="utf-8")
     (CAPTURED / "card.json").write_text(card.model_dump_json(indent=2) + "\n", encoding="utf-8")
     (CAPTURED / "checklist_item_silent.json").write_text(silent.model_dump_json(indent=2) + "\n", encoding="utf-8")
-    print(f"captured to {CAPTURED}: {len(report.checklist)} items, {len(report.cards)} cards")
+    for name, question in ASK.items():
+        resp = await answer(gw, settings, ing, report, AskRequest(question=question, conversation_id="conv_example"))
+        (CAPTURED / f"{name}.json").write_text(resp.model_dump_json(indent=2) + "\n", encoding="utf-8")
+        print(f"  {name}: {resp.status.value}")
+    print(f"captured to {CAPTURED}: {len(report.checklist)} items, {len(report.cards)} cards, {len(ASK)} answers")
 
 
 if __name__ == "__main__":

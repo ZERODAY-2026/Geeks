@@ -13,7 +13,9 @@
           "clause_id": "C13",
           "quote": "13. LOCK-IN. Neither party shall terminate this Agreement during the first six (6) months from the Commencement Date, save as provided in Clause 17.",
           "match": "EXACT",
-          "score": 100.0
+          "score": 100.0,
+          "line_start": null,
+          "line_end": null
         }
       ]
     },
@@ -39,7 +41,9 @@
           "clause_id": "C12",
           "quote": "The Licensee shall pay to the Licensor an interest-free refundable security deposit of Rs. 1,50,000/- (Rupees One Lakh Fifty Thousand only)",
           "match": "EXACT",
-          "score": 100.0
+          "score": 100.0,
+          "line_start": null,
+          "line_end": null
         }
       }
     ],

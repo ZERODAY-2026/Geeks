@@ -15,6 +15,7 @@ from typing import Literal
 from pydantic import BaseModel, Field
 
 from ..ingest.pipeline import Ingested
+from ..ingest.segment import line_span
 from ..llm.gateway import LLMGateway
 from ..llm.prompts import ask as prompts
 from ..models import (
@@ -30,6 +31,7 @@ from ..models import (
     DocType,
     Escalation,
     MatchType,
+    PageText,
     TriageReport,
     UserRole,
 )
@@ -78,8 +80,9 @@ class AskOut(BaseModel):
     status: Literal["ANSWERED", "NOT_IN_DOCUMENT"]
 
 
-def _clause_citation(clause: Clause) -> Citation:
+def _clause_citation(clause: Clause, pages: list[PageText]) -> Citation:
     """A whole clause as a citation: its text is the source text, so it needs no matching."""
+    line_start, line_end = line_span(pages, clause.char_start, clause.char_end)
     return Citation(
         page=clause.page_start,
         char_start=clause.char_start,
@@ -88,6 +91,8 @@ def _clause_citation(clause: Clause) -> Citation:
         quote=clause.text,
         match=MatchType.EXACT,
         score=100.0,
+        line_start=line_start,
+        line_end=line_end,
     )
 
 
@@ -99,7 +104,7 @@ async def _retrieve(gw: LLMGateway, doc: DocContext, question: str) -> list[str]
 def _related(doc: DocContext, ids: list[str]) -> list[Citation]:
     out: list[Citation] = []
     for cid in ids:
-        cit = _clause_citation(doc.by_id[cid])
+        cit = _clause_citation(doc.by_id[cid], doc.ing.pages)
         if doc.overlaps_flagged(cit):
             continue  # never show flagged hidden text as a related clause
         out.append(cit)

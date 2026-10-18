@@ -81,6 +81,7 @@ class FakeOllama:
 def settings(tmp_path: Path) -> Settings:
     s = Settings()
     s.models.profile = "gpu"
+    s.server.serve_frontend = False
     s.models.options.timeout_s = 2
     s.paths.results_dir = str(tmp_path / "results")
     return s

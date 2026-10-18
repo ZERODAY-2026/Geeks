@@ -1,28 +1,53 @@
 {
   "status": "NOT_IN_DOCUMENT",
-  "message": "This document does not appear to address pets.",
+  "message": "This document does not appear to address that. The closest related clauses are below.",
   "claims": [],
   "related_clauses": [
     {
-      "page": 4,
-      "char_start": 7300,
-      "char_end": 7357,
-      "clause_id": "C15",
-      "quote": "The Premises shall be used only for residential purposes.",
+      "page": 1,
+      "char_start": 425,
+      "char_end": 801,
+      "clause_id": "C4",
+      "quote": "3. SECURITY DEPOSIT. The Licensee shall pay to the Licensor an interest-free refundable security deposit of Rs. 1,50,000/- (Rupees One Lakh Fifty Thousand only) on or before the date of possession. The deposit shall be refunded within thirty (30) days of the Licensee vacating the Premises, after deducting any amounts towards unpaid licence fee, damages and painting charges.",
       "match": "EXACT",
-      "score": 100.0
+      "score": 100.0,
+      "line_start": 7,
+      "line_end": 7
+    },
+    {
+      "page": 1,
+      "char_start": 0,
+      "char_end": 231,
+      "clause_id": "C1",
+      "quote": "LEAVE AND LICENSE AGREEMENT (SYNTHETIC TEST DOCUMENT)\n\nThis Agreement is made on 1 March 2026 between Mr. A. Sharma, the Licensor, and Ms. B. Rao, the Licensee, for the premises at 12 MG Road, Bengaluru, Karnataka (the \"Premises\").",
+      "match": "EXACT",
+      "score": 100.0,
+      "line_start": 1,
+      "line_end": 3
+    },
+    {
+      "page": 1,
+      "char_start": 1153,
+      "char_end": 1211,
+      "clause_id": "C8",
+      "quote": "7. SUBLETTING. The Licensee shall not sublet the Premises.",
+      "match": "EXACT",
+      "score": 100.0,
+      "line_start": 11,
+      "line_end": 11
     }
   ],
-  "not_found_note": "No clause mentions pets or animals. The closest related clause is about use of the Premises.",
+  "not_found_note": "No clause in this document answers the question.",
   "clarifying_question": null,
   "escalation": null,
-  "conversation_id": "conv_1",
+  "conversation_id": "conv_example",
   "trace": {
-    "route": "DOC_FACT",
+    "route": "DOCFACT",
     "tools_used": [
-      "search_clauses"
+      "search_clauses",
+      "answer"
     ],
-    "latency_ms": 2950
+    "latency_ms": 496
   },
   "disclaimer": "LexiShield gives preliminary information to help you understand a document. It is not legal advice and cannot decide whether anything is legal or enforceable."
 }

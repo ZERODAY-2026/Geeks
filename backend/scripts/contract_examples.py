@@ -13,18 +13,14 @@ from pydantic import BaseModel
 
 from lexishield.models import (
     AskResponse,
-    AskStatus,
-    AskTrace,
     BenchmarkResult,
     ChecklistItem,
     Citation,
-    Claim,
     ClaimKind,
     Classification,
     Clause,
     ClauseCard,
     Country,
-    Distortion,
     DocType,
     DocumentDetail,
     DocumentSummary,
@@ -189,45 +185,16 @@ STATUTE = StatuteRef(
     source_url="https://indiacode.gov.in",
 )
 
-# The report, card and silent checklist item are real output, captured on the synthetic rental fixture by
-# scripts/capture_examples.py. They are not hand-written, so the frontend sees what the analysis produces.
+# The report, card, silent checklist item and the three Ask answers are real output, captured on the synthetic
+# rental fixture by scripts/capture_examples.py. They are not hand-written, so the frontend sees real output.
 CAPTURED = Path(__file__).resolve().parent / "captured"
 REPORT = TriageReport.model_validate_json((CAPTURED / "report.json").read_text(encoding="utf-8"))
 CARD = ClauseCard.model_validate_json((CAPTURED / "card.json").read_text(encoding="utf-8"))
 CHECK_SILENT = ChecklistItem.model_validate_json((CAPTURED / "checklist_item_silent.json").read_text(encoding="utf-8"))
 
-ASK_ANSWERED = AskResponse(
-    status=AskStatus.ANSWERED,
-    message="Here is what the document says about the deposit.",
-    claims=[CARD.plain_explanation],
-    conversation_id="conv_1",
-    trace=AskTrace(route="DOC_FACT", tools_used=["search_clauses", "get_clause"], latency_ms=3820),
-)
-ASK_DECLINED = AskResponse(
-    status=AskStatus.LEGAL_VERDICT_DECLINED,
-    message="I can't tell you whether this clause is enforceable. That depends on the law and the facts. "
-    "Here is what the document says:",
-    claims=[
-        Claim(
-            text="Neither side can end the agreement in the first 6 months, except under Clause 17.",
-            kind=ClaimKind.STATED,
-            citations=[LOCKIN],
-            distortion=Distortion.PASS,
-            facts=["6 months"],
-        )
-    ],
-    escalation=ESC_RENT,
-    conversation_id="conv_1",
-    trace=AskTrace(route="LEGAL_VERDICT", tools_used=[], latency_ms=410),
-)
-ASK_NOT_FOUND = AskResponse(
-    status=AskStatus.NOT_IN_DOCUMENT,
-    message="This document does not appear to address pets.",
-    not_found_note="No clause mentions pets or animals. The closest related clause is about use of the Premises.",
-    related_clauses=[cite("C15", "The Premises shall be used only for residential purposes.", 7300, page=4)],
-    conversation_id="conv_1",
-    trace=AskTrace(route="DOC_FACT", tools_used=["search_clauses"], latency_ms=2950),
-)
+ASK_ANSWERED = AskResponse.model_validate_json((CAPTURED / "ask_answered.json").read_text(encoding="utf-8"))
+ASK_DECLINED = AskResponse.model_validate_json((CAPTURED / "ask_declined.json").read_text(encoding="utf-8"))
+ASK_NOT_FOUND = AskResponse.model_validate_json((CAPTURED / "ask_not_in_document.json").read_text(encoding="utf-8"))
 
 SCENARIO_INFO = ScenarioInfo(
     scenario_id="rental_early_exit",

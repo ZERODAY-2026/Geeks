@@ -15,7 +15,7 @@ from dataclasses import dataclass
 from rapidfuzz import fuzz
 
 from ..ingest.hidden import ZERO_WIDTH
-from ..ingest.segment import page_of
+from ..ingest.segment import line_span, page_of
 from ..models import Citation, Clause, MatchType, PageText
 
 MIN_FUZZY_CHARS = 20  # shorter quotes match too easily to trust fuzzily
@@ -110,6 +110,7 @@ def verify_quote(quote: str, clause: Clause, text: str, pages: list[PageText], f
         return None
     g_start = clause.char_start + start
     g_end = clause.char_start + end
+    line_start, line_end = line_span(pages, g_start, g_end)
     return Citation(
         page=page_of(pages, g_start),
         char_start=g_start,
@@ -118,4 +119,6 @@ def verify_quote(quote: str, clause: Clause, text: str, pages: list[PageText], f
         quote=text[g_start:g_end],  # always the source text
         match=match,
         score=score,
+        line_start=line_start,
+        line_end=line_end,
     )

@@ -13,6 +13,7 @@ from ..settings import Settings, get_settings
 from ..trust import egress_guard, temp_sentinel
 from ..trust.vault import Vault
 from .errors import install_error_handlers
+from .frontend import mount_frontend
 from .routers import analysis, documents, interaction, meta, system
 from .upload_limit import UploadLimit
 
@@ -55,4 +56,6 @@ def create_app(settings: Settings | None = None, gateway: LLMGateway | None = No
     app.add_middleware(UploadLimit, max_bytes=settings.server.max_upload_mb * MB, path_prefix=f"{API_PREFIX}/documents")
     for r in (system.router, documents.router, analysis.router, interaction.router, meta.router):
         app.include_router(r, prefix=API_PREFIX)
+    if settings.server.serve_frontend:
+        mount_frontend(app, settings.paths.resolve("frontend_dist"))  # registered last: API routes win
     return app

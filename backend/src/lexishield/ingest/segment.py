@@ -67,6 +67,17 @@ def page_of(pages: list[PageText], offset: int) -> int:
     return pages[-1].page
 
 
+def line_span(pages: list[PageText], char_start: int, char_end: int) -> tuple[int, int]:
+    """1-based lines, within the page where the span starts, of the first and last character of [char_start, char_end).
+
+    A span that runs onto the next page ends at that page's last line, so both numbers refer to the same page.
+    """
+    page = next((p for p in pages if p.char_start <= char_start < p.char_end), pages[-1])
+    rel_start = max(0, char_start - page.char_start)
+    rel_last = min(len(page.text), max(rel_start + 1, char_end - page.char_start)) - 1
+    return page.text.count("\n", 0, rel_start) + 1, page.text.count("\n", 0, rel_last) + 1
+
+
 def build_clauses(text: str, pages: list[PageText]) -> list[Clause]:
     spans = segment(text)
     id_by_number = {s.number: f"C{i}" for i, s in enumerate(spans, 1) if s.number}
