@@ -11,19 +11,19 @@ topics:
     title: Parties and property
     query: parties licensor licensee landlord tenant premises address
     lexicon: [licensor, licensee, landlord, tenant, premises, between]
-    hypothesis: The agreement names the owner and the occupant and describes the property.
+    hypothesis: The agreement names the parties to it.
     severity: LOW
   - id: in_rental.term
     title: Term and lock-in start
     query: term duration months commencement lease period licence period
     lexicon: [months, commencing, commencement, term of, years]
-    hypothesis: The agreement states how long the occupancy lasts and when it starts.
+    hypothesis: The agreement states how long the occupancy lasts.
     severity: MEDIUM
   - id: in_rental.rent_amount
     title: Rent or licence fee and due date
     query: monthly rent licence fee amount due date
     lexicon: [rent, licence fee, monthly fee, per month]
-    hypothesis: The agreement states the monthly amount and the day it is due.
+    hypothesis: The agreement states the monthly rent or licence fee.
     severity: HIGH
   - id: in_rental.rent_escalation
     title: Rent increase
@@ -36,7 +36,7 @@ topics:
     title: Security deposit amount
     query: security deposit amount refundable interest
     lexicon: [deposit, security amount, advance, caution money]
-    hypothesis: The agreement states the security deposit amount and whether it is refundable.
+    hypothesis: The agreement states the security deposit amount.
     severity: HIGH
     silence_note: Deposit terms not found.
     escalation_ref: rent_tenancy
@@ -44,7 +44,7 @@ topics:
     title: Deposit refund timeline and deductions
     query: deposit refunded within days after vacating deductions
     lexicon: [refund, refunded, refundable, vacat, deduct]
-    hypothesis: The agreement says when the deposit is refunded and what can be deducted from it.
+    hypothesis: The agreement says when the deposit is refunded.
     severity: HIGH
     silence_note: No refund timeline found. Ask for one in writing.
     escalation_ref: rent_tenancy
@@ -63,7 +63,7 @@ topics:
     title: Notice to end the agreement
     query: termination notice period written notice to end agreement
     lexicon: [terminat, notice, end this agreement, vacate]
-    hypothesis: The agreement states how much written notice each party must give to end it.
+    hypothesis: The agreement states the notice needed to end it.
     severity: HIGH
     silence_note: No notice period found.
     escalation_ref: rent_tenancy
@@ -71,7 +71,7 @@ topics:
     title: Maintenance and repairs
     query: maintenance repairs responsibility structural minor
     lexicon: [repair, maintenance, structural]
-    hypothesis: The agreement says who pays for minor and structural repairs.
+    hypothesis: The agreement says which party is responsible for repairs.
     severity: MEDIUM
     silence_note: Not found. Who pays for repairs is often unclear, so ask before moving in.
     escalation_ref: rent_tenancy
@@ -79,7 +79,7 @@ topics:
     title: Society charges and utilities
     query: society maintenance charges electricity water utilities
     lexicon: [society, electricity, utilit, maintenance charges, broadband]
-    hypothesis: The agreement says who pays society charges and utility bills.
+    hypothesis: The agreement says who pays society charges or utility bills.
     severity: LOW
     silence_note: Not found. Ask who pays society charges and utility bills.
   - id: in_rental.landlord_entry
@@ -92,7 +92,7 @@ topics:
     title: Subletting and occupants
     query: subletting sub-let assign occupants guests
     lexicon: [sublet, sub-let, occupants, assign]
-    hypothesis: The agreement says whether the occupant may sublet or share the property.
+    hypothesis: The agreement says whether the occupant may sublet, assign or transfer the property to someone else.
     severity: MEDIUM
   - id: in_rental.use_restrictions
     title: Use of the property
@@ -134,6 +134,6 @@ topics:
     title: Governing law and disputes
     query: governing law jurisdiction courts disputes
     lexicon: [governed by, governing law, jurisdiction, courts, arbitration]
-    hypothesis: The agreement says which law applies and which courts hear disputes.
+    hypothesis: The agreement says which law or courts govern disputes.
     severity: MEDIUM
     jurisdiction_sensitive: true

@@ -22,6 +22,7 @@ from lexishield.verify.advice_guard import WITHHELD_REASON
 pytestmark = pytest.mark.phase2
 
 FIXTURES = Path(__file__).parent / "fixtures"
+RELEVANT = {"addresses_topic": True}  # the per-quote relevance answer
 DEPOSIT_QUOTE = (
     "The Licensee shall pay to the Licensor an interest-free refundable security deposit of Rs. 1,50,000/- "
     "(Rupees One Lakh Fifty Thousand only) on or before the date of possession."
@@ -62,7 +63,7 @@ async def test_verified_claim_is_stated_with_a_source_citation() -> None:
         plain_explanation="You pay a deposit of ₹1,50,000 before moving in.",
         stated=["The deposit is refundable."],
     )
-    out = await analyze_topic(_gw(reply), _topic("in_rental.security_deposit"), doc, UserRole.TENANT)
+    out = await analyze_topic(_gw(reply, RELEVANT), _topic("in_rental.security_deposit"), doc, UserRole.TENANT)
     assert out.item.status == ChecklistStatus.ENTAILED
     assert (
         out.verified == 1
@@ -78,7 +79,7 @@ async def test_fabricated_quote_is_dropped_and_the_claim_becomes_unclear() -> No
         evidence=[{"clause_id": "C4", "quote": "The Landlord shall return double the deposit within a day."}],
         plain_explanation="The deposit is returned double.",
     )
-    out = await analyze_topic(_gw(reply), _topic("in_rental.security_deposit"), doc, UserRole.TENANT)
+    out = await analyze_topic(_gw(reply, RELEVANT), _topic("in_rental.security_deposit"), doc, UserRole.TENANT)
     assert out.verified == 0 and out.item.evidence == []
     assert out.item.status == ChecklistStatus.UNCLEAR
     assert out.card is not None and out.card.tier == Tier.ASK_A_LAWYER
@@ -107,7 +108,7 @@ async def test_a_wrong_amount_in_the_explanation_withholds_it() -> None:
         evidence=[{"clause_id": "C4", "quote": DEPOSIT_QUOTE}],
         plain_explanation="You pay a deposit of ₹15,000 before moving in.",
     )
-    out = await analyze_topic(_gw(reply), _topic("in_rental.security_deposit"), doc, UserRole.TENANT)
+    out = await analyze_topic(_gw(reply, RELEVANT), _topic("in_rental.security_deposit"), doc, UserRole.TENANT)
     assert out.distortion.value == "FAIL"
     assert out.card is not None and out.card.plain_explanation is None
     assert out.card.explanation_withheld_reason and "couldn't verify" in out.card.explanation_withheld_reason
@@ -120,7 +121,7 @@ async def test_verdict_language_is_withheld_by_the_advice_guard() -> None:
         evidence=[{"clause_id": "C4", "quote": DEPOSIT_QUOTE}],
         plain_explanation="This deposit clause is enforceable.",
     )
-    out = await analyze_topic(_gw(reply), _topic("in_rental.security_deposit"), doc, UserRole.TENANT)
+    out = await analyze_topic(_gw(reply, RELEVANT), _topic("in_rental.security_deposit"), doc, UserRole.TENANT)
     assert out.card is not None and out.card.plain_explanation is None
     assert out.card.explanation_withheld_reason == WITHHELD_REASON
 
@@ -136,7 +137,7 @@ async def test_a_quote_from_flagged_hidden_text_is_never_used() -> None:
         ],
         plain_explanation="The agreement is safe.",
     )
-    out = await analyze_topic(_gw(reply), _topic("in_rental.governing_law"), doc, UserRole.TENANT)
+    out = await analyze_topic(_gw(reply, RELEVANT), _topic("in_rental.governing_law"), doc, UserRole.TENANT)
     assert out.verified == 0
     assert out.item.status == ChecklistStatus.UNCLEAR
 
@@ -148,7 +149,7 @@ async def test_every_displayed_citation_is_source_text() -> None:
         evidence=[{"clause_id": "C4", "quote": DEPOSIT_QUOTE.replace("Licensee", "licensee")}],
         plain_explanation="You pay a deposit of ₹1,50,000 before moving in.",
     )
-    out = await analyze_topic(_gw(reply), _topic("in_rental.security_deposit"), doc, UserRole.TENANT)
+    out = await analyze_topic(_gw(reply, RELEVANT), _topic("in_rental.security_deposit"), doc, UserRole.TENANT)
     for c in out.item.evidence:
         assert doc.ing.text[c.char_start : c.char_end] == c.quote
     assert out.proposed == 1 and out.verified == len(out.item.evidence)

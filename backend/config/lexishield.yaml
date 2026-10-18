@@ -42,6 +42,7 @@ agent:
 verify:
   fuzzy_min: 92
   retrieval_k: 6
+  relevance_gate: true       # grounding gate: quotes must use the topic's own terms
 
 privacy:
   egress_allow: [127.0.0.1, "::1", localhost]

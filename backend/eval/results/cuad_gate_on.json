@@ -1,0 +1,842 @@
+{
+  "summary": {
+    "label": "gate_on",
+    "gate": true,
+    "contracts": 15,
+    "errors": 0,
+    "topic_checks": 90,
+    "absent_checks": 49,
+    "present_checks": 41,
+    "over_claims": 2,
+    "false_silences": 1,
+    "detections": 16,
+    "grounded_detections": 15
+  },
+  "rows": [
+    {
+      "title": "TELEGLOBEINTERNATIONALHOLDINGSLTD_03_29_2004-EX-10.10-CONSTRUCTION AND MAINTENANCE AGREEMENT",
+      "file": "TELEGLOBEINTERNATIONALHOLDINGSLTD_03_29_2004-EX-10.10-CONSTRUCTION AND MAINTENANCE AGREEMENT.PDF",
+      "items": [
+        {
+          "topic": "msa.ip_transfer",
+          "present": false,
+          "status": "UNCLEAR",
+          "evidence": 0,
+          "grounded": false,
+          "card": "ASK_A_LAWYER"
+        },
+        {
+          "topic": "msa.liability_cap",
+          "present": true,
+          "status": "UNCLEAR",
+          "evidence": 0,
+          "grounded": false,
+          "card": "ASK_A_LAWYER"
+        },
+        {
+          "topic": "msa.termination_kill_fee",
+          "present": true,
+          "status": "UNCLEAR",
+          "evidence": 3,
+          "grounded": false,
+          "card": "ASK_A_LAWYER"
+        },
+        {
+          "topic": "msa.non_solicit",
+          "present": false,
+          "status": "NOT_MENTIONED",
+          "evidence": 0,
+          "grounded": false,
+          "card": null
+        },
+        {
+          "topic": "msa.assignment",
+          "present": true,
+          "status": "UNCLEAR",
+          "evidence": 3,
+          "grounded": false,
+          "card": "ASK_A_LAWYER"
+        },
+        {
+          "topic": "msa.governing_law",
+          "present": false,
+          "status": "UNCLEAR",
+          "evidence": 0,
+          "grounded": false,
+          "card": "ASK_A_LAWYER"
+        }
+      ],
+      "error": null
+    },
+    {
+      "title": "HUBEIMINKANGPHARMACEUTICALLTD_09_19_2006-EX-10.1-OUTSOURCING AGREEMENT",
+      "file": "HUBEIMINKANGPHARMACEUTICALLTD_09_19_2006-EX-10.1-OUTSOURCING AGREEMENT.PDF",
+      "items": [
+        {
+          "topic": "msa.ip_transfer",
+          "present": false,
+          "status": "NOT_MENTIONED",
+          "evidence": 0,
+          "grounded": false,
+          "card": null
+        },
+        {
+          "topic": "msa.liability_cap",
+          "present": true,
+          "status": "UNCLEAR",
+          "evidence": 0,
+          "grounded": false,
+          "card": "ASK_A_LAWYER"
+        },
+        {
+          "topic": "msa.termination_kill_fee",
+          "present": false,
+          "status": "UNCLEAR",
+          "evidence": 0,
+          "grounded": false,
+          "card": "ASK_A_LAWYER"
+        },
+        {
+          "topic": "msa.non_solicit",
+          "present": false,
+          "status": "NOT_MENTIONED",
+          "evidence": 0,
+          "grounded": false,
+          "card": null
+        },
+        {
+          "topic": "msa.assignment",
+          "present": false,
+          "status": "UNCLEAR",
+          "evidence": 0,
+          "grounded": false,
+          "card": "ASK_A_LAWYER"
+        },
+        {
+          "topic": "msa.governing_law",
+          "present": true,
+          "status": "UNCLEAR",
+          "evidence": 0,
+          "grounded": false,
+          "card": "ASK_A_LAWYER"
+        }
+      ],
+      "error": null
+    },
+    {
+      "title": "SENMIAOTECHNOLOGYLTD_02_19_2019-EX-10.5-Collaboration Agreement",
+      "file": "SENMIAOTECHNOLOGYLTD_02_19_2019-EX-10.5-Collaboration Agreement.PDF",
+      "items": [
+        {
+          "topic": "msa.ip_transfer",
+          "present": false,
+          "status": "ENTAILED",
+          "evidence": 1,
+          "grounded": false,
+          "card": "STATED"
+        },
+        {
+          "topic": "msa.liability_cap",
+          "present": true,
+          "status": "UNCLEAR",
+          "evidence": 0,
+          "grounded": false,
+          "card": "ASK_A_LAWYER"
+        },
+        {
+          "topic": "msa.termination_kill_fee",
+          "present": true,
+          "status": "UNCLEAR",
+          "evidence": 3,
+          "grounded": false,
+          "card": "ASK_A_LAWYER"
+        },
+        {
+          "topic": "msa.non_solicit",
+          "present": false,
+          "status": "UNCLEAR",
+          "evidence": 0,
+          "grounded": false,
+          "card": "ASK_A_LAWYER"
+        },
+        {
+          "topic": "msa.assignment",
+          "present": true,
+          "status": "ENTAILED",
+          "evidence": 1,
+          "grounded": true,
+          "card": "STATED"
+        },
+        {
+          "topic": "msa.governing_law",
+          "present": true,
+          "status": "ENTAILED",
+          "evidence": 2,
+          "grounded": true,
+          "card": "STATED"
+        }
+      ],
+      "error": null
+    },
+    {
+      "title": "UpjohnInc_20200121_10-12G_EX-2.6_11948692_EX-2.6_Manufacturing Agreement_ Supply Agreement",
+      "file": "UpjohnInc_20200121_10-12G_EX-2.6_11948692_EX-2.6_Manufacturing Agreement_ Supply Agreement.pdf",
+      "items": [
+        {
+          "topic": "msa.ip_transfer",
+          "present": false,
+          "status": "UNCLEAR",
+          "evidence": 1,
+          "grounded": false,
+          "card": "ASK_A_LAWYER"
+        },
+        {
+          "topic": "msa.liability_cap",
+          "present": true,
+          "status": "UNCLEAR",
+          "evidence": 2,
+          "grounded": false,
+          "card": "ASK_A_LAWYER"
+        },
+        {
+          "topic": "msa.termination_kill_fee",
+          "present": false,
+          "status": "UNCLEAR",
+          "evidence": 2,
+          "grounded": false,
+          "card": "ASK_A_LAWYER"
+        },
+        {
+          "topic": "msa.non_solicit",
+          "present": true,
+          "status": "UNCLEAR",
+          "evidence": 0,
+          "grounded": false,
+          "card": "ASK_A_LAWYER"
+        },
+        {
+          "topic": "msa.assignment",
+          "present": true,
+          "status": "ENTAILED",
+          "evidence": 1,
+          "grounded": true,
+          "card": "INTERPRETATION"
+        },
+        {
+          "topic": "msa.governing_law",
+          "present": true,
+          "status": "ENTAILED",
+          "evidence": 2,
+          "grounded": true,
+          "card": "INTERPRETATION"
+        }
+      ],
+      "error": null
+    },
+    {
+      "title": "INTERNATIONALFASTFOODCORP_04_04_1997-EX-99-FRANCHISE AGREEMENT",
+      "file": "INTERNATIONALFASTFOODCORP_04_04_1997-EX-99-FRANCHISE AGREEMENT.PDF",
+      "items": [
+        {
+          "topic": "msa.ip_transfer",
+          "present": false,
+          "status": "UNCLEAR",
+          "evidence": 0,
+          "grounded": false,
+          "card": "ASK_A_LAWYER"
+        },
+        {
+          "topic": "msa.liability_cap",
+          "present": false,
+          "status": "UNCLEAR",
+          "evidence": 0,
+          "grounded": false,
+          "card": "ASK_A_LAWYER"
+        },
+        {
+          "topic": "msa.termination_kill_fee",
+          "present": false,
+          "status": "UNCLEAR",
+          "evidence": 0,
+          "grounded": false,
+          "card": "ASK_A_LAWYER"
+        },
+        {
+          "topic": "msa.non_solicit",
+          "present": true,
+          "status": "NOT_MENTIONED",
+          "evidence": 0,
+          "grounded": false,
+          "card": null
+        },
+        {
+          "topic": "msa.assignment",
+          "present": true,
+          "status": "UNCLEAR",
+          "evidence": 2,
+          "grounded": false,
+          "card": "ASK_A_LAWYER"
+        },
+        {
+          "topic": "msa.governing_law",
+          "present": true,
+          "status": "UNCLEAR",
+          "evidence": 1,
+          "grounded": false,
+          "card": "ASK_A_LAWYER"
+        }
+      ],
+      "error": null
+    },
+    {
+      "title": "ANIXABIOSCIENCESINC_06_09_2020-EX-10.1-COLLABORATION AGREEMENT",
+      "file": "ANIXABIOSCIENCESINC_06_09_2020-EX-10.1-COLLABORATION AGREEMENT.PDF",
+      "items": [
+        {
+          "topic": "msa.ip_transfer",
+          "present": false,
+          "status": "UNCLEAR",
+          "evidence": 2,
+          "grounded": false,
+          "card": "ASK_A_LAWYER"
+        },
+        {
+          "topic": "msa.liability_cap",
+          "present": true,
+          "status": "UNCLEAR",
+          "evidence": 0,
+          "grounded": false,
+          "card": "ASK_A_LAWYER"
+        },
+        {
+          "topic": "msa.termination_kill_fee",
+          "present": true,
+          "status": "UNCLEAR",
+          "evidence": 3,
+          "grounded": false,
+          "card": "ASK_A_LAWYER"
+        },
+        {
+          "topic": "msa.non_solicit",
+          "present": false,
+          "status": "NOT_MENTIONED",
+          "evidence": 0,
+          "grounded": false,
+          "card": null
+        },
+        {
+          "topic": "msa.assignment",
+          "present": true,
+          "status": "ENTAILED",
+          "evidence": 1,
+          "grounded": true,
+          "card": "ASK_A_LAWYER"
+        },
+        {
+          "topic": "msa.governing_law",
+          "present": true,
+          "status": "ENTAILED",
+          "evidence": 2,
+          "grounded": true,
+          "card": "STATED"
+        }
+      ],
+      "error": null
+    },
+    {
+      "title": "ETELOS,INC_03_09_2004-EX-10.8-DISTRIBUTOR AGREEMENT",
+      "file": "ETELOS,INC_03_09_2004-EX-10.8-DISTRIBUTOR AGREEMENT.PDF",
+      "items": [
+        {
+          "topic": "msa.ip_transfer",
+          "present": false,
+          "status": "UNCLEAR",
+          "evidence": 0,
+          "grounded": false,
+          "card": "ASK_A_LAWYER"
+        },
+        {
+          "topic": "msa.liability_cap",
+          "present": true,
+          "status": "UNCLEAR",
+          "evidence": 0,
+          "grounded": false,
+          "card": "ASK_A_LAWYER"
+        },
+        {
+          "topic": "msa.termination_kill_fee",
+          "present": true,
+          "status": "UNCLEAR",
+          "evidence": 1,
+          "grounded": false,
+          "card": "ASK_A_LAWYER"
+        },
+        {
+          "topic": "msa.non_solicit",
+          "present": false,
+          "status": "NOT_MENTIONED",
+          "evidence": 0,
+          "grounded": false,
+          "card": null
+        },
+        {
+          "topic": "msa.assignment",
+          "present": true,
+          "status": "UNCLEAR",
+          "evidence": 2,
+          "grounded": false,
+          "card": "ASK_A_LAWYER"
+        },
+        {
+          "topic": "msa.governing_law",
+          "present": true,
+          "status": "ENTAILED",
+          "evidence": 3,
+          "grounded": true,
+          "card": "INTERPRETATION"
+        }
+      ],
+      "error": null
+    },
+    {
+      "title": "XACCT Technologies, Inc.SUPPORT AND MAINTENANCE AGREEMENT",
+      "file": "XACCT Technologies, Inc.SUPPORT AND MAINTENANCE AGREEMENT.PDF",
+      "items": [
+        {
+          "topic": "msa.ip_transfer",
+          "present": false,
+          "status": "NOT_MENTIONED",
+          "evidence": 0,
+          "grounded": false,
+          "card": null
+        },
+        {
+          "topic": "msa.liability_cap",
+          "present": true,
+          "status": "ENTAILED",
+          "evidence": 2,
+          "grounded": true,
+          "card": "STATED"
+        },
+        {
+          "topic": "msa.termination_kill_fee",
+          "present": false,
+          "status": "UNCLEAR",
+          "evidence": 2,
+          "grounded": false,
+          "card": "ASK_A_LAWYER"
+        },
+        {
+          "topic": "msa.non_solicit",
+          "present": false,
+          "status": "NOT_MENTIONED",
+          "evidence": 0,
+          "grounded": false,
+          "card": null
+        },
+        {
+          "topic": "msa.assignment",
+          "present": false,
+          "status": "NOT_MENTIONED",
+          "evidence": 0,
+          "grounded": false,
+          "card": null
+        },
+        {
+          "topic": "msa.governing_law",
+          "present": true,
+          "status": "ENTAILED",
+          "evidence": 1,
+          "grounded": false,
+          "card": "STATED"
+        }
+      ],
+      "error": null
+    },
+    {
+      "title": "LohaCompanyltd_20191209_F-1_EX-10.16_11917878_EX-10.16_Supply Agreement",
+      "file": "LohaCompanyltd_20191209_F-1_EX-10.16_11917878_EX-10.16_Supply Agreement.pdf",
+      "items": [
+        {
+          "topic": "msa.ip_transfer",
+          "present": false,
+          "status": "UNCLEAR",
+          "evidence": 0,
+          "grounded": false,
+          "card": "ASK_A_LAWYER"
+        },
+        {
+          "topic": "msa.liability_cap",
+          "present": false,
+          "status": "NOT_MENTIONED",
+          "evidence": 0,
+          "grounded": false,
+          "card": null
+        },
+        {
+          "topic": "msa.termination_kill_fee",
+          "present": false,
+          "status": "UNCLEAR",
+          "evidence": 0,
+          "grounded": false,
+          "card": "ASK_A_LAWYER"
+        },
+        {
+          "topic": "msa.non_solicit",
+          "present": false,
+          "status": "NOT_MENTIONED",
+          "evidence": 0,
+          "grounded": false,
+          "card": null
+        },
+        {
+          "topic": "msa.assignment",
+          "present": false,
+          "status": "UNCLEAR",
+          "evidence": 0,
+          "grounded": false,
+          "card": "ASK_A_LAWYER"
+        },
+        {
+          "topic": "msa.governing_law",
+          "present": true,
+          "status": "ENTAILED",
+          "evidence": 2,
+          "grounded": true,
+          "card": "STATED"
+        }
+      ],
+      "error": null
+    },
+    {
+      "title": "LIMEENERGYCO_09_09_1999-EX-10-DISTRIBUTOR AGREEMENT",
+      "file": "LIMEENERGYCO_09_09_1999-EX-10-DISTRIBUTOR AGREEMENT.PDF",
+      "items": [
+        {
+          "topic": "msa.ip_transfer",
+          "present": false,
+          "status": "UNCLEAR",
+          "evidence": 0,
+          "grounded": false,
+          "card": "ASK_A_LAWYER"
+        },
+        {
+          "topic": "msa.liability_cap",
+          "present": false,
+          "status": "UNCLEAR",
+          "evidence": 0,
+          "grounded": false,
+          "card": "ASK_A_LAWYER"
+        },
+        {
+          "topic": "msa.termination_kill_fee",
+          "present": false,
+          "status": "UNCLEAR",
+          "evidence": 1,
+          "grounded": false,
+          "card": "ASK_A_LAWYER"
+        },
+        {
+          "topic": "msa.non_solicit",
+          "present": true,
+          "status": "ENTAILED",
+          "evidence": 1,
+          "grounded": true,
+          "card": "STATED"
+        },
+        {
+          "topic": "msa.assignment",
+          "present": true,
+          "status": "UNCLEAR",
+          "evidence": 2,
+          "grounded": false,
+          "card": "ASK_A_LAWYER"
+        },
+        {
+          "topic": "msa.governing_law",
+          "present": true,
+          "status": "UNCLEAR",
+          "evidence": 1,
+          "grounded": false,
+          "card": "ASK_A_LAWYER"
+        }
+      ],
+      "error": null
+    },
+    {
+      "title": "IGENEBIOTECHNOLOGYINC_05_13_2003-EX-1-JOINT VENTURE AGREEMENT",
+      "file": "IGENEBIOTECHNOLOGYINC_05_13_2003-EX-1-JOINT VENTURE AGREEMENT.PDF",
+      "items": [
+        {
+          "topic": "msa.ip_transfer",
+          "present": false,
+          "status": "UNCLEAR",
+          "evidence": 2,
+          "grounded": false,
+          "card": "ASK_A_LAWYER"
+        },
+        {
+          "topic": "msa.liability_cap",
+          "present": false,
+          "status": "UNCLEAR",
+          "evidence": 0,
+          "grounded": false,
+          "card": "ASK_A_LAWYER"
+        },
+        {
+          "topic": "msa.termination_kill_fee",
+          "present": false,
+          "status": "UNCLEAR",
+          "evidence": 0,
+          "grounded": false,
+          "card": "ASK_A_LAWYER"
+        },
+        {
+          "topic": "msa.non_solicit",
+          "present": false,
+          "status": "NOT_MENTIONED",
+          "evidence": 0,
+          "grounded": false,
+          "card": null
+        },
+        {
+          "topic": "msa.assignment",
+          "present": true,
+          "status": "ENTAILED",
+          "evidence": 2,
+          "grounded": true,
+          "card": "ASK_A_LAWYER"
+        },
+        {
+          "topic": "msa.governing_law",
+          "present": true,
+          "status": "UNCLEAR",
+          "evidence": 0,
+          "grounded": false,
+          "card": "ASK_A_LAWYER"
+        }
+      ],
+      "error": null
+    },
+    {
+      "title": "VITAMINSHOPPECOMINC_09_13_1999-EX-10.26-SPONSORSHIP AGREEMENT",
+      "file": "VITAMINSHOPPECOMINC_09_13_1999-EX-10.26-SPONSORSHIP AGREEMENT.PDF",
+      "items": [
+        {
+          "topic": "msa.ip_transfer",
+          "present": false,
+          "status": "ENTAILED",
+          "evidence": 1,
+          "grounded": false,
+          "card": "STATED"
+        },
+        {
+          "topic": "msa.liability_cap",
+          "present": true,
+          "status": "ENTAILED",
+          "evidence": 1,
+          "grounded": true,
+          "card": "INTERPRETATION"
+        },
+        {
+          "topic": "msa.termination_kill_fee",
+          "present": false,
+          "status": "UNCLEAR",
+          "evidence": 1,
+          "grounded": false,
+          "card": "ASK_A_LAWYER"
+        },
+        {
+          "topic": "msa.non_solicit",
+          "present": false,
+          "status": "UNCLEAR",
+          "evidence": 0,
+          "grounded": false,
+          "card": "ASK_A_LAWYER"
+        },
+        {
+          "topic": "msa.assignment",
+          "present": true,
+          "status": "UNCLEAR",
+          "evidence": 0,
+          "grounded": false,
+          "card": "ASK_A_LAWYER"
+        },
+        {
+          "topic": "msa.governing_law",
+          "present": true,
+          "status": "ENTAILED",
+          "evidence": 2,
+          "grounded": true,
+          "card": "INTERPRETATION"
+        }
+      ],
+      "error": null
+    },
+    {
+      "title": "SPOKHOLDINGS,INC_06_19_2020-EX-10.1-COOPERATION AGREEMENT",
+      "file": "SPOKHOLDINGS,INC_06_19_2020-EX-10.1-COOPERATION AGREEMENT.PDF",
+      "items": [
+        {
+          "topic": "msa.ip_transfer",
+          "present": false,
+          "status": "UNCLEAR",
+          "evidence": 0,
+          "grounded": false,
+          "card": "ASK_A_LAWYER"
+        },
+        {
+          "topic": "msa.liability_cap",
+          "present": false,
+          "status": "UNCLEAR",
+          "evidence": 0,
+          "grounded": false,
+          "card": "ASK_A_LAWYER"
+        },
+        {
+          "topic": "msa.termination_kill_fee",
+          "present": false,
+          "status": "UNCLEAR",
+          "evidence": 0,
+          "grounded": false,
+          "card": "ASK_A_LAWYER"
+        },
+        {
+          "topic": "msa.non_solicit",
+          "present": false,
+          "status": "UNCLEAR",
+          "evidence": 0,
+          "grounded": false,
+          "card": "ASK_A_LAWYER"
+        },
+        {
+          "topic": "msa.assignment",
+          "present": true,
+          "status": "UNCLEAR",
+          "evidence": 0,
+          "grounded": false,
+          "card": "ASK_A_LAWYER"
+        },
+        {
+          "topic": "msa.governing_law",
+          "present": true,
+          "status": "UNCLEAR",
+          "evidence": 0,
+          "grounded": false,
+          "card": "ASK_A_LAWYER"
+        }
+      ],
+      "error": null
+    },
+    {
+      "title": "SoupmanInc_20150814_8-K_EX-10.1_9230148_EX-10.1_Franchise Agreement4",
+      "file": "SoupmanInc_20150814_8-K_EX-10.1_9230148_EX-10.1_Franchise Agreement4.pdf",
+      "items": [
+        {
+          "topic": "msa.ip_transfer",
+          "present": false,
+          "status": "NOT_MENTIONED",
+          "evidence": 0,
+          "grounded": false,
+          "card": null
+        },
+        {
+          "topic": "msa.liability_cap",
+          "present": false,
+          "status": "NOT_MENTIONED",
+          "evidence": 0,
+          "grounded": false,
+          "card": null
+        },
+        {
+          "topic": "msa.termination_kill_fee",
+          "present": false,
+          "status": "NOT_MENTIONED",
+          "evidence": 0,
+          "grounded": false,
+          "card": null
+        },
+        {
+          "topic": "msa.non_solicit",
+          "present": false,
+          "status": "NOT_MENTIONED",
+          "evidence": 0,
+          "grounded": false,
+          "card": null
+        },
+        {
+          "topic": "msa.assignment",
+          "present": false,
+          "status": "NOT_MENTIONED",
+          "evidence": 0,
+          "grounded": false,
+          "card": null
+        },
+        {
+          "topic": "msa.governing_law",
+          "present": false,
+          "status": "NOT_MENTIONED",
+          "evidence": 0,
+          "grounded": false,
+          "card": null
+        }
+      ],
+      "error": null
+    },
+    {
+      "title": "FUSIONPHARMACEUTICALSINC_06_05_2020-EX-10.17-Supply Agreement - FUSION",
+      "file": "FUSIONPHARMACEUTICALSINC_06_05_2020-EX-10.17-Supply Agreement - FUSION.PDF",
+      "items": [
+        {
+          "topic": "msa.ip_transfer",
+          "present": false,
+          "status": "UNCLEAR",
+          "evidence": 0,
+          "grounded": false,
+          "card": "ASK_A_LAWYER"
+        },
+        {
+          "topic": "msa.liability_cap",
+          "present": true,
+          "status": "UNCLEAR",
+          "evidence": 0,
+          "grounded": false,
+          "card": "ASK_A_LAWYER"
+        },
+        {
+          "topic": "msa.termination_kill_fee",
+          "present": true,
+          "status": "UNCLEAR",
+          "evidence": 3,
+          "grounded": false,
+          "card": "ASK_A_LAWYER"
+        },
+        {
+          "topic": "msa.non_solicit",
+          "present": true,
+          "status": "ENTAILED",
+          "evidence": 1,
+          "grounded": true,
+          "card": "STATED"
+        },
+        {
+          "topic": "msa.assignment",
+          "present": true,
+          "status": "ENTAILED",
+          "evidence": 2,
+          "grounded": true,
+          "card": "STATED"
+        },
+        {
+          "topic": "msa.governing_law",
+          "present": false,
+          "status": "UNCLEAR",
+          "evidence": 0,
+          "grounded": false,
+          "card": "ASK_A_LAWYER"
+        }
+      ],
+      "error": null
+    }
+  ]
+}

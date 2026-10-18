@@ -9,7 +9,7 @@ topics:
     title: Scope and deliverables
     query: scope services deliverables statement of work
     lexicon: [scope, deliverables, statement of work, services]
-    hypothesis: The agreement describes the work and what is delivered.
+    hypothesis: The agreement describes the work to be done.
     severity: HIGH
   - id: msa.revisions
     title: Revisions
@@ -22,19 +22,19 @@ topics:
     title: Payment terms and late payment
     query: payment terms invoice days late payment
     lexicon: [payment, invoice, late, days after]
-    hypothesis: The agreement says when and how the client pays, and what happens if payment is late.
+    hypothesis: The agreement says when the client must pay.
     severity: HIGH
   - id: msa.ip_transfer
     title: Ownership of work
     query: intellectual property ownership transfer on payment
     lexicon: [intellectual property, ownership, copyright, transfer]
-    hypothesis: The agreement says who owns the work and when ownership passes.
+    hypothesis: The agreement says who owns the work.
     severity: HIGH
   - id: msa.confidentiality
     title: Confidentiality
     query: confidential information non-disclosure
     lexicon: [confidential, non-disclosure]
-    hypothesis: The agreement says what information must be kept secret.
+    hypothesis: The agreement requires information to be kept confidential.
     severity: MEDIUM
     silence_note: Not found.
   - id: msa.indemnity
@@ -47,14 +47,14 @@ topics:
     title: Liability cap
     query: limitation of liability cap maximum liability
     lexicon: [liability, cap, limitation of liability, uncapped]
-    hypothesis: The agreement says whether liability is limited and to what amount.
+    hypothesis: The agreement says whether liability is limited.
     severity: HIGH
     silence_note: Not found. Unlimited liability can be a large risk.
   - id: msa.termination_kill_fee
     title: Termination and kill fee
     query: termination kill fee cancellation notice
     lexicon: [terminat, kill fee, cancel, cancellation]
-    hypothesis: The agreement says how either side can end it and whether a cancellation fee applies.
+    hypothesis: The agreement says how either side can end it.
     severity: HIGH
   - id: msa.non_solicit
     title: Non-solicit
@@ -80,6 +80,6 @@ topics:
     title: Governing law and disputes
     query: governing law jurisdiction courts arbitration
     lexicon: [governed by, governing law, jurisdiction, courts, arbitration]
-    hypothesis: The agreement says which law applies and how disputes are resolved.
+    hypothesis: The agreement says which law applies or how disputes are resolved.
     severity: MEDIUM
     jurisdiction_sensitive: true

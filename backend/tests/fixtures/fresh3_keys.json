@@ -1,0 +1,66 @@
+{
+  "_note": "Third fresh held-out keys, written before any model run, against the single-claim hypotheses. Never seen by the prompts, the relevance check or any earlier run. Traps: an occupancy clause with no subletting rule, and a training bond with no joining bonus. SILENT = NOT_MENTIONED or UNCLEAR is correct, ENTAILED is not. Do not edit a key after a run. Synthetic documents only.",
+  "documents": {
+    "fresh3_rental_kolkata.pdf": {
+      "pack": "in_rental",
+      "topics": {
+        "in_rental.parties_and_property": "ENTAILED",
+        "in_rental.term": "ENTAILED",
+        "in_rental.rent_amount": "ENTAILED",
+        "in_rental.rent_escalation": "SILENT",
+        "in_rental.security_deposit": "ENTAILED",
+        "in_rental.deposit_refund_deductions": "SILENT",
+        "in_rental.lock_in": "SILENT",
+        "in_rental.termination_notice": "ENTAILED",
+        "in_rental.maintenance_repairs": "ENTAILED",
+        "in_rental.society_utilities": "ENTAILED",
+        "in_rental.landlord_entry": "SILENT",
+        "in_rental.subletting": "SILENT",
+        "in_rental.use_restrictions": "SILENT",
+        "in_rental.late_payment_penalty": "SILENT",
+        "in_rental.renewal": "SILENT",
+        "in_rental.stamp_duty_registration": "SILENT",
+        "in_rental.painting_cleaning_deductions": "SILENT",
+        "in_rental.governing_law": "ENTAILED"
+      }
+    },
+    "fresh3_employment_noida.pdf": {
+      "pack": "in_employment",
+      "topics": {
+        "in_employment.role_designation": "ENTAILED",
+        "in_employment.ctc_compensation": "ENTAILED",
+        "in_employment.probation": "ENTAILED",
+        "in_employment.notice_period": "ENTAILED",
+        "in_employment.notice_buyout": "SILENT",
+        "in_employment.termination_cause": "ENTAILED",
+        "in_employment.service_bond": "ENTAILED",
+        "in_employment.joining_bonus_clawback": "SILENT",
+        "in_employment.non_compete": "SILENT",
+        "in_employment.non_solicit": "SILENT",
+        "in_employment.confidentiality": "ENTAILED",
+        "in_employment.ip_assignment": "SILENT",
+        "in_employment.working_hours_overtime": "ENTAILED",
+        "in_employment.leave": "SILENT",
+        "in_employment.transfer_relocation": "SILENT",
+        "in_employment.background_verification": "SILENT",
+        "in_employment.garden_leave": "SILENT",
+        "in_employment.governing_law": "ENTAILED"
+      }
+    },
+    "fresh3_notice_contractor.pdf": {
+      "pack": "notice_generic",
+      "topics": {
+        "notice.sender_recipient": "ENTAILED",
+        "notice.demand": "ENTAILED",
+        "notice.amount_claimed": "ENTAILED",
+        "notice.response_deadline": "ENTAILED",
+        "notice.referenced_agreement": "ENTAILED",
+        "notice.stated_legal_basis": "SILENT",
+        "notice.threatened_consequences": "ENTAILED",
+        "notice.how_to_respond": "SILENT",
+        "notice.enclosures": "SILENT",
+        "notice.notice_date": "SILENT"
+      }
+    }
+  }
+}

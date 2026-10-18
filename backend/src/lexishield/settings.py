@@ -66,6 +66,8 @@ class AgentSettings(BaseModel):
 class VerifySettings(BaseModel):
     fuzzy_min: int = 92
     retrieval_k: int = 6
+    # Grounding gate: a quote supports a topic only if it uses the topic's own terms (see agents/checklist.py).
+    relevance_gate: bool = True
 
 
 class PrivacySettings(BaseModel):

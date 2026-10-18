@@ -17,14 +17,14 @@ topics:
     title: Pay and compensation breakdown
     query: CTC salary compensation breakdown annual fixed components
     lexicon: [ctc, salary, compensation, fixed pay, components]
-    hypothesis: The letter states the total pay and how it is made up.
+    hypothesis: The letter states how the total pay is made up.
     severity: HIGH
     silence_note: The pay breakdown is not in this document.
   - id: in_employment.probation
     title: Probation period
     query: probation period confirmation
     lexicon: [probation, confirmation]
-    hypothesis: The letter says how long probation lasts and what happens at its end.
+    hypothesis: The letter states the length of the probation period.
     severity: MEDIUM
     silence_note: Not found. Ask how long probation lasts.
   - id: in_employment.notice_period
@@ -46,7 +46,7 @@ topics:
     title: Termination with and without cause
     query: termination with cause without cause dismissal
     lexicon: [terminat, dismiss, with cause, without cause]
-    hypothesis: The letter says how the employer can end employment, with and without cause.
+    hypothesis: The letter says how the employer can end the employment.
     severity: HIGH
     silence_note: Not found. Ask how either side can end the employment.
     escalation_ref: employment
@@ -88,14 +88,14 @@ topics:
     title: Confidentiality
     query: confidential information non-disclosure secrecy
     lexicon: [confidential, non-disclosure, nda, secrecy]
-    hypothesis: The letter says what information must be kept secret.
+    hypothesis: The letter requires the employee to keep information confidential.
     severity: MEDIUM
     silence_note: Not found. Ask what must be kept confidential.
   - id: in_employment.ip_assignment
     title: Intellectual property and work outside job
     query: intellectual property invention ownership work assignment outside work
     lexicon: [intellectual property, invention, work product, ownership, copyright]
-    hypothesis: The letter says who owns work the employee creates, including outside work.
+    hypothesis: The letter says who owns work or inventions the employee creates.
     severity: MEDIUM
     silence_note: Not found. Ask who owns work you create.
     escalation_ref: employment
@@ -103,7 +103,7 @@ topics:
     title: Working hours and overtime
     query: working hours overtime shift schedule
     lexicon: [working hours, overtime, shift, hours per week]
-    hypothesis: The letter says how many hours are expected and whether overtime is paid.
+    hypothesis: The letter states the working hours or how overtime is treated.
     severity: LOW
     silence_note: Not found. Ask about working hours and overtime.
   - id: in_employment.leave
@@ -139,6 +139,6 @@ topics:
     title: Governing law and disputes
     query: governing law jurisdiction courts disputes
     lexicon: [governed by, governing law, jurisdiction, courts]
-    hypothesis: The letter says which law applies and which courts hear disputes.
+    hypothesis: The letter says which law or courts govern disputes.
     severity: MEDIUM
     jurisdiction_sensitive: true

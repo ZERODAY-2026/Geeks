@@ -151,7 +151,7 @@ async def run_analysis(
     topics = sorted(pack.topics, key=lambda t: SEVERITY_ORDER[t.severity]) if pack else []
     await emit("job.stage", {"stage": "plan", "done": 0, "total": len(topics)})
 
-    doc = DocContext.build(ing, classification.party_roles, country, cfg.fuzzy_min, cfg.retrieval_k)
+    doc = DocContext.build(ing, classification.party_roles, country, cfg.fuzzy_min, cfg.retrieval_k, cfg.relevance_gate)
     role = req.user_role or UserRole.UNKNOWN
     outcomes: list[TopicOutcome] = []
     for i, topic in enumerate(topics, 1):
