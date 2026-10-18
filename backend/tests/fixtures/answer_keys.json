@@ -1,0 +1,54 @@
+{
+  "_note": "Written before any model run, from the fixture text. Gold clause numbers are the printed clause numbers (C1 = preamble when present). Synthetic documents only.",
+  "documents": {
+    "in_rental_11m_leave_license.txt": {
+      "core": true,
+      "doc_type": "rental",
+      "country": "IN",
+      "party_roles": {"Licensor": "landlord", "Licensee": "tenant"}
+    },
+    "in_rental_missing_clauses.pdf": {
+      "core": true,
+      "doc_type": "rental",
+      "country": "IN",
+      "party_roles": {"Licensor": "landlord", "Licensee": "tenant"}
+    },
+    "in_offer_letter_bond.pdf": {
+      "core": true,
+      "doc_type": "employment",
+      "country": "IN",
+      "party_roles": {"Employer": "employer", "Employee": "employee"}
+    },
+    "msa_freelance_generic.pdf": {
+      "core": true,
+      "doc_type": "msa",
+      "country": "IN",
+      "party_roles": {"Contractor": "contractor", "Client": "client"}
+    },
+    "legal_notice_demand.pdf": {
+      "core": true,
+      "doc_type": "legal_notice",
+      "country": "IN",
+      "party_roles": {}
+    },
+    "us_lease_generic.pdf": {"core": false, "doc_type": "rental", "country": "US"},
+    "uk_tenancy_generic.pdf": {"core": false, "doc_type": "rental", "country": "UK"}
+  },
+  "retrieval": [
+    {"file": "in_rental_11m_leave_license.txt", "query": "security deposit refund after vacating", "gold": ["3"]},
+    {"file": "in_rental_11m_leave_license.txt", "query": "monthly licence fee amount and due date", "gold": ["2"]},
+    {"file": "in_rental_11m_leave_license.txt", "query": "lock-in period before termination", "gold": ["4", "9"]},
+    {"file": "in_rental_11m_leave_license.txt", "query": "who pays for structural repairs", "gold": ["5"]},
+    {"file": "in_rental_11m_leave_license.txt", "query": "governing law and exclusive jurisdiction of courts", "gold": ["8"]},
+    {"file": "in_rental_11m_leave_license.txt", "query": "subletting the premises is prohibited", "gold": ["7"]},
+    {"file": "in_rental_11m_leave_license.txt", "query": "landlord inspection on reasonable notice", "gold": ["6"]},
+    {"file": "in_rental_missing_clauses.pdf", "query": "refund timeline for the security deposit", "gold": ["3"]},
+    {"file": "in_rental_missing_clauses.pdf", "query": "monthly licence fee payment date", "gold": ["2"]},
+    {"file": "in_rental_missing_clauses.pdf", "query": "governing law courts jurisdiction", "gold": ["5"]},
+    {"file": "in_rental_missing_clauses.pdf", "query": "notice to end the agreement", "gold": ["6"]},
+    {"file": "in_offer_letter_bond.pdf", "query": "service bond repayment if leaving early", "gold": ["5"]},
+    {"file": "in_offer_letter_bond.pdf", "query": "notice period on resignation and buyout", "gold": ["4"]},
+    {"file": "in_offer_letter_bond.pdf", "query": "non-compete after leaving the company", "gold": ["6"]},
+    {"file": "in_offer_letter_bond.pdf", "query": "annual CTC salary amount", "gold": ["3"]}
+  ]
+}

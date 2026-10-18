@@ -4,16 +4,19 @@ from __future__ import annotations
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from starlette.formparsers import MultiPartParser
 
 from .. import __version__
 from ..llm.gateway import LLMGateway
 from ..settings import Settings, get_settings
-from ..trust import egress_guard
+from ..trust import egress_guard, temp_sentinel
 from ..trust.vault import Vault
 from .errors import install_error_handlers
 from .routers import analysis, documents, interaction, meta, system
+from .upload_limit import UploadLimit
 
 API_PREFIX = "/api/v1"
+MB = 1024 * 1024
 
 DESCRIPTION = """Private legal document triage, fully on-device, powered by Google Gemma via Ollama.
 
@@ -33,6 +36,9 @@ def create_app(settings: Settings | None = None, gateway: LLMGateway | None = No
         redoc_url=None,
     )
     egress_guard.install()  # process-wide; idempotent
+    temp_sentinel.install()
+    # Uploads within the limit stay in memory: the multipart spool rolls over to disk only above this size.
+    MultiPartParser.spool_max_size = settings.server.max_upload_mb * MB
     app.state.settings = settings
     app.state.gateway = gateway or LLMGateway(settings)
     app.state.vault = Vault(settings.privacy.session_ttl_s)
@@ -44,6 +50,7 @@ def create_app(settings: Settings | None = None, gateway: LLMGateway | None = No
         allow_headers=["Content-Type", "Accept"],
     )
     install_error_handlers(app)
+    app.add_middleware(UploadLimit, max_bytes=settings.server.max_upload_mb * MB, path_prefix=f"{API_PREFIX}/documents")
     for r in (system.router, documents.router, analysis.router, interaction.router, meta.router):
         app.include_router(r, prefix=API_PREFIX)
     return app

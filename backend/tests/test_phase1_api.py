@@ -19,6 +19,17 @@ API = "/api/v1"
 FIXTURE = Path(__file__).parent / "fixtures" / "in_rental_11m_leave_license.txt"
 
 
+def _docx_bytes() -> bytes:
+    import docx
+
+    d = docx.Document()
+    d.add_paragraph("1. TERM. The licence is for eleven (11) months.")
+    d.add_paragraph("2. SECURITY DEPOSIT. The deposit is Rs. 1,50,000/- and is refundable.")
+    buf = io.BytesIO()
+    d.save(buf)
+    return buf.getvalue()
+
+
 @pytest.fixture
 def doc_id(client) -> str:  # type: ignore[no-untyped-def]
     r = client.post(
@@ -63,9 +74,23 @@ def test_wipe_sessions(client) -> None:  # type: ignore[no-untyped-def]
     assert client.delete(f"{API}/sessions").json()["wiped"] >= 2
 
 
-def test_docx_is_refused_with_problem_json(client) -> None:  # type: ignore[no-untyped-def]
+def test_malformed_docx_is_422(client) -> None:  # type: ignore[no-untyped-def]
     r = client.post(f"{API}/documents", files={"file": ("lease.docx", b"PK\x03\x04", "application/octet-stream")})
+    assert r.status_code == 422 and r.json()["code"] == "MALFORMED_FILE"
+
+
+def test_unsupported_extension_is_415(client) -> None:  # type: ignore[no-untyped-def]
+    r = client.post(f"{API}/documents", files={"file": ("lease.rtf", b"{\\rtf1}", "application/rtf")})
     assert r.status_code == 415 and r.json()["code"] == "UNSUPPORTED_TYPE"
+
+
+def test_docx_upload_via_multipart(client) -> None:  # type: ignore[no-untyped-def]
+    r = client.post(
+        f"{API}/documents",
+        files={"file": ("lease.docx", _docx_bytes(), "application/octet-stream")},
+    )
+    assert r.status_code == 201 and r.json()["clause_count"] == 2
+    assert r.json()["mime"] == "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
 
 
 def test_pdf_upload_via_multipart(client) -> None:  # type: ignore[no-untyped-def]

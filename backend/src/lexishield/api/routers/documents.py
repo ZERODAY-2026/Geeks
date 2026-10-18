@@ -10,15 +10,16 @@ from datetime import UTC, datetime
 
 from fastapi import APIRouter, Request, UploadFile
 
-from ...ingest.pipeline import Ingested, IngestError, ingest_pdf, ingest_text
+from ...ingest.pipeline import Ingested, IngestError, ingest_docx, ingest_pdf, ingest_text
 from ...models import Clause, DeleteResult, DocumentDetail, DocumentSummary, TextUpload, WipeResult
-from ...trust import egress_guard
+from ...trust import egress_guard, temp_sentinel
 from ...trust.vault import Vault
 from ..errors import LexiError, problem_responses
 
 router = APIRouter(tags=["documents"])
 
 MB = 1024 * 1024
+DOCX_MIME = "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
 
 
 def _vault(request: Request) -> Vault:
@@ -64,30 +65,34 @@ def _load(request: Request, document_id: str) -> DocumentDetail:
     response_model=DocumentSummary,
     status_code=201,
     responses=problem_responses(413, 415, 422),
-    summary="Upload a PDF or TXT (multipart field `file`)",
+    summary="Upload a PDF, DOCX or TXT (multipart field `file`)",
 )
 async def upload_document(request: Request, file: UploadFile) -> DocumentSummary:
     max_bytes = request.app.state.settings.server.max_upload_mb * MB
-    data = await file.read(max_bytes + 1)
-    if len(data) > max_bytes:
-        raise LexiError(413, "DOC_TOO_LARGE", "Document too large", f"The limit is {max_bytes // MB} MB.")
     name = file.filename or "upload"
     lower = name.lower()
-    if lower.endswith(".pdf"):
-        ing = _run_ingest(ingest_pdf, data, name)
-        return _store(request, ing, name, "application/pdf")
-    if lower.endswith(".txt"):
-        try:
-            text = data.decode("utf-8-sig")
-        except UnicodeDecodeError as e:
-            raise LexiError(422, "MALFORMED_FILE", "Malformed file", "The text file is not valid UTF-8.") from e
-        ing = _run_ingest(ingest_text, text, name)
-        return _store(request, ing, name, "text/plain")
+    with temp_sentinel.watch():
+        data = await file.read(max_bytes + 1)
+        if len(data) > max_bytes:
+            raise LexiError(413, "DOC_TOO_LARGE", "Document too large", f"The limit is {max_bytes // MB} MB.")
+        if lower.endswith(".pdf"):
+            ing = _run_ingest(ingest_pdf, data, name)
+            return _store(request, ing, name, "application/pdf")
+        if lower.endswith(".docx"):
+            ing = _run_ingest(ingest_docx, data, name)
+            return _store(request, ing, name, DOCX_MIME)
+        if lower.endswith(".txt"):
+            try:
+                text = data.decode("utf-8-sig")
+            except UnicodeDecodeError as e:
+                raise LexiError(422, "MALFORMED_FILE", "Malformed file", "The text file is not valid UTF-8.") from e
+            ing = _run_ingest(ingest_text, text, name)
+            return _store(request, ing, name, "text/plain")
     raise LexiError(
         415,
         "UNSUPPORTED_TYPE",
         "Unsupported file type",
-        "This build accepts PDF and TXT. DOCX support is the next Phase 1 item.",
+        "This build accepts PDF, DOCX and TXT.",
     )
 
 

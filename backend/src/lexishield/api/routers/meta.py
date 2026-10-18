@@ -13,7 +13,7 @@ from ...models import (
     PrivacyStatus,
     ReceiptRequest,
 )
-from ...trust import egress_guard
+from ...trust import egress_guard, temp_sentinel
 from ..errors import NotImplementedYet, problem_responses
 
 router = APIRouter()
@@ -27,8 +27,7 @@ async def privacy_status(request: Request) -> PrivacyStatus:
             active=st["active"], allowed_hosts=st["allowed_hosts"], blocked_attempts=st["blocked_attempts"]
         ),
         network_mode="host-loopback",
-        # Placeholder: the temp-file sentinel is not built yet, so this is not a measurement.
-        temp_files_created=0,
+        temp_files_created=temp_sentinel.count(),
         sessions=len(request.app.state.vault),
         retention_ttl_s=request.app.state.settings.privacy.session_ttl_s,
     )

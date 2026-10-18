@@ -197,6 +197,10 @@ class LLMGateway:
             raise ModelTimeout("embedding call timed out") from e
         except (httpx.ConnectError, httpx.ConnectTimeout, ConnectionError) as e:
             raise ModelUnavailable(f"cannot reach Ollama at {self.settings.ollama.host}") from e
+        except Exception as e:  # ollama.ResponseError, e.g. the embedding model is not pulled
+            if type(e).__name__ == "ResponseError":
+                raise ModelUnavailable(str(e)) from e
+            raise
         return [list(v) for v in _get(resp, "embeddings", [])]
 
     # ------------------------------------------------------------ runtime info
