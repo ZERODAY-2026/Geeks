@@ -39,12 +39,14 @@ def scan_text(text: str) -> list[HiddenFinding]:
                 )
             )
     for m in INJECTION_RE.finditer(text):
+        # The whole line is excluded from analysis, not just the matched phrase.
+        line_end = text.find("\n", m.end())
         findings.append(
             HiddenFinding(
                 type=HiddenFindingType.INJECTION_PATTERN,
                 severity=Severity.HIGH,
                 char_start=m.start(),
-                char_end=m.end(),
+                char_end=len(text) if line_end == -1 else line_end,
                 preview=m.group(0)[:120],
                 excluded_from_analysis=True,
             )
@@ -60,6 +62,11 @@ def _is_white(color: object) -> bool:
             return all(float(c) <= 0.05 for c in color)
         return all(isinstance(c, (int, float)) and c >= 0.95 for c in color)
     return False
+
+
+def is_hidden_glyph(char: dict) -> bool:
+    """True for a PDF glyph a reader cannot see: white fill or a size under 4 pt."""
+    return _is_white(char.get("non_stroking_color")) or (char.get("size") or 99) < 4
 
 
 def _preview(chars: Sequence[dict]) -> str:

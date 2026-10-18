@@ -101,7 +101,7 @@ Commit the resulting `backend/eval/results/bench_*.json` files for each machine.
 primary model is chosen with its measured status-correct rate (see Open issues in the log).
 
 ### Phase 1: ingestion, trust boundary, retrieval (planned 0:45–2:15)
-**Status:** not started. Stub endpoints exist; the phase1 tests are not written yet.
+**Status:** built and gated. Tests: `tests/test_phase1_*.py` (ingest, api, trust, retrieval, classify). Gap against this list: `trust/redact_log.py` not written; retrieval recall@6 is 1.000 on the 15 labelled queries, which is too easy to separate BM25 from the hybrid, so a harder set is still needed.
 
 **Tests to write (`tests/test_phase1_*.py`, marker `phase1`):**
 - Offset round-trip: `doc.text[c.char_start:c.char_end] == clause.text` for every clause in each fixture.
