@@ -55,109 +55,34 @@ The architecture is derived directly from Sections 6–9 of [`docs/plan/LexiShie
 
 ```mermaid
 flowchart TD
-    subgraph ClientLayer["Client & Contract Layer"]
-        UI["Web UI (React, Offline Bundled Assets)<br/>No CDNs • No Google Fonts • No Remote Analytics"]
-        CLI["LexiShield CLI<br/>(lexishield serve | info)"]
-        CONTRACT["Frozen OpenAPI 3.1 Contract<br/>contracts/openapi.json + examples/*.json"]
-        UI -->|HTTP / SSE| GW
-        CLI -->|CLI Entrypoint| GW
-        CONTRACT -.->|Client Generation| UI
+    UI["Web UI / CLI Client<br/>(Local React bundle • No external CDNs/telemetry)"]
+
+    subgraph Gateway["API Gateway & Local Trust Boundary (FastAPI · Loopback 127.0.0.1)"]
+        API["REST & SSE Endpoints<br/>/documents • /analyze • /ask • /report"]
+        VAULT["Sealed In-Memory Vault<br/>(AES-256-GCM Session Key • 0 Disk Writes)"]
+        EG["In-Process Egress Guard<br/>(Blocks Non-Loopback Sockets)"]
+        API --- VAULT
+        EG -.->|Enforces Loopback| API
     end
 
-    subgraph TrustBoundary["Local Trust Boundary & Privacy Kernel (src/lexishield/trust/)"]
-        EG["In-Process Egress Guard<br/>(sys.addaudithook blocks non-loopback sockets)"]
-        VAULT["Sealed In-Memory Vault<br/>(AES-256-GCM ephemeral keys, 0 disk writes)"]
-        SENTINEL["Temp-File Sentinel<br/>(Verifies 0 disk spillage during uploads)"]
-        SHRED["Crypto-Shredder<br/>(DELETE drops session AES key)"]
-        ATTEST["Privacy Receipt Attestation<br/>(Ed25519-signed verification receipt)"]
-        DEPAUDIT["Dependency Auditor<br/>(Rejects telemetry: Sentry, PostHog, etc.)"]
+    subgraph Pipeline["Five-Stage Processing Pipeline"]
+        STAGE1["1. Ingestion & Sanitization<br/>PDF/DOCX/TXT Parser • Hidden Text & Injection Scan • Exact Offset Map"]
+        STAGE2["2. Hybrid Retrieval & Context<br/>BM25 + EmbeddingGemma RRF (k=6) • Cross-Refs • Statute Index"]
+        STAGE3["3. Gemma Agent Orchestration<br/>Classification • Checklist DAG • LLM Gateway (Schema Enforcement)"]
+        STAGE4["4. Multi-Layer Verification Gate<br/>Quote Verifier • Fact Distortion Checker • Silence Double-Key • Advice Guard"]
+        STAGE5["5. Triage & Escalation<br/>Severity Scoring • Exposure Arithmetic • India-First Escalation Routes"]
+
+        STAGE1 --> STAGE2 --> STAGE3 --> STAGE4 --> STAGE5
     end
 
-    subgraph APIGateway["API Gateway Layer (src/lexishield/api/)"]
-        GW["FastAPI Core App (app.py)<br/>Loopback Bind: 127.0.0.1:8000 only"]
-        LIMIT["Upload Limiter & Memory Spool<br/>(MultiPartParser cap: 20 MB)"]
-        ERRORS["RFC 9457 problem+json Handler"]
-        SSE["SSE Event Streamer (sse-starlette)"]
-        ROUTERS["Routers: system • documents • analysis • interaction • meta"]
-        GW --- LIMIT
-        GW --- ERRORS
-        GW --- SSE
-        GW --- ROUTERS
+    subgraph Runtime["Local Inference Runtime"]
+        OLLAMA["Ollama Runtime (127.0.0.1:11434)<br/>• Gemma 4 Chat: gemma4:e4b-it-qat (GPU) / e2b (CPU)<br/>• Embeddings: embeddinggemma:300m"]
     end
 
-    subgraph IngestionSubsystem["Stage 1 · Ingestion & Sanitization (src/lexishield/ingest/)"]
-        LOADERS["Loaders: PDF (pdfplumber) • DOCX • TXT"]
-        HIDDEN["Hidden-Content Detector<br/>(White text, tiny font, bidi, zero-width)"]
-        INJECT["Prompt Injection Scanner<br/>(Quarantine & remove from prompts)"]
-        OFFSET["Normalizer & Global Offset Map<br/>(doc.text[start:end] == clause.text)"]
-        SEGMENT["Clause Segmenter (C1..Cn)<br/>Cross-reference & Definition extraction"]
-        LOADERS --> HIDDEN --> INJECT --> OFFSET --> SEGMENT
-    end
-
-    subgraph RetrievalSubsystem["Stage 2 · Retrieval & Context (src/lexishield/retrieval/)"]
-        HYBRID["Hybrid Search Engine<br/>Reciprocal Rank Fusion (RRF, k=6)"]
-        BM25["BM25 Lexical Index<br/>(rank-bm25)"]
-        EMBED["Vector Semantic Index<br/>(EmbeddingGemma via numpy)"]
-        XREF["X-Ref & Definition Expander<br/>('subject to Clause 7.2')"]
-        STATUTES["Statute Context Index<br/>(SQLite FTS5 from Open India Law)"]
-        PACKS["Checklist & Topic Packs<br/>(YAML: in_rental, in_employment, etc.)"]
-        BM25 --> HYBRID
-        EMBED --> HYBRID
-        HYBRID --> XREF
-    end
-
-    subgraph GemmaOrchestration["Stage 3 · Gemma Agent Orchestrator (src/lexishield/agents/ & llm/)"]
-        QUEUE["Asyncio Job Queue & Worker"]
-        DAG["Analysis DAG Pipeline<br/>Classify ➔ Pack ➔ Topic NLI ➔ Cards ➔ Triage"]
-        ASKAGENT["Interactive Ask Agent<br/>(Tool-using: search_clauses, max 3 calls)"]
-        SCENARIO["What-If Scenario Engine<br/>(Financial & timeline calculation)"]
-        LLMGW["LLM Gateway (llm/gateway.py)<br/>Strict JSON Schema • 1 Repair Retry • Timeouts"]
-        QUEUE --> DAG
-        DAG --> LLMGW
-        ASKAGENT --> LLMGW
-        SCENARIO --> LLMGW
-    end
-
-    subgraph VerificationGate["Stage 4 · Verification Gate (src/lexishield/verify/)"]
-        QUOTEVERIFY["Strict Quote Verifier<br/>(Exact/normalized/fuzzy match to source text)"]
-        DISTORTION["Fact Distortion Checker<br/>(Numbers, dates, money ₹, polarity, party roles)"]
-        SILENCE["Silence Double-Key<br/>(Model NOT_MENTIONED + Lexicon check)"]
-        ADVICEGUARD["Legal Advice Guard<br/>(Regex blocks verdicts; forces escalation)"]
-        TIERS["Confidence & Evidence Tiers<br/>(STATED • INTERPRETATION • NOT_FOUND)"]
-        READGRADE["Reading Grade Calculator<br/>(textstat: target grade ≤ 9)"]
-        QUOTEVERIFY --> DISTORTION --> SILENCE --> ADVICEGUARD --> TIERS --> READGRADE
-    end
-
-    subgraph TriageSubsystem["Stage 5 · Triage & Escalation (src/lexishield/triage/)"]
-        SEVERITY["Severity Classifier<br/>(YAML rule mapping over verified facts)"]
-        EXPOSURE["Exposure Arithmetic<br/>(Deposit, notice, liability calculation)"]
-        ESCALATE["India-First Escalation Router<br/>(Lawyers, Rent Authority, Labour Dept, DLSA)"]
-        BRIEF["Pre-Lawyer Escalation Brief<br/>(Structured Markdown / JSON dossier)"]
-        SEVERITY --> ESCALATE
-        EXPOSURE --> ESCALATE
-        ESCALATE --> BRIEF
-    end
-
-    subgraph InferenceRuntime["Local Inference Runtime (Ollama)"]
-        OLLAMA["Ollama Server (127.0.0.1:11434)<br/>Offline • Local CUDA / CPU"]
-        CHATMODEL["Chat Model (Gemma 4):<br/>• GPU: gemma4:e4b-it-qat (6.1 GB)<br/>• CPU: gemma4:e2b-it-qat (4.3 GB)<br/>think: false (3x speedup)"]
-        EMBEDMODEL["Embed Model:<br/>embeddinggemma:300m (622 MB)"]
-        OLLAMA --- CHATMODEL
-        OLLAMA --- EMBEDMODEL
-    end
-
-    ROUTERS --> IngestionSubsystem
-    IngestionSubsystem --> VAULT
-    ROUTERS --> GemmaOrchestration
-    GemmaOrchestration --> RetrievalSubsystem
-    RetrievalSubsystem --> PACKS
-    RetrievalSubsystem --> STATUTES
-    LLMGW <-->|JSON Schema via Loopback| OLLAMA
-    GemmaOrchestration --> VerificationGate
-    VerificationGate --> TriageSubsystem
-    TriageSubsystem --> VAULT
-    VAULT --> ROUTERS
-    TrustBoundary -.->|Monitors & Protects| APIGateway
+    UI -->|HTTP / SSE| API
+    API --> STAGE1
+    STAGE3 <-->|Strict Structured JSON| OLLAMA
+    STAGE5 -->|Cache Report| VAULT
 ```
 
 ---
