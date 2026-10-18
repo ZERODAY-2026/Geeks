@@ -91,75 +91,16 @@ flowchart TD
 
 ```mermaid
 flowchart TD
-    subgraph Step1["1. Ingestion & Sanitization (Phase 1: Verified)"]
-        UPLOAD["User Upload: PDF / DOCX / TXT<br/>POST /api/v1/documents"]
-        SPOOL["In-Memory Buffer<br/>Cap: 20 MB (0 disk writes verified by Sentinel)"]
-        PARSE["File Parsers & Layout Extraction<br/>pdfplumber / python-docx / UTF-8 text"]
-        SCAN["Sanitization & Security Scans<br/>Hidden Text Scan + Prompt Injection Quarantine"]
-        OFFSET["Normalizer & Global Offset Map<br/>Exact round-trip: doc.text[start:end] == clause.text"]
-        SEGMENT["Clause Segmentation & Linking<br/>Hierarchical C1..Cn + Definitions + X-Refs"]
-        VAULT_IN["Sealed In-Memory Vault<br/>AES-256-GCM session key (in RAM only)"]
-        SUMMARY["201 Created: DocumentSummary<br/>id, pages, clause count, warnings, quick detect"]
+    S1["<b>1. Ingestion & Sanitization (Phase 1)</b><br/>POST /documents • Memory Spool (0 Disk) • Injection & Offset Scan • Sealed RAM Vault"]
+    S2["<b>2. Job Trigger & Progressive Stream (Phase 2)</b><br/>POST /analyze • SSE Stream (/events) • Gemma Classification • YAML Topic Packs"]
+    S3["<b>3. Per-Topic NLI & Verification Gate (Phase 2)</b><br/>Hybrid RRF Retrieval • Structured Gemma NLI • Quote Verifier • Distortion & Advice Guards"]
+    S4["<b>4. Triage Synthesis & Escalation (Phase 2)</b><br/>GET /report • Severity Rules • Financial Exposure • DLSA / Labour / Rent Escalation"]
+    S5["<b>5. Interactive Q&A & Crypto-Shred (Phase 3 & 4)</b><br/>POST /ask (Grounded Citations · Verdicts Declined) • Pre-Lawyer Brief • DELETE (Crypto-Shred)"]
 
-        UPLOAD --> SPOOL --> PARSE --> SCAN --> OFFSET --> SEGMENT --> VAULT_IN --> SUMMARY
-    end
-
-    subgraph Step2["2. Job Trigger & Progressive SSE Streaming (Phase 2: Planned)"]
-        START["Trigger Analysis<br/>POST /api/v1/documents/{id}/analyze"]
-        QUEUE["Asyncio Job Queue<br/>Returns 202 Accepted (job_id)"]
-        SSE_OPEN["Client Opens SSE Event Stream<br/>GET /api/v1/jobs/{job_id}/events"]
-        CLASSIFY["Gemma Document Classification<br/>DocType + Jurisdiction + Party Roles"]
-        PACK_SEL["Load Checklist Pack (YAML)<br/>e.g. in_rental.yaml, in_employment.yaml"]
-
-        SUMMARY --> START --> QUEUE --> SSE_OPEN
-        SSE_OPEN --> CLASSIFY --> PACK_SEL
-    end
-
-    subgraph Step3["3. Per-Topic NLI & Verification Pipeline (Phase 2: Planned)"]
-        RETRIEVE["Hybrid Retrieval per Topic<br/>BM25 + EmbeddingGemma (RRF k=6) + X-Refs"]
-        LLM_CALL["Gemma 4 Structured NLI Inference<br/>Schema: Status, Evidence Quotes, Plain Explanation"]
-        GATE{"Verification Gate<br/>Automated Checks"}
-
-        Q_CHECK["1. Quote Verifier<br/>Match quote to original document offset"]
-        S_CHECK["2. Silence Double-Key<br/>If NOT_MENTIONED + Lexicon hit -> UNCLEAR"]
-        D_CHECK["3. Distortion Checker<br/>Verify numbers, dates, durations, negation & roles"]
-        A_CHECK["4. Legal Advice Guard<br/>Regex blocks verdicts (enforceable, illegal, etc.)"]
-
-        VERIFIED["Output: Verified ClauseCard & ChecklistItem<br/>Confidence Tier + Reading Grade Calculation"]
-        STREAM_CARD["Emit Progressive SSE Events<br/>event: checklist.item & event: card.ready"]
-
-        PACK_SEL --> RETRIEVE --> LLM_CALL --> GATE
-        GATE --> Q_CHECK --> S_CHECK --> D_CHECK --> A_CHECK --> VERIFIED --> STREAM_CARD
-    end
-
-    subgraph Step4["4. Triage Synthesis & Report (Phase 2: Planned)"]
-        TRIAGE["Triage Aggregator<br/>Severity Rules + Exposure Arithmetic (Rent, Deposit)"]
-        ESCALATION["India-First Escalation Router<br/>Lawyers, Rent Authority, Labour Dept, DLSA"]
-        VAULT_SAVE["Store Final TriageReport<br/>Encrypted in In-Memory Vault"]
-        REPORT_READY["Emit SSE: event: report.ready<br/>document_id, report_url"]
-        REPORT_GET["Client Fetches Full Report<br/>GET /api/v1/documents/{id}/report"]
-
-        STREAM_CARD --> TRIAGE --> ESCALATION --> VAULT_SAVE --> REPORT_READY --> REPORT_GET
-    end
-
-    subgraph Step5["5. Interactive Layer & Crypto-Shredding (Phase 3 & 4: Planned)"]
-        ASK["User Grounded Q&A<br/>POST /api/v1/documents/{id}/ask"]
-        ROUTER{"Ask Intent Router"}
-        DECLINED["Legal Verdict Bait<br/>Refusal: LEGAL_VERDICT_DECLINED + Escalation"]
-        ANSWERED["Factual / Plain Query<br/>ANSWERED with Verified Clause Citations"]
-        NOT_FOUND["Uncovered Topic<br/>NOT_IN_DOCUMENT + Nearest Related Clauses"]
-
-        BRIEF["Pre-Lawyer Escalation Brief<br/>GET /api/v1/documents/{id}/brief (JSON/Markdown)"]
-        DELETE["Crypto-Shred Document<br/>DELETE /api/v1/documents/{id}"]
-        SHRED_ACTION["Vault Discards AES-256-GCM Key<br/>Data becomes immediately unrecoverable (404)"]
-
-        REPORT_GET --> ASK --> ROUTER
-        ROUTER -->|Verdict Bait| DECLINED
-        ROUTER -->|Document Fact| ANSWERED
-        ROUTER -->|Absent Topic| NOT_FOUND
-        REPORT_GET --> BRIEF
-        REPORT_GET --> DELETE --> SHRED_ACTION
-    end
+    S1 -->|DocumentSummary| S2
+    S2 -->|Checklist Items| S3
+    S3 -->|Verified Cards| S4
+    S4 -->|TriageReport| S5
 ```
 
 ---
