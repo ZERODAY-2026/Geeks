@@ -17,7 +17,7 @@ MAX_PROMPT_CHARS = 6000  # the front of a document carries the parties, the type
 
 
 class PartyRoleOut(BaseModel):
-    party: str = Field(max_length=60)
+    party: str | None = Field(max_length=60)  # null when the name does not appear verbatim in the document
     role: UserRole
 
 
@@ -55,7 +55,8 @@ async def classify(gw: LLMGateway, ing: Ingested) -> ClassifyResult:
         Classification(
             doc_type=DocType(value.doc_type),
             confidence=value.confidence,
-            party_roles={p.party: p.role for p in value.party_roles},
+            # A name is kept only if it appears verbatim in the text the model saw, whatever the model returned.
+            party_roles={p.party: p.role for p in value.party_roles if p.party and p.party in document},
         ),
         source="model",
     )

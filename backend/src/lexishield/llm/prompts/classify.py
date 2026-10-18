@@ -9,7 +9,9 @@ SYSTEM = (
     "employment contract), msa (freelance or services contract), legal_notice (a demand or legal notice), "
     "unknown (none of these). For party_roles, map each party name the document defines to one role from: "
     "tenant, landlord, employee, employer, contractor, client, recipient, sender, unknown. "
-    "Use only names that appear in the document."
+    "Use only names that appear in the document. "
+    "Return null for any party name field whose exact name does not appear verbatim in the document text. "
+    "Do not infer, guess, or derive party names from context, document type, or general knowledge."
 )
 
 USER = """<document>

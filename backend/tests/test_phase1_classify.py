@@ -49,6 +49,18 @@ async def test_injection_never_reaches_the_model_payload() -> None:
     assert result.source == "model"
 
 
+async def test_party_names_not_in_the_text_are_dropped() -> None:
+    reply = (
+        '{"doc_type": "legal_notice", "confidence": 0.9, "party_roles": ['
+        '{"party": null, "role": "unknown"}, '
+        '{"party": "Sender Corp", "role": "sender"}]}'
+    )
+    gw = LLMGateway(Settings(), client=FakeOllama(replies=[reply]))
+    result = await classify(gw, _ingest("legal_notice_demand.pdf"))
+    assert result.source == "model"
+    assert result.classification.party_roles == {}
+
+
 async def test_signals_fallback_when_the_model_is_down() -> None:
     gw = LLMGateway(Settings(), client=FakeOllama(down=True))
     ing = _ingest("in_rental_11m_leave_license.txt")
