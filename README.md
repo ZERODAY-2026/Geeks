@@ -56,7 +56,7 @@ The architecture is derived directly from Sections 6–9 of [`docs/plan/LexiShie
 ```mermaid
 flowchart TD
     subgraph ClientLayer["Client & Contract Layer"]
-        UI["Web UI (React, Offline Bundled Assets)<br/>No CDNs - No Google Fonts - No Remote Analytics"]
+        UI["Web UI (React, Offline Bundled Assets)<br/>No CDNs • No Google Fonts • No Remote Analytics"]
         CLI["LexiShield CLI<br/>(lexishield serve | info)"]
         CONTRACT["Frozen OpenAPI 3.1 Contract<br/>contracts/openapi.json + examples/*.json"]
         UI -->|HTTP / SSE| GW
@@ -78,15 +78,15 @@ flowchart TD
         LIMIT["Upload Limiter & Memory Spool<br/>(MultiPartParser cap: 20 MB)"]
         ERRORS["RFC 9457 problem+json Handler"]
         SSE["SSE Event Streamer (sse-starlette)"]
-        ROUTERS["Routers: system - documents - analysis - interaction - meta"]
+        ROUTERS["Routers: system • documents • analysis • interaction • meta"]
         GW --- LIMIT
         GW --- ERRORS
         GW --- SSE
         GW --- ROUTERS
     end
 
-    subgraph IngestionSubsystem["Stage 1: Ingestion & Sanitization (src/lexishield/ingest/)"]
-        LOADERS["Loaders: PDF (pdfplumber) - DOCX - TXT"]
+    subgraph IngestionSubsystem["Stage 1 · Ingestion & Sanitization (src/lexishield/ingest/)"]
+        LOADERS["Loaders: PDF (pdfplumber) • DOCX • TXT"]
         HIDDEN["Hidden-Content Detector<br/>(White text, tiny font, bidi, zero-width)"]
         INJECT["Prompt Injection Scanner<br/>(Quarantine & remove from prompts)"]
         OFFSET["Normalizer & Global Offset Map<br/>(doc.text[start:end] == clause.text)"]
@@ -94,7 +94,7 @@ flowchart TD
         LOADERS --> HIDDEN --> INJECT --> OFFSET --> SEGMENT
     end
 
-    subgraph RetrievalSubsystem["Stage 2: Retrieval & Context (src/lexishield/retrieval/)"]
+    subgraph RetrievalSubsystem["Stage 2 · Retrieval & Context (src/lexishield/retrieval/)"]
         HYBRID["Hybrid Search Engine<br/>Reciprocal Rank Fusion (RRF, k=6)"]
         BM25["BM25 Lexical Index<br/>(rank-bm25)"]
         EMBED["Vector Semantic Index<br/>(EmbeddingGemma via numpy)"]
@@ -106,29 +106,29 @@ flowchart TD
         HYBRID --> XREF
     end
 
-    subgraph GemmaOrchestration["Stage 3: Gemma Agent Orchestrator (src/lexishield/agents/ & llm/)"]
+    subgraph GemmaOrchestration["Stage 3 · Gemma Agent Orchestrator (src/lexishield/agents/ & llm/)"]
         QUEUE["Asyncio Job Queue & Worker"]
-        DAG["Analysis DAG Pipeline<br/>Classify / Pack / Topic NLI / Cards / Triage"]
+        DAG["Analysis DAG Pipeline<br/>Classify ➔ Pack ➔ Topic NLI ➔ Cards ➔ Triage"]
         ASKAGENT["Interactive Ask Agent<br/>(Tool-using: search_clauses, max 3 calls)"]
         SCENARIO["What-If Scenario Engine<br/>(Financial & timeline calculation)"]
-        LLMGW["LLM Gateway (llm/gateway.py)<br/>Strict JSON Schema - 1 Repair Retry - Timeouts"]
+        LLMGW["LLM Gateway (llm/gateway.py)<br/>Strict JSON Schema • 1 Repair Retry • Timeouts"]
         QUEUE --> DAG
         DAG --> LLMGW
         ASKAGENT --> LLMGW
         SCENARIO --> LLMGW
     end
 
-    subgraph VerificationGate["Stage 4: Verification Gate (src/lexishield/verify/)"]
+    subgraph VerificationGate["Stage 4 · Verification Gate (src/lexishield/verify/)"]
         QUOTEVERIFY["Strict Quote Verifier<br/>(Exact/normalized/fuzzy match to source text)"]
-        DISTORTION["Fact Distortion Checker<br/>(Numbers, dates, money INR, polarity, party roles)"]
+        DISTORTION["Fact Distortion Checker<br/>(Numbers, dates, money ₹, polarity, party roles)"]
         SILENCE["Silence Double-Key<br/>(Model NOT_MENTIONED + Lexicon check)"]
         ADVICEGUARD["Legal Advice Guard<br/>(Regex blocks verdicts; forces escalation)"]
-        TIERS["Confidence & Evidence Tiers<br/>(STATED - INTERPRETATION - NOT_FOUND)"]
-        READGRADE["Reading Grade Calculator<br/>(textstat: target grade <= 9)"]
+        TIERS["Confidence & Evidence Tiers<br/>(STATED • INTERPRETATION • NOT_FOUND)"]
+        READGRADE["Reading Grade Calculator<br/>(textstat: target grade ≤ 9)"]
         QUOTEVERIFY --> DISTORTION --> SILENCE --> ADVICEGUARD --> TIERS --> READGRADE
     end
 
-    subgraph TriageSubsystem["Stage 5: Triage & Escalation (src/lexishield/triage/)"]
+    subgraph TriageSubsystem["Stage 5 · Triage & Escalation (src/lexishield/triage/)"]
         SEVERITY["Severity Classifier<br/>(YAML rule mapping over verified facts)"]
         EXPOSURE["Exposure Arithmetic<br/>(Deposit, notice, liability calculation)"]
         ESCALATE["India-First Escalation Router<br/>(Lawyers, Rent Authority, Labour Dept, DLSA)"]
@@ -139,8 +139,8 @@ flowchart TD
     end
 
     subgraph InferenceRuntime["Local Inference Runtime (Ollama)"]
-        OLLAMA["Ollama Server (127.0.0.1:11434)<br/>Offline - Local CUDA / CPU"]
-        CHATMODEL["Chat Model (Gemma 4):<br/>* GPU: gemma4:e4b-it-qat (6.1 GB)<br/>* CPU: gemma4:e2b-it-qat (4.3 GB)<br/>think: false (3x speedup)"]
+        OLLAMA["Ollama Server (127.0.0.1:11434)<br/>Offline • Local CUDA / CPU"]
+        CHATMODEL["Chat Model (Gemma 4):<br/>• GPU: gemma4:e4b-it-qat (6.1 GB)<br/>• CPU: gemma4:e2b-it-qat (4.3 GB)<br/>think: false (3x speedup)"]
         EMBEDMODEL["Embed Model:<br/>embeddinggemma:300m (622 MB)"]
         OLLAMA --- CHATMODEL
         OLLAMA --- EMBEDMODEL
