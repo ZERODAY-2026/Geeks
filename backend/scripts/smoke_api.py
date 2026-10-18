@@ -216,6 +216,60 @@ class Smoke:
         for name, fn in [("analyze + SSE order", analyze), ("report + citations", report), ("packs", packs)]:
             self.check(f"P2 {name}", fn)
 
+    def phase3(self) -> None:
+        """Synthetic fixture only. Ask, scenarios and the brief on the running server (uses the live model)."""
+        fixtures = Path(__file__).resolve().parents[1] / "tests" / "fixtures"
+        text = (fixtures / "in_rental_11m_leave_license.txt").read_text(encoding="utf-8")
+        doc_id = self.c.post(f"{API}/documents/text", json={"text": text, "filename": "lease.txt"}).json()[
+            "document_id"
+        ]
+
+        def ask(question: str) -> dict:
+            r = self.c.post(f"{API}/documents/{doc_id}/ask", json={"question": question}, timeout=300)
+            assert r.status_code == 200, f"status {r.status_code}: {r.text[:200]}"
+            return r.json()
+
+        def verdict() -> str:
+            body = ask("Is the lock-in clause enforceable?")
+            assert body["status"] == "LEGAL_VERDICT_DECLINED", body["status"]
+            assert body["escalation"], "no escalation route"
+            return f"declined, escalation: {body['escalation']['who']}"
+
+        def not_in_document() -> str:
+            body = ask("What is the pet policy?")
+            assert body["status"] == "NOT_IN_DOCUMENT" and not body["claims"], body["status"]
+            return f"NOT_IN_DOCUMENT, {len(body['related_clauses'])} related clauses"
+
+        def grounded() -> str:
+            body = ask("How much is the security deposit?")
+            assert body["status"] in ("ANSWERED", "PARTIAL"), body["status"]
+            for claim in body["claims"]:
+                for c in claim["citations"]:
+                    assert c["quote"] in text, "citation is not source text"
+            return f"{body['status']}, {len(body['claims'])} claim(s) with verified citations"
+
+        def scenario_and_brief() -> str:
+            job = self.c.post(f"{API}/documents/{doc_id}/analyze", json={}).json()["job_id"]
+            with self.c.stream("GET", f"{API}/jobs/{job}/events", timeout=900) as s:
+                for _ in s.iter_lines():
+                    pass
+            run = self.c.post(
+                f"{API}/documents/{doc_id}/scenarios/rental_early_exit/run", json={"params": {"months_stayed": 3}}
+            )
+            assert run.status_code == 200, run.text[:200]
+            exposure = run.json()["exposure"]
+            md = self.c.get(f"{API}/documents/{doc_id}/brief", params={"format": "md"})
+            assert md.status_code == 200 and md.text.startswith("# Brief for a lawyer"), md.text[:100]
+            return f"scenario computable={exposure['computable']}, brief {len(md.text)} chars"
+
+        for name, fn in [
+            ("verdict declined", verdict),
+            ("not in document", not_in_document),
+            ("grounded answer", grounded),
+            ("scenario + brief", scenario_and_brief),
+        ]:
+            self.check(f"P3 {name}", fn)
+
     def temp_files(self) -> int:
         return int(self.c.get(f"{API}/privacy/status").json()["temp_files_created"])
 

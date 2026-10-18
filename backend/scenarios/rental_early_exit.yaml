@@ -1,0 +1,10 @@
+# What-if: leaving a rental early. Amounts come only from verified clauses; a missing input is reported, never guessed.
+scenario_id: rental_early_exit
+title: Leaving the rental early
+description: Walks through the lock-in and notice clauses for leaving in a given month, and adds up only the amounts the document states.
+doc_types: [rental]
+params_schema:
+  type: object
+  required: [months_stayed]
+  properties:
+    months_stayed: {type: integer, minimum: 0, maximum: 120, description: Months into the agreement when you would leave.}

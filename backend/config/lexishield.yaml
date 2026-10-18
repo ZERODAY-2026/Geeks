@@ -11,6 +11,7 @@ server:
     - http://127.0.0.1:5173
     - http://localhost:3000
   max_upload_mb: 20
+  api_docs: false            # /docs loads Swagger UI from a CDN, so it is off for offline use
 
 ollama:
   host: http://127.0.0.1:11434
@@ -36,7 +37,7 @@ models:
     think: false               # Gemma 4 thinking off: ~3x faster (measured P0)
 
 agent:
-  mode: tools                # tools | pipeline
+  mode: pipeline             # pipeline is built; tools (bounded tool-calling agent) is not
   max_tool_calls: 3
 
 verify:

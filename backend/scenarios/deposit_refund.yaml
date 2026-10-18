@@ -1,0 +1,8 @@
+# What-if: getting the security deposit back. Shows the stated amount, timeline and deductions, or says they are missing.
+scenario_id: deposit_refund
+title: Getting the deposit back
+description: Shows the deposit amount, when the document says it is returned, and what may be deducted, using only verified clauses.
+doc_types: [rental]
+params_schema:
+  type: object
+  properties: {}

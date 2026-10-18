@@ -13,6 +13,7 @@ from ... import __version__
 from ...llm.gateway import LLMGateway, ModelUnavailable
 from ...models import BenchmarkResult, Health, ModelInfo, StatuteIndexInfo, SystemInfo
 from ...settings import Settings
+from ...triage.statutes import index_info as statute_index_info
 from ..deps import get_gateway, get_settings_dep
 from ..errors import LexiError, problem_responses
 
@@ -75,7 +76,7 @@ async def system_info(gw: Gw, cfg: Cfg) -> SystemInfo:
     prof = cfg.models.active
     packs_dir = cfg.paths.resolve("packs_dir")
     packs = sorted(p.stem for p in packs_dir.glob("*.yaml")) if packs_dir.exists() else []
-    statute_db = cfg.paths.statute_db
+    statutes_available, snapshot = statute_index_info(cfg)
     return SystemInfo(
         app_version=__version__,
         profile=cfg.models.profile,
@@ -86,9 +87,7 @@ async def system_info(gw: Gw, cfg: Cfg) -> SystemInfo:
         ollama_host=cfg.ollama.host,
         gpu=_gpu_name(),
         packs=packs,
-        statute_index=StatuteIndexInfo(
-            available=statute_db.exists(), snapshot="v2026.08" if statute_db.exists() else None
-        ),
+        statute_index=StatuteIndexInfo(available=statutes_available, snapshot=snapshot),
         agent_mode=cfg.agent.mode,
     )
 

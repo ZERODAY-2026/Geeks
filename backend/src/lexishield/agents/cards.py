@@ -6,6 +6,7 @@ Otherwise it shows the verified source quote and the reason the explanation was 
 
 from __future__ import annotations
 
+import nltk
 import textstat
 from pydantic import BaseModel, Field
 
@@ -20,6 +21,7 @@ from ..models import (
     Severity,
     Tier,
 )
+from ..settings import BACKEND_DIR
 from ..verify.advice_guard import WITHHELD_REASON, verdict_hits
 from ..verify.facts import extract_facts
 
@@ -50,8 +52,26 @@ class CardInput(BaseModel):
     country: Country = Country.IN
 
 
+# textstat counts syllables with NLTK's cmudict and downloads it on first use if it is missing. This app runs
+# offline, so the data is installed once at set-up time (scripts/prepare_offline.py) into backend/data/nltk_data,
+# and the grade is only measured when that data is present. A missing grade is better than a network call.
+LOCAL_NLTK_DATA = BACKEND_DIR / "data" / "nltk_data"
+if LOCAL_NLTK_DATA.exists():
+    nltk.data.path.insert(0, str(LOCAL_NLTK_DATA))
+
+
+def syllable_data_installed() -> bool:
+    try:
+        nltk.data.find("corpora/cmudict")
+    except LookupError:
+        return False
+    return True
+
+
 def reading_grade(text: str) -> float | None:
-    return round(float(textstat.flesch_kincaid_grade(text)), 1) if text.strip() else None
+    if not text.strip() or not syllable_data_installed():
+        return None
+    return round(float(textstat.flesch_kincaid_grade(text)), 1)
 
 
 def _clean(items: list[str]) -> list[str]:
